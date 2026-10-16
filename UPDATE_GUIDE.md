@@ -77,7 +77,7 @@ RSS 会随着文章构建更新。它提供网站订阅，不代表已向各个�
 在项目目录执行：
 
 ```powershell
-node --test privacy.test.mjs
+node --test privacy.test.mjs portfolio.test.mjs
 node build.mjs
 git status
 git add .
@@ -91,8 +91,43 @@ git push
 提交后在仓库 Actions 查看部署结果，成功后刷新网站即可。
 
 
-## VLN 动态背景
+## 科技动态背景与计算机实验室
 
-背景由 assets/background.js 在浏览器本地绘制，不加载外部模型。机器人、无人机、无人车的路线是视觉示意，不是实际 VLN 模型结果。
+背景由 assets/background.js 本地绘制，鼠标移动产生光场和近邻连接，点击产生信号脉冲。“沉浸视图”可完整浏览；Esc 返回阅读。可暂停，尊重系统减少动态效果设置。旧的 VLN / 具身路径实验保留在 #/lab。
 
-右下角可暂停或播放动画；“沉浸漫游”进入完整场景，移动鼠标改变视角，点击地面设置共同目标。“返回阅读”或 Esc 退出。尊重系统的“减少动态效果”设置，后台标签页会暂停渲染。暂停偏好只保存在本机。
+三个新增实验由 assets/computer-labs.js 与对应 CSS 维护，入口是 #/labs。深链接分别为 ?lab=sorting、?lab=neural、?lab=network。切换页面会停止计时器。
+
+## 后续添加论文
+
+在 data/papers.json 数组追加真实公开成果。所需字段如下；以下只用于说明字段，请替换所有示例内容后再保存：
+
+```json
+{
+  "id": "your-paper-slug",
+  "title": "真实论文标题",
+  "authors": ["按照论文署名顺序填写"],
+  "year": "2026",
+  "venue": "正式会议、期刊或预印本平台",
+  "status": "published",
+  "abstract": "公开版本的摘要或简要介绍",
+  "tags": ["VLN"],
+  "doiUrl": "",
+  "pdfUrl": "",
+  "codeUrl": "",
+  "bibtex": ""
+}
+```
+
+status 只能选 published（正式发表）或 preprint（公开预印本）。投稿中、拟投稿与录用前稿件不要冒充已发表论文。链接填真实 HTTPS 地址，没有则留空；作者列表保持真实顺序。不要上传审稿意见、私人投稿截图或未获授权的附件。论文公开全文链接可以指向正式出版平台或作者合法公开版本，不需要把 PDF 原件放进仓库。
+
+## ICPC / CCPC 公开证书
+
+assets/public-honors/ 只保存 6 张经审核的永久脱敏 WebP。data/public-certificates.json 保存公开标题与相对图片路径；不包含原件位置。public-honors.mjs 保存对应 SHA256，构建时会检查文件没有被替换。
+
+不要把原图直接覆盖这些文件。若需要更新公开副本，应在本地重新脱敏、去除元数据、逐张核对后，再更新精确白名单和摘要。其他原件仍使用人工申请流程。
+
+## 收藏、点赞与留言
+
+访客收藏无需登录，保存在当前浏览器。清理浏览器数据会丢失收藏；不会同步到其他设备。论文、手记、项目与实验都有收藏或交流入口。
+
+留言与共享点赞走 GitHub Discussions，由站主安装 giscus 后启用；详见 COMMUNITY_GUIDE.md。不要把 GitHub 密码、登录令牌或应用私钥写入前端配置。

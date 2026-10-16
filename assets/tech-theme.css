@@ -1,0 +1,44 @@
+/* A restrained technical skin. Layout and laboratory behavior remain in style.css. */
+:root{--bg:#f2f6fa;--paper:#fbfdff;--sidebar:#eaf0f6;--ink:#1b3045;--muted:#52697e;--soft:#637b91;--line:#d5e0eb;--accent:#246a95;--accent-soft:#e4eff7;--sand:#eef0f9;--code:#e8eff6;--hero:#eaf1f8;--shadow:0 24px 90px #132d4526;color-scheme:light}
+:root[data-theme=dark]{--bg:#080e19;--paper:#111c2e;--sidebar:#0c1524;--ink:#e6eef8;--muted:#a2b3c8;--soft:#91a5bd;--line:#24354c;--accent:#7ed1f0;--accent-soft:#142c40;--sand:#25263c;--code:#0b1422;--hero:#122239;--shadow:0 24px 90px #0008;color-scheme:dark}
+body{background:radial-gradient(ellipse at 80% 10%,color-mix(in srgb,var(--accent-soft) 56%,var(--bg)),transparent 58%),var(--bg)}
+#vln-background{opacity:1}
+body:after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;background:radial-gradient(340px circle at var(--pointer-x,-500px) var(--pointer-y,-500px),color-mix(in srgb,var(--accent) 7%,transparent),transparent 78%);transition:opacity .4s}
+body.pointer-in-field:after{opacity:1}
+.main-shell{background:linear-gradient(105deg,color-mix(in srgb,var(--bg) 91%,transparent),color-mix(in srgb,var(--bg) 78%,transparent) 65%,color-mix(in srgb,var(--bg) 47%,transparent));border-right:1px solid color-mix(in srgb,var(--line) 45%,transparent)}
+.sidebar{background:color-mix(in srgb,var(--sidebar) 93%,transparent);backdrop-filter:blur(18px);border-color:color-mix(in srgb,var(--accent) 15%,var(--line))}
+.sidebar:before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.4;pointer-events:none}
+.topbar{border-bottom-color:color-mix(in srgb,var(--accent) 14%,var(--line))}
+.brand-mark{font-family:Consolas,monospace;letter-spacing:-5px;font-size:38px}.brand-mark span,.avatar span{color:var(--accent)}
+.avatar{border-radius:15px;font-family:Consolas,monospace;background:linear-gradient(135deg,var(--accent-soft),var(--paper));box-shadow:inset 0 1px 0 color-mix(in srgb,var(--ink) 8%,transparent)}
+.avatar:after{background:var(--accent)}.profile-status i{background:var(--accent)}
+.hero h1,.page-header h1,.about-prose .lead,.article-header h1,.lab-notes h2,.publish-notes h2{font-family:Inter,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-weight:550;letter-spacing:-1.2px}
+.hero h1{line-height:1.45}.hero h1 em:after{background:var(--accent);opacity:.35}
+.brand-word small,.tiny-label,.eyebrow,.scene-overline{font-family:Consolas,"SFMono-Regular",monospace}
+.nav-link{border:1px solid transparent;border-radius:7px;transition:background .18s,border-color .18s,color .18s}
+.nav-link.active{background:linear-gradient(100deg,var(--accent-soft),color-mix(in srgb,var(--accent-soft) 30%,transparent));border-color:color-mix(in srgb,var(--accent) 18%,transparent)}
+.nav-link:hover{border-color:color-mix(in srgb,var(--accent) 16%,transparent)}
+.primary-link{box-shadow:inset 0 1px 0 #ffffff26;border:1px solid color-mix(in srgb,var(--accent) 55%,transparent);border-radius:6px}
+.award-mini,.project-entry,.embodied-lab,.currently,.subscribe-panel,.project-note,.request-channel{box-shadow:inset 0 1px 0 color-mix(in srgb,var(--ink) 4%,transparent);background:color-mix(in srgb,var(--paper) 94%,transparent)}
+.award-mini,.project-entry,.social-icon,.tag,.request-channel{transition:border-color .18s,background .18s,box-shadow .18s,transform .18s}
+.award-mini:hover,.project-entry:hover,.request-channel:hover{border-color:color-mix(in srgb,var(--accent) 58%,var(--line));box-shadow:inset 0 1px 0 color-mix(in srgb,var(--accent) 18%,transparent),0 8px 28px color-mix(in srgb,var(--accent) 5%,transparent)}
+.project-entry:first-child{background:linear-gradient(115deg,var(--hero),color-mix(in srgb,var(--paper) 85%,transparent))}
+.post-art{border:1px solid color-mix(in srgb,var(--accent) 14%,transparent)}
+.post-card:after{content:"";position:absolute;left:-12px;right:-12px;top:3px;bottom:3px;z-index:-1;pointer-events:none;border-radius:8px;background:linear-gradient(100deg,color-mix(in srgb,var(--accent) 5%,transparent),transparent);opacity:0;transition:opacity .2s}.post-card:hover:after{opacity:1}
+.award-emblem,.award-mini-top svg{color:var(--accent)}.pin-label{color:var(--accent)}
+.social-icon:hover,.tag:hover{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));box-shadow:0 0 18px color-mix(in srgb,var(--accent) 6%,transparent)}
+.scene-dock{border-radius:10px;gap:12px;padding:9px 14px;border-color:color-mix(in srgb,var(--accent) 25%,var(--line));background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(20px);box-shadow:0 8px 40px #0000001c,inset 0 1px 0 color-mix(in srgb,var(--ink) 6%,transparent)}
+.scene-indicator{height:5px;width:5px;border-radius:1px;box-shadow:0 0 12px color-mix(in srgb,var(--accent) 45%,transparent)}
+.scene-dock-title{font-family:Consolas,"Microsoft YaHei",monospace;letter-spacing:.4px;font-size:12px;color:var(--muted)}
+.scene-dock button{font-size:12px}.scene-dock button:hover{color:var(--ink)}
+.scene-info{max-width:480px;top:12vh;left:max(36px,7vw)}
+.scene-info h2{font-family:Inter,"Segoe UI","Microsoft YaHei",sans-serif;font-weight:500;font-size:clamp(28px,3.2vw,47px);letter-spacing:-1px;line-height:1.5;white-space:normal}
+.scene-description{max-width:340px;line-height:2;color:var(--muted)}.scene-overline{font-size:11px;letter-spacing:2px}
+.scene-demo-note{opacity:.85;line-height:1.9;max-width:320px}
+:root[data-theme=dark] .scene-info{text-shadow:0 2px 18px #080e19}
+:root[data-theme=dark] dialog{background:#101b2b;border-color:var(--line)}
+:root[data-theme=dark] dialog::backdrop{background:#020712a8;backdrop-filter:blur(5px)}
+body.scene-focus:after{opacity:0}
+@media(min-width:1500px){.main-shell{background:linear-gradient(105deg,color-mix(in srgb,var(--bg) 92%,transparent),color-mix(in srgb,var(--bg) 72%,transparent) 75%,color-mix(in srgb,var(--bg) 35%,transparent))}}
+@media(max-width:650px){.main-shell{background:color-mix(in srgb,var(--bg) 87%,transparent)}.sidebar{backdrop-filter:blur(15px)}.scene-info{top:7vh;left:25px;right:25px;max-width:300px}.scene-info h2{font-size:30px;line-height:1.5;max-width:280px}.scene-description{font-size:13px;max-width:280px}.scene-overline{font-size:10px;letter-spacing:1.3px}.scene-dock{gap:9px;padding:7px 11px}.scene-dock-title{font-size:11px}.brand-mark{font-size:33px}.page-header h1{letter-spacing:-.7px}}
+@media(prefers-reduced-motion:reduce){body:after{transition:none}.post-card:after{transition:none}}

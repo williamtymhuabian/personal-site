@@ -1,5 +1,7 @@
 import path from 'node:path';
-import { readdir } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { approvedProofs } from './public-honors.mjs';
 import { execFileSync } from 'node:child_process';
 
 const fields = {
@@ -64,6 +66,7 @@ export function validatePublicData({ profile, awards, projects }) {
 export function validatePublishPaths(files) {
   for (const input of files) {
     const name = input.replaceAll('\\', '/');
+    if (name === 'data/public-certificates.json' || Object.hasOwn(approvedProofs, name)) continue;
     if (/(^|\/)(\.private|certificates|certificate-originals|获奖证书)(\/|$)|\.private\.(json|txt)$|证书|certificate(?!-request)/i.test(name)) throw new Error(`禁止将证书或私有索引放入公开发布文件：${name}`);
     if (/\.(pdf|docx?|heic|tiff?)$/i.test(name)) throw new Error(`公开站点不接收原始文档：${name}。请将核验材料保留在站点外。`);
     if (/\.(png|jpe?g|gif|webp)$/i.test(name) && !name.startsWith('assets/projects/')) throw new Error(`图片仅允许存放公开项目插图目录 assets/projects/：${name}。证书请勿放入该目录。`);
@@ -82,6 +85,10 @@ async function publicFiles(directory, prefix = '') {
 }
 export async function checkPublicFiles(root) {
   validatePublishPaths(await publicFiles(root));
+  for (const [file, expected] of Object.entries(approvedProofs)) {
+    const actual = createHash('sha256').update(await readFile(path.join(root, file))).digest('hex');
+    if (actual !== expected) throw new Error(`公开证书副本已改变，请重新检查脱敏范围：${file}`);
+  }
   let tracked;
   try { tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).split('\0').filter(Boolean); }
   catch { return; }
