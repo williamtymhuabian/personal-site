@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const { profile, posts, projects, journeys = [] } = JSON.parse(document.getElementById('site-data').textContent);
+  const { profile, posts, projects, journeys = [], fields, friends, ccfCatalog } = JSON.parse(document.getElementById('site-data').textContent);
   const main = document.getElementById('main');
   document.querySelector('.skip-link').addEventListener('click', event => { event.preventDefault(); main.focus(); main.scrollIntoView({ behavior: 'instant' }); });
   const paths = {
@@ -40,7 +40,7 @@
   const categoryIcon = category => ({ '建站手记': 'git', '技术实践': 'code', '历史阅读': 'history', '随记': 'note' }[category] || 'note');
   const categoryStyle = category => ({ '建站手记': 'git', '技术实践': 'tech', '历史阅读': 'history', '随记': 'note' }[category] || 'note');
   const categoryUrl = category => `#/posts?category=${encodeURIComponent(category)}`;
-  const navItems = [['/', 'home', '首页'], ['/labs', 'code', '计算机实验室'], ['/papers', 'note', '论文与研究'], ['/posts', 'book', '全部手记'], ['/projects', 'code', '项目与实践'], ['/awards', 'award', '竞赛与成果'], ['/journeys', 'pin', '足迹与旅行'], ['/publish', 'rss', '发布与订阅'], ['/community', 'github', '留言与交流'], ['/favorites', 'folder', '我的收藏'], ['/archives', 'archive', '文章归档'], ['/about', 'user', '关于我']];
+  const navItems = [['/', 'home', '首页'], ['/labs', 'code', '计算机实验室'], ['/papers', 'note', '论文与研究'], ['/venues', 'book', '期刊与会议'], ['/posts', 'book', '全部手记'], ['/projects', 'code', '项目与实践'], ['/awards', 'award', '竞赛与成果'], ['/journeys', 'pin', '足迹与旅行'], ['/publish', 'rss', '发布与订阅'], ['/community', 'github', '留言与交流'], ['/favorites', 'folder', '我的收藏'], ['/archives', 'archive', '文章归档'], ['/friends', 'user', '朋友们'], ['/about', 'user', '关于我']];
   document.getElementById('main-nav').innerHTML = navItems.map(([route, symbol, label]) => `<a class="nav-link" href="#${route}" data-route="${route}">${icon(symbol)}<span>${label}</span></a>`).join('');
   document.getElementById('sidebar-socials').innerHTML = profile.socials.filter(s => safeUrl(s.url)).map(s => `<a class="social-icon" href="${esc(safeUrl(s.url))}" target="_blank" rel="noopener noreferrer" aria-label="打开 ${esc(s.name)} 主页">${icon(s.symbol)}</a>`).join('');
   document.getElementById('search-symbol').innerHTML = icon('search');
@@ -62,12 +62,12 @@
   }
   function renderHome() {
     const selected = profile.awards.filter(a => a.featured && a.kind === 'award').slice(0, 3);
-    return `<section class="hero hero-interactive"><div class="hero-copy"><p class="eyebrow">COMPUTER SCIENCE / EXPLORE & BUILD</p><h1>在计算的世界里，<br><em>保持探索。</em></h1><p class="hero-description">你好，我是 ${esc(profile.name)}。<br>${esc(profile.school)} · ${esc(profile.major)} · ${esc(profile.education)}<br>研究具身智能与 VLN，探索算法、人工智能与计算机系统。</p><a class="current-study-link" href="#/about?section=education">当前 · 苏州大学硕士在读 / 完整经历 ↗</a><div class="hero-actions"><a class="primary-link" href="#/labs">进入计算机实验室 ${icon('code')}</a><a class="text-link" href="#/posts">翻开手记 ${icon('arrow')}</a></div><div class="hero-research-tags"><span>算法与系统</span><span>AI / VLN</span><span>交互式学习</span></div></div><div class="hero-art"><div class="compute-feature"><div class="compute-feature-top"><span>COMPUTING FIELD / LIVE</span><i></i></div><div class="compute-orbit" aria-hidden="true"><span class="compute-ring r1"></span><span class="compute-ring r2"></span><span class="compute-ring r3"></span><span class="compute-core">W<span>COMPUTE / CONNECT</span></span><span class="compute-node n1">AI</span><span class="compute-node n2">SYS</span><span class="compute-node n3">ALG</span></div><p>每个问题，都是一个入口。</p><div class="compute-feature-bottom"><span>3 个新实验 · 保留具身导航</span><a href="#/labs">开始探索 ↗</a></div></div></div></section>
+    return `<section class="hero hero-interactive"><div class="hero-copy"><p class="eyebrow">COMPUTER SCIENCE / EXPLORE & BUILD</p><h1>在计算的世界里，<br><em>保持探索。</em></h1><p class="hero-description">你好，我是 ${esc(profile.name)}。<br>${esc(profile.school)} · ${esc(profile.major)} · ${esc(profile.education)}<br>研究具身智能与 VLN，探索算法、人工智能与计算机系统。</p><a class="current-study-link" href="#/about?section=education">当前 · 苏州大学硕士在读 / 完整经历 ↗</a><div class="hero-actions"><a class="primary-link" href="#/labs">进入计算机实验室 ${icon('code')}</a><a class="text-link" href="#/posts">翻开手记 ${icon('arrow')}</a></div><div class="hero-research-tags"><span>算法与系统</span><span>AI / VLN</span><span>交互式学习</span></div></div><div class="hero-art"><div class="compute-feature"><div class="compute-feature-top"><span>COMPUTING FIELD / LIVE</span><i></i></div><div class="compute-orbit" aria-hidden="true"><span class="compute-ring r1"></span><span class="compute-ring r2"></span><span class="compute-ring r3"></span><span class="compute-core">W<span>COMPUTE / CONNECT</span></span><span class="compute-node n1">AI</span><span class="compute-node n2">SYS</span><span class="compute-node n3">ALG</span></div><p>每个问题，都是一个入口。</p><div class="compute-feature-bottom"><span>${fields.length} 个方向 · 保留具身导航</span><a href="#/labs">开始探索 ↗</a></div></div></div></section>
     <div class="intro-strip"><span>${icon('book')} ${posts.length} 篇手记<span>·</span>${profile.awards.filter(a => a.kind === 'award').length} 项竞赛获奖<span>·</span>${projects.length} 个项目记录</span><span class="intro-topics">ALGORITHMS / AI / SYSTEMS</span><span>${icon('clock')} 最近更新 ${date(latestDate)}</span></div>
     <div class="home-columns"><section><div class="section-heading"><h2>最近手记 <small>LATEST NOTES</small></h2><a href="#/posts">全部文章 ${icon('arrow')}</a></div><div>${posts.slice(0, 4).map(postCard).join('')}</div><a class="subscribe-inline" href="./feed.xml">${icon('rss')} 订阅最新手记 <span>RSS ↗</span></a></section>
     <aside class="home-aside" aria-label="手记分类与关注"><section class="side-section"><h2 class="side-title">${icon('folder')} 手记分类</h2><div class="category-list">${categories.map(c => `<a class="category-button" href="${categoryUrl(c)}"><span>${esc(c)}</span><span>${String(posts.filter(p => p.category === c).length).padStart(2, '0')}</span></a>`).join('')}</div></section>
     <section class="side-section currently"><span class="tiny-label">RESEARCH DIRECTION / 研究兴趣</span><p>具身智能<br>在行动中理解世界。</p><span>从一个可运行的小实验开始，<br>记录问题、过程与真实结果。</span><a class="text-link" href="#/lab" style="margin-top:12px">进入交互实验室 ↗</a></section><section class="side-section"><h2 class="side-title">${icon('external')} 在别处找到我</h2>${socials()}</section></aside></div>
-    <section class="home-labs"><div class="section-heading"><h2>动手理解计算 <small>COMPUTER LABS</small></h2><a href="#/labs">全部实验 ↗</a></div><div class="lab-discovery-grid"><a href="#/labs?lab=sorting"><span>01 / ALGORITHMS</span><h3>让排序过程可见</h3><p>单步观察比较和交换，看看算法怎样推进。</p><strong>排序算法 ↗</strong></a><a href="#/labs?lab=neural"><span>02 / AI</span><h3>从输入到激活</h3><p>调节输入和权重，理解感知机的输出。</p><strong>神经网络 ↗</strong></a><a href="#/labs?lab=network"><span>03 / SYSTEMS</span><h3>追踪一个数据包</h3><p>改变网络链路，观察路由如何响应。</p><strong>计算机网络 ↗</strong></a></div></section><a class="journey-home-link" href="#/journeys"><div><strong>把赛场与旅行，连成一幅足迹。</strong><p>走过 ${journeys.length} 座城市，收藏参赛经历与沿途风景。</p></div><span>打开城市地图 ↗</span></a><section class="awards-preview"><div class="section-heading"><h2>走过的路 <small>SELECTED HONORS</small></h2><a href="#/awards">全部竞赛与成果 ${icon('arrow')}</a></div><div class="award-grid">${selected.map(awardMini).join('')}</div></section>`;
+    <section class="home-labs"><div class="section-heading"><h2>动手理解计算 <small>COMPUTER LABS</small></h2><a href="#/labs">全部实验 ↗</a></div><div class="field-home-links">${fields.map((field,i)=>`<a href="#/labs?field=${field.id}"><span>${String(i+1).padStart(2,'0')}</span><strong>${esc(field.title)}</strong><i aria-hidden="true">↗</i></a>`).join('')}</div></section><a class="journey-home-link" href="#/journeys"><div><strong>把赛场与旅行，连成一幅足迹。</strong><p>走过 ${journeys.length} 座城市，收藏参赛经历与沿途风景。</p></div><span>打开城市地图 ↗</span></a><section class="awards-preview"><div class="section-heading"><h2>走过的路 <small>SELECTED HONORS</small></h2><a href="#/awards">全部竞赛与成果 ${icon('arrow')}</a></div><div class="award-grid">${selected.map(awardMini).join('')}</div></section>`;
   }
 
   function pageHeader(kicker, title, description) { return `<header class="page-header"><p class="eyebrow">${kicker}</p><h1>${title}</h1><p>${description}</p></header>`; }
@@ -112,8 +112,8 @@
   function renderAbout() {
     return `${pageHeader('A LITTLE ABOUT ME', `你好，我是 ${esc(profile.name)}。`, `${esc(profile.school)} · ${esc(profile.major)} · ${esc(profile.education)}`)}<div class="about-layout"><div class="about-prose"><p class="lead">让智能走进世界，<br>让每次探索留下痕迹。</p><p>我在${esc(profile.school)}攻读${esc(profile.major)}硕士，当前关注${esc(profile.researchFocus)}。科研、技术学习和算法竞赛，是我的经历；历史和新技术，是我愿意继续探索的话题。</p>${educationMarkup()}<h2>从竞赛走向更长的探索</h2><p>这里整理了过往的程序设计、数学建模、信息安全和团队创作经历。历史奖项保留原有赛事与组别，后续也会继续更新研究生阶段的竞赛与项目。</p><a class="text-link" href="#/awards">查看竞赛与成果 ${icon('arrow')}</a><h2>用实践理解具身智能</h2><p>感知、决策与行动怎样连接？一个想法怎样在环境中得到反馈？我希望从具体的小实验开始，把问题、方法和结果写清楚。站内实验室提供一个可操作的二维导航示意，欢迎动手试试。</p><a class="text-link" href="#/lab">进入交互实验室 ${icon('robot')}</a><h2>文章、项目与核验申请</h2><p>GitHub 放代码，CSDN 分享技术文章，这个网站汇集自己的手记与实践。ICPC、CCPC 的证书与奖牌按本人选择完整展示竞赛信息；其他材料如需核验，可通过邮箱、GitHub 或 CSDN 提交用途，由我人工决定是否提供。</p><button class="text-link" data-request="general">申请核验材料 ${icon('arrow')}</button><h2>在别处找到我</h2><div class="about-socials">${socials()}<a class="social-row" href="mailto:${esc(profile.certificateContact.email)}">${icon('mail')}<strong>联系邮箱</strong><span>${esc(profile.certificateContact.email)}</span></a></div></div><aside class="about-facts"><div class="avatar" aria-hidden="true">W<span>_</span></div><dl><div><dt>UNIVERSITY / 学校</dt><dd>${esc(profile.school)}</dd></div><div><dt>ACADEMIC / 专业与阶段</dt><dd>${esc(profile.major)}<br>${esc(profile.education)}</dd></div><div><dt>RESEARCH / 关注方向</dt><dd>${esc(profile.researchFocus)}</dd></div><div><dt>INTERESTS / 兴趣</dt><dd>算法与技术实践<br>历史阅读</dd></div></dl><p class="sidebar-motto">${esc(profile.motto)}<br><span>Stay curious. Keep building.</span></p><a class="text-link" href="./feed.xml">${icon('rss')} 订阅最新手记</a></aside></div>`;
   }
-  function renderComputerLabs() {
-    return `${pageHeader('ALGORITHMS / AI / SYSTEMS', '计算机 · 交互实验室', '不只读结论。改变输入、观察过程，在可操作的小实验中理解计算。')}<div class="lab-hub-intro"><div><span class="tiny-label">03 NEW LABS / HANDS ON</span><h2>算法怎样运行？智能怎样计算？网络怎样连接？</h2><p>三个可交互的教学实验，分别从算法、人工智能与计算机系统切入。</p></div><a class="text-link" href="#/lab">保留实验：具身导航 ↗</a></div>${window.ComputerLabs.markup()}<div class="lab-bookmark-row">${['sorting','neural','network'].map((id,i) => `<div><span>${['排序算法','神经网络','网络路由'][i]}</span>${window.Portfolio.actions('lab:' + id,{compact:true})}</div>`).join('')}</div>`;
+  function renderComputerLabs(query) {
+    return window.FieldLabs.markup(query);
   }
   function renderLab() {
     return `${pageHeader('PERCEIVE / PLAN / ACT', '具身智能 · 交互实验室', '给机器人一个目标，改变环境，再观察行动如何发生。先从一个小实验，理解环境、规划与反馈之间的联系。')}<div class="lab-page-layout"><div>${window.EmbodiedLab.markup()}</div><aside class="lab-notes"><p class="tiny-label">TRY IT YOURSELF</p><h2>给它一个目标。</h2><ol><li>点击空白格设置目标。</li><li>点击“规划并移动”。</li><li>编辑障碍，再试一次。</li></ol><h3>这里可以观察什么？</h3><p>障碍会改变最短路径；目标被包围时，机器人会报告不可达。你也可以聚焦地图后，用方向键手动移动。</p><h3>实验的边界</h3><p>已知地图上的 BFS 导航演示，只用于交互解释。它不代表真实机器人控制、强化学习训练或个人科研成果。</p><a class="text-link" href="#/projects">更多项目与实践 ↗</a></aside></div>`;
@@ -141,6 +141,8 @@
     window.ComputerLabs.unmount();
     window.Portfolio.unmount();
     window.Journeys.unmount();
+    window.FieldLabs.unmount();
+    window.ResearchDesk.unmount();
     document.title = profile.siteTitle;
     let html;
     if (route === '/') html = renderHome();
@@ -151,7 +153,9 @@
     else if (route === '/journeys') html = window.Journeys.markup(query);
     else if (route === '/about') html = renderAbout();
     else if (route === '/lab') html = renderLab();
-    else if (route === '/labs') html = renderComputerLabs();
+    else if (route === '/labs') html = renderComputerLabs(query);
+    else if (route === '/venues') html = window.ResearchDesk.markup(query);
+    else if (route === '/friends') html = window.ResearchDesk.friendsMarkup();
     else if (route === '/papers') html = window.Portfolio.paperMarkup(query);
     else if (route === '/favorites') html = window.Portfolio.favoritesMarkup();
     else if (route === '/community') html = window.Portfolio.communityMarkup(query);
@@ -163,6 +167,8 @@
     window.ComputerLabs.mount(main);
     window.Portfolio.mount(main);
     window.Journeys.mount(main, query);
+    window.FieldLabs.mount(main);
+    window.ResearchDesk.mount(main);
     bindPageControls(query);
     const activeRoute = route.startsWith('/post/') ? '/posts' : route === '/lab' ? '/labs' : route;
     document.getElementById('page-label').textContent = navItems.find(n => n[0] === activeRoute)?.[2] || '页面未找到';
@@ -187,6 +193,9 @@
   function updateSearch() {
     const keyword = searchInput.value.trim().toLocaleLowerCase();
     const index = [
+      ...fields.map(field => ({title:field.title,info:'计算机方向 · 交互实验',text:field.topics.join(' '),href:'#/labs?field='+field.id})),
+      ...ccfCatalog.venues.map(venue => ({title:venue.abbr?venue.abbr+' · '+venue.name:venue.name,info:'CCF '+venue.rank+' · '+(venue.type==='journal'?'期刊':'会议'),text:venue.publisher,href:'#/venues?q='+encodeURIComponent(venue.name)})),
+      ...friends.map(friend=>({title:friend.nickname,info:'朋友们',text:friend.bio,href:'#/friends'})),
       ...window.Portfolio.entries().filter(e => e.key.startsWith('lab:') || e.key.startsWith('paper:')).map(e => ({title:e.title,info:e.info,text:e.title,href:e.href})),
       ...posts.map(p => ({ title: p.title, info: `手记 · ${p.category} · ${date(p.date)}`, text: `${p.summary} ${p.tags.join(' ')} ${p.searchText}`, href: `#/post/${p.slug}` })),
       ...profile.awards.map(a => ({ title: a.title, info: `${kindNames[a.kind]} · ${a.year} · ${a.prize}`, text: `${a.detail} ${a.category}`, href: `#/awards?record=${a.id}` })),

@@ -95,7 +95,7 @@ git push
 
 背景由 assets/background.js 本地绘制，恢复机器人、无人机与无人车动画。进入“沉浸漫游”后，移动鼠标改变视角，点击地面设置共同目标；Esc 返回阅读。可暂停，尊重系统减少动态效果设置。独立的具身路径实验保留在 #/lab。
 
-三个新增实验由 assets/computer-labs.js 与对应 CSS 维护，入口是 #/labs。深链接分别为 ?lab=sorting、?lab=neural、?lab=network。切换页面会停止计时器。
+原排序、神经元和路由实验由 assets/computer-labs.js 与对应 CSS 维护；#/labs 现在按十个主领域组织，其余教学示例由 assets/field-labs.js 维护。原深链接 ?lab=sorting、?lab=neural、?lab=network 继续可用。切换页面会停止计时器。
 
 ## 后续添加论文
 
@@ -163,3 +163,18 @@ assets/public-honors/ 只保存已审核且获准公开的 WebP。当前算法�
 - 默认旅行地图包含全部到访城市，比赛出行也属于旅行。独立旅行记录和参赛经历共用地图，不需要为每次比赛复制一条旅行记录；参赛次数只统计 award 与 participation。
 - 可用 `#/journeys?view=travel&city=beijing` 或 `#/journeys?view=competition&city=xian` 分享对应视图。竞赛视图不显示纯旅行城市，筛选切换会校正当前选中城市。
 - 视频号账号在 profile.json 的 socials 中维护 handle；当前为 sphi9JNBWNUfo3i。取得真实分享主页链接后再填 url，此前使用复制账号功能。
+
+
+## 更新计算机方向与 CCF 研究台
+
+- `data/fields.json` 维护十个主领域的主题、简介和对应教学示例；`demo` 必须关联已实现的模块，不能用空页面充作实验。更新研究主题不代表新增论文或成果。
+- `scripts/update-ccf.py` 从原版正式 PDF 提取目录，使用 PyMuPDF，核对原文件 SHA256、60 个区块与总数，拒绝未知文件。原版镜像： https://lib.zjgsu.edu.cn/2026/0414/c1056a221631/page.htm 。更换版次需先核对 CCF 官方说明、更新脚本固定版本及计数，并逐页检查；原 PDF 仅缓存于 .private，不上传到公开仓库。
+- 条目 id 使用类别、类型与全名摘要，避免仅因排序或推荐类别变化而错配本地准备笔记。若场所改名或归类变化，仍需显式迁移对应候选记录。
+- 日期、录用率、影响因子、费用不在该目录数据中。不要从等级推断这些信息，不要把 DBLP 链接标成当届投稿官网。用户在准备台自行核对并填写官网来源；个人准备日期不能当成已验证截稿日期。
+- 候选与准备信息只保存在使用者当前浏览器。CSV 导出候选信息；ICS 导出用户填写的个人准备日期，日历应用负责提醒。若今后需要跨设备同步或自动收集截止日期，应另行设计后端、来源核验和权限。
+
+## 添加朋友
+
+在 `data/friends.json` 数组中添加 `{ "id": "unique-id", "nickname": "昵称", "bio": "一句介绍", "url": "https://主页链接" }`。先确认朋友同意公开这些信息；主页尚无链接可将 url 留空。不要添加电话、邮箱、学号、住址或私有原件字段。名单为空时，网站显示整理中的真实状态。
+
+完整检查：`node --test privacy.test.mjs portfolio.test.mjs journey.test.mjs explore.test.mjs`，然后 `node build.mjs`。浏览器检查各方向交互、CCF 筛选/导出和手机布局后提交推送。

@@ -6,6 +6,12 @@ const read = async file => JSON.parse(await readFile(new URL(file, import.meta.u
 const stops = await read('./data/journeys.json'), awards = await read('./data/awards.json');
 
 test('current city records link to the correct award years', () => assert.doesNotThrow(() => validateJourneys(stops, awards)));
+test('two HUST ICPC visits keep the 2024 non-award and 2025 bronze distinct',()=>{
+  const events=stops.find(s=>s.id==='wuhan').events;
+  const previous=events.find(e=>e.id==='icpc-2024-wuhan-participation');
+  assert.equal(previous.year,'2024');assert.equal(previous.result,'no-award');assert.equal(previous.school,'华中科技大学');assert.equal(previous.awardId,'');
+  assert(events.some(e=>e.id==='icpc-2025-wuhan'&&e.kind==='award'));
+});
 test('tourism records remain separate from competition results', () => {
   for (const city of ['yichang','wuxi','beijing']) {
     const stop=stops.find(s=>s.id===city);assert(stop);

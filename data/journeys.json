@@ -34,6 +34,17 @@
     "latitude": 30.59,
     "events": [
       {
+        "id": "icpc-2024-wuhan-participation",
+        "awardId": "",
+        "title": "ICPC 武汉邀请赛",
+        "year": "2024",
+        "kind": "participation",
+        "result": "no-award",
+        "school": "华中科技大学",
+        "summary": "第一次赴华中科技大学参加 ICPC 武汉邀请赛，未获奖。与 2025 年再次参赛并获铜奖的经历分别记录。",
+        "photos": []
+      },
+      {
         "id": "icpc-2025-wuhan",
         "awardId": "icpc-2025-wuhan",
         "title": "ICPC 全国邀请赛 · 武汉站",
