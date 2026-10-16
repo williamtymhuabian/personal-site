@@ -140,3 +140,15 @@ assets/public-honors/ 只保存已审核且获准公开的 WebP。当前算法�
 每组一张单图、两张并列、三张及以上自动出现轮播控件。不要靠重复图片凑轮播，也不要改变奖项数量。公开前逐张核对已取得对应范围的公开授权，且没有 EXIF 等额外元数据。disclosure 必须明确填写 complete（完整竞赛信息）或 redacted（按选择脱敏）。更新精确白名单与 SHA256，再构建。
 
 本科国家级大创条目的 id 是 national-undergraduate-innovation。已填写 2024 年立项的“面向 AIoT 应用的空地协同推理方法”，本人角色为项目成员。后续更新具体工作或结题情况时修改该项目即可，不要新增重复项目。科研项目经历不计入竞赛获奖数。
+
+
+## 更新教育经历和竞赛足迹
+
+- 当前身份修改 `profile.json` 的学校、专业、学历与 role；完整教育经历在 `educationHistory` 中维护，月份为 YYYY-MM，当前阶段 end 为空。首页不堆叠完整时间线，头像链接会进入教育经历区。
+- `data/journeys.json` 按城市维护 longitude / latitude（城市中心）与 events。地图自动依据坐标布局；新城市若超出当前东部区域范围，应同时调整 `assets/journeys.js` 的投影范围、经纬网与海岸线裁切，不能静默落在图外。
+- 每条赛事填写 id、title、year（未知留空）、kind、school（未知留空）、summary、photos。有奖项时填写真实 awardId；没有获奖的参赛经历使用 participation，不能关联获奖记录。杭州决赛的年份、学校待补充，保留参赛与氛围分享定位。
+- 每张现场照片先检查人脸、姓名牌、学号、电话、门牌、车票与二维码，避免公开住宿、宿舍和即时行程；去除 EXIF/GPS 后生成 WebP 展示副本。上传前仍需人工检查画面，去元数据并不能隐藏画面本身的位置线索。不要直接复制整批原图进仓库。
+- 照片存为 `assets/journeys/城市id-内容简名-SHA256前10位.webp`，将完整 SHA256 写入 `travel-media.mjs`。对应赛事 photos 中填写 image、alt、caption；校验会拒绝未审核照片、额外私人字段或错误奖项关联。无照片时留空数组，无需占位图片。
+- 学校邮箱和完整竞赛证书依本人选择公开。若将来想降低关联风险，可改用独立联系邮箱并调整公开副本；网页删除不能保证第三方副本、缓存或 Git 历史中的旧版本消失。
+
+完成后执行 `node --test privacy.test.mjs portfolio.test.mjs journey.test.mjs` 和 `node build.mjs`，核对网页后再提交推送。

@@ -49,5 +49,23 @@
     "douyinUrl": ""
   },
   "researchFocus": "具身智能",
-  "siteUrl": "https://williamtymhuabian.github.io/personal-site/"
+  "siteUrl": "https://williamtymhuabian.github.io/personal-site/",
+  "educationHistory": [
+    {
+      "school": "苏州大学",
+      "degree": "硕士研究生",
+      "major": "计算机科学与技术",
+      "start": "2026-09",
+      "end": "",
+      "current": true
+    },
+    {
+      "school": "长江大学",
+      "degree": "本科",
+      "major": "计算机科学与技术",
+      "start": "2022-09",
+      "end": "2026-07",
+      "current": false
+    }
+  ]
 }

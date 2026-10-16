@@ -18,6 +18,8 @@
   <script src="./assets/computer-labs.js?v={{ASSET_VERSION}}" defer></script>
   <script src="./assets/honors.js?v={{ASSET_VERSION}}" defer></script>
   <script src="./assets/portfolio.js?v={{ASSET_VERSION}}" defer></script>
+  <link rel="stylesheet" href="./assets/journeys.css?v={{ASSET_VERSION}}">
+  <script src="./assets/journeys.js?v={{ASSET_VERSION}}" defer></script>
   <script src="./assets/app.js?v={{ASSET_VERSION}}" defer></script>
 </head>
 <body>
@@ -42,7 +44,7 @@
       <a class="brand" href="#/" aria-label="{{NAME}} 首页"><span class="brand-mark">w<span>.</span></span><span class="brand-word">{{NAME}}<small>探索手记 / FIELD NOTES</small></span></a>
       <button class="mobile-menu icon-button" id="menu-toggle" aria-label="展开导航" aria-expanded="false"></button>
       <div class="sidebar-body" id="sidebar-body">
-        <div class="profile-block"><div class="avatar" aria-hidden="true">W<span>_</span></div><p class="profile-name">{{NAME}}</p><p class="profile-role">{{ROLE}}</p><span class="profile-status"><i></i> 学习中，也记录中</span></div>
+        <div class="profile-block"><a class="profile-avatar-link" href="#/about?section=education" aria-label="查看完整教育经历"><div class="avatar" aria-hidden="true">W<span>_</span></div></a><p class="profile-name">{{NAME}}</p><p class="profile-role">{{ROLE}}</p><span class="profile-status"><i></i> 当前 · 苏州大学硕士研究生</span><a class="profile-history-link" href="#/about?section=education">完整经历 ↗</a></div>
         <nav class="main-nav" id="main-nav" aria-label="主导航"></nav>
         <div class="sidebar-bottom"><p class="tiny-label">ELSEWHERE / 在别处</p><div id="sidebar-socials" class="sidebar-socials"></div><p class="sidebar-motto">{{MOTTO}}<br><span>One small discovery at a time.</span></p></div>
       </div>

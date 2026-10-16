@@ -7,6 +7,11 @@ const awards = JSON.parse(await readFile(new URL('./data/awards.json', import.me
 const projects = JSON.parse(await readFile(new URL('./data/projects.json', import.meta.url), 'utf8'));
 const dataset = () => structuredClone({ profile, awards, projects });
 test('approved public dataset and explicitly published social handles pass', () => assert.doesNotThrow(() => validatePublicData(dataset())));
+test('education history rejects private fields and invalid month ranges', () => {
+  for (const mutate of [p=>p.educationHistory[0].studentId='private',p=>p.educationHistory[0].start='2026-13',p=>p.educationHistory[1].end='2020-07',p=>p.educationHistory[1].current=true]) {
+    const value=dataset();mutate(value.profile);assert.throws(() => validatePublicData(value));
+  }
+});
 test('certificate paths and original URLs cannot be added to award data', () => {
   for (const key of ['sourcePath', 'certificateUrl', 'ocrText']) {
     const value = dataset(); value.awards[0][key] = 'private-original';

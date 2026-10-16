@@ -2,10 +2,12 @@ import path from 'node:path';
 import { readdir, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { approvedProofs } from './public-honors.mjs';
+import { approvedTravelPhotos } from './travel-media.mjs';
 import { execFileSync } from 'node:child_process';
 
 const fields = {
-  profile: ['name', 'siteTitle', 'description', 'role', 'motto', 'socials', 'school', 'major', 'education', 'researchFocus', 'siteUrl', 'certificateContact'],
+  profile: ['name', 'siteTitle', 'description', 'role', 'motto', 'socials', 'school', 'major', 'education', 'educationHistory', 'researchFocus', 'siteUrl', 'certificateContact'],
+  education: ['school', 'degree', 'major', 'start', 'end', 'current'],
   social: ['name', 'label', 'url', 'symbol', 'handle'],
   contact: ['mode', 'githubIssueUrl', 'csdnUrl', 'email', 'douyinUrl'],
   award: ['id', 'year', 'title', 'prize', 'category', 'level', 'detail', 'kind', 'phase', 'featured'],
@@ -32,6 +34,14 @@ export function validatePublicData({ profile, awards, projects }) {
   knownFields(profile, 'profile');
   for (const field of ['name', 'siteTitle', 'description', 'role', 'school', 'major', 'education']) text(profile[field], field);
   url(profile.siteUrl, 'siteUrl', false);
+  if (!Array.isArray(profile.educationHistory) || profile.educationHistory.filter(e => e.current).length!==1) throw new Error('教育经历需要且仅需要一个当前阶段。');
+  for (const entry of profile.educationHistory) {
+    knownFields(entry, 'education');
+    for (const key of ['school','degree','major']) text(entry[key], key);
+    const month = value => typeof value==='string' && /^20\d{2}-(0[1-9]|1[0-2])$/.test(value);
+    if (!month(entry.start) || typeof entry.current!=='boolean' || (entry.current ? entry.end!=='' : !month(entry.end) || entry.end<entry.start)) throw new Error('教育经历的月份范围无效。');
+    publicText(entry);
+  }
   if (!Array.isArray(profile.socials)) throw new Error('socials 需要为数组。');
   profile.socials.forEach(s => { knownFields(s, 'social'); text(s.name, '平台名'); url(s.url, s.name); if (s.handle !== undefined && typeof s.handle !== 'string') throw new Error('平台账号需要为文字。'); });
   knownFields(profile.certificateContact, 'contact');
@@ -66,10 +76,10 @@ export function validatePublicData({ profile, awards, projects }) {
 export function validatePublishPaths(files) {
   for (const input of files) {
     const name = input.replaceAll('\\', '/');
-    if (name === 'data/public-certificates.json' || Object.hasOwn(approvedProofs, name)) continue;
+    if (name === 'data/public-certificates.json' || Object.hasOwn(approvedProofs, name) || Object.hasOwn(approvedTravelPhotos, name)) continue;
     if (/(^|\/)(\.private|certificates|certificate-originals|获奖证书)(\/|$)|\.private\.(json|txt)$|证书|certificate(?!-request)/i.test(name)) throw new Error(`禁止将证书或私有索引放入公开发布文件：${name}`);
     if (/\.(pdf|docx?|heic|tiff?)$/i.test(name)) throw new Error(`公开站点不接收原始文档：${name}。请将核验材料保留在站点外。`);
-    if (/\.(png|jpe?g|gif|webp)$/i.test(name) && !name.startsWith('assets/projects/')) throw new Error(`图片仅允许存放公开项目插图目录 assets/projects/：${name}。证书请勿放入该目录。`);
+    if (/\.(png|jpe?g|gif|webp)$/i.test(name) && !name.startsWith('assets/projects/')) throw new Error(`图片须为已审核的证书或足迹副本，或位于公开项目插图目录 assets/projects/：${name}。证书请勿放入项目目录。`);
   }
 }
 async function publicFiles(directory, prefix = '') {
@@ -85,7 +95,7 @@ async function publicFiles(directory, prefix = '') {
 }
 export async function checkPublicFiles(root) {
   validatePublishPaths(await publicFiles(root));
-  for (const [file, expected] of Object.entries(approvedProofs)) {
+  for (const [file, expected] of Object.entries({...approvedProofs, ...approvedTravelPhotos})) {
     const actual = createHash('sha256').update(await readFile(path.join(root, file))).digest('hex');
     if (actual !== expected) throw new Error(`公开证书副本已改变，请重新审核公开范围：${file}`);
   }

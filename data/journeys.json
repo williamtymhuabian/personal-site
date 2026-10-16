@@ -1,0 +1,120 @@
+[
+  {
+    "id": "xian",
+    "city": "西安",
+    "longitude": 108.94,
+    "latitude": 34.34,
+    "events": [
+      {
+        "id": "icpc-2025-xian-regional",
+        "awardId": "icpc-2025-xian-regional",
+        "title": "ICPC 亚洲区域赛 · 西安站",
+        "year": "2025",
+        "kind": "award",
+        "school": "西北工业大学",
+        "summary": "2025 ICPC Asia Xi’an Regional Contest，团队银奖。区域赛与全国邀请赛分别记录。",
+        "photos": []
+      },
+      {
+        "id": "icpc-2025-xian-invitational",
+        "awardId": "icpc-2025-xian-invitational",
+        "title": "ICPC 全国邀请赛 · 西安站",
+        "year": "2025",
+        "kind": "award",
+        "school": "西北工业大学",
+        "summary": "2025 ICPC China Shaanxi (Xi’an) National Invitational Programming Contest，团队银奖。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "wuhan",
+    "city": "武汉",
+    "longitude": 114.3,
+    "latitude": 30.59,
+    "events": [
+      {
+        "id": "icpc-2025-wuhan",
+        "awardId": "icpc-2025-wuhan",
+        "title": "ICPC 全国邀请赛 · 武汉站",
+        "year": "2025",
+        "kind": "award",
+        "school": "华中科技大学",
+        "summary": "2025 ICPC China Hubei (Wuhan) National Invitational Programming Contest，团队铜奖。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "nanchang",
+    "city": "南昌",
+    "longitude": 115.86,
+    "latitude": 28.68,
+    "events": [
+      {
+        "id": "icpc-2025-nanchang",
+        "awardId": "icpc-2025-nanchang",
+        "title": "ICPC 全国邀请赛 · 南昌站",
+        "year": "2025",
+        "kind": "award",
+        "school": "江西师范大学",
+        "summary": "2025 ICPC China National Invitational Programming Contest (Nanchang)，团队银奖。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "fuzhou",
+    "city": "福州",
+    "longitude": 119.3,
+    "latitude": 26.07,
+    "events": [
+      {
+        "id": "ccpc-2025-fuzhou",
+        "awardId": "ccpc-2025-fuzhou",
+        "title": "CCPC 全国邀请赛 · 福州站",
+        "year": "2025",
+        "kind": "award",
+        "school": "福州大学",
+        "summary": "2025 China Collegiate Programming Contest — National Invitational Contest (Fuzhou)，团队银奖。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "changchun",
+    "city": "长春",
+    "longitude": 125.32,
+    "latitude": 43.82,
+    "events": [
+      {
+        "id": "ccpc-2025-northeast",
+        "awardId": "ccpc-2025-northeast",
+        "title": "CCPC 全国邀请赛 · 东北站",
+        "year": "2025",
+        "kind": "award",
+        "school": "长春理工大学",
+        "summary": "2025 年中国大学生程序设计竞赛全国邀请赛（东北），团队铜奖。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "hangzhou",
+    "city": "杭州",
+    "longitude": 120.16,
+    "latitude": 30.27,
+    "events": [
+      {
+        "id": "icpc-hangzhou-finals",
+        "awardId": "",
+        "title": "ICPC 杭州决赛",
+        "year": "",
+        "kind": "participation",
+        "school": "",
+        "summary": "一次值得记录的决赛经历。这里将收录参赛物料、赛场氛围与沿途见闻。",
+        "photos": []
+      }
+    ]
+  }
+]

@@ -11,6 +11,13 @@
         "kind": "certificate",
         "width": 1684,
         "height": 1191
+      },
+      {
+        "image": "assets/public-honors/icpc-2025-xian-regional-medal-8bfad23d78.webp",
+        "alt": "ICPC 亚洲区域赛 · 西安站 · 银奖实物奖牌照片，完整保留赛事文字、学校名称与校徽。",
+        "kind": "medal",
+        "width": 940,
+        "height": 1045
       }
     ],
     "disclosure": "complete"

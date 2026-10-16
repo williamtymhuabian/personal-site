@@ -5,6 +5,7 @@ import http from 'node:http';
 import { createHash } from 'node:crypto';
 import { validatePublicData, checkPublicFiles } from './privacy.mjs';
 import { validatePortfolio } from './portfolio-validation.mjs';
+import { validateJourneys } from './journey-validation.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -63,8 +64,10 @@ async function build() {
   const papers = JSON.parse(await readFile(path.join(root, 'data', 'papers.json'), 'utf8'));
   const publicCertificates = JSON.parse(await readFile(path.join(root, 'data', 'public-certificates.json'), 'utf8'));
   const community = JSON.parse(await readFile(path.join(root, 'data', 'community.json'), 'utf8'));
+  const journeys = JSON.parse(await readFile(path.join(root, 'data', 'journeys.json'), 'utf8'));
   validatePublicData({ profile, awards, projects });
   validatePortfolio({ papers, publicCertificates, community, awards });
+  validateJourneys(journeys, awards);
   await checkPublicFiles(root);
   const directory = path.join(root, 'content');
   const files = (await readdir(directory)).filter(f => f.endsWith('.md')).sort();
@@ -84,9 +87,9 @@ async function build() {
   if (!posts.length) throw new Error('请至少保留一篇文章。');
   posts.sort((a, b) => Number(b.pinned) - Number(a.pinned) || b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
   const template = await readFile(path.join(root, 'src', 'template.html'), 'utf8');
-  const serialized = JSON.stringify({ profile: { ...profile, awards }, posts, projects, papers, publicCertificates, community }).replaceAll('<', '\\u003c').replaceAll('\u2028', '\\u2028').replaceAll('\u2029', '\\u2029');
+  const serialized = JSON.stringify({ profile: { ...profile, awards }, posts, projects, papers, publicCertificates, community, journeys }).replaceAll('<', '\\u003c').replaceAll('\u2028', '\\u2028').replaceAll('\u2029', '\\u2029');
   const assetHash = createHash('sha256');
-  for (const file of ['app.js', 'lab.js', 'background.js', 'computer-labs.js', 'portfolio.js', 'honors.js', 'honors.css', 'style.css', 'computer-labs.css', 'portfolio.css']) assetHash.update(await readFile(path.join(root, 'assets', file)));
+  for (const file of ['app.js', 'lab.js', 'background.js', 'computer-labs.js', 'portfolio.js', 'honors.js', 'honors.css', 'style.css', 'computer-labs.css', 'portfolio.css', 'journeys.js', 'journeys.css']) assetHash.update(await readFile(path.join(root, 'assets', file)));
   const replacements = { TITLE: escapeHtml(profile.siteTitle), DESCRIPTION: escapeHtml(profile.description), NAME: escapeHtml(profile.name), ROLE: profile.role.split(' · ').map(escapeHtml).join('<br>'), MOTTO: escapeHtml(profile.motto), SITE_DATA: serialized, ASSET_VERSION: assetHash.digest('hex').slice(0, 10) };
   const html = template.replace(/\{\{(TITLE|DESCRIPTION|NAME|ROLE|MOTTO|SITE_DATA|ASSET_VERSION)\}\}/g, (_, key) => replacements[key]);
   await writeFile(path.join(root, 'index.html'), html, 'utf8');
@@ -101,9 +104,11 @@ await build();
 if (process.argv.includes('--serve')) {
   const port = Number(process.env.PORT || 4173);
   const allowed = new Map([['/', ['index.html', 'text/html; charset=utf-8']], ['/index.html', ['index.html', 'text/html; charset=utf-8']], ['/feed.xml', ['feed.xml', 'application/rss+xml; charset=utf-8']], ['/assets/app.js', ['assets/app.js', 'text/javascript; charset=utf-8']], ['/assets/lab.js', ['assets/lab.js', 'text/javascript; charset=utf-8']], ['/assets/background.js', ['assets/background.js', 'text/javascript; charset=utf-8']], ['/assets/style.css', ['assets/style.css', 'text/css; charset=utf-8']], ['/assets/favicon.svg', ['assets/favicon.svg', 'image/svg+xml']]]);
-  for (const file of ['computer-labs.js','portfolio.js','honors.js','computer-labs.css','portfolio.css','honors.css']) allowed.set('/assets/' + file, ['assets/' + file, file.endsWith('.css') ? 'text/css; charset=utf-8' : 'text/javascript; charset=utf-8']);
+  for (const file of ['computer-labs.js','portfolio.js','honors.js','computer-labs.css','portfolio.css','honors.css','journeys.js','journeys.css']) allowed.set('/assets/' + file, ['assets/' + file, file.endsWith('.css') ? 'text/css; charset=utf-8' : 'text/javascript; charset=utf-8']);
   const publicProofs = JSON.parse(await readFile(path.join(root, 'data', 'public-certificates.json'), 'utf8'));
   for (const proof of publicProofs) for (const item of proof.items) allowed.set('/' + item.image, [item.image, 'image/webp']);
+  const journeys = JSON.parse(await readFile(path.join(root, 'data', 'journeys.json'), 'utf8'));
+  for (const stop of journeys) for (const event of stop.events) for (const photo of event.photos) allowed.set('/' + photo.image, [photo.image, 'image/webp']);
   const server = http.createServer(async (request, response) => {
     const pathname = new URL(request.url, 'http://localhost').pathname;
     const entry = allowed.get(pathname);
