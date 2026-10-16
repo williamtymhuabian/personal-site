@@ -17,7 +17,7 @@
   function section(groups) {
     if (!groups.length) return '';
     const total = groups.reduce((sum, group) => sum + items(group).length, 0);
-    return `<section class="public-honors"><div class="section-heading"><h2>奖牌与证书 <small>HONORS IN PICTURES</small></h2><span>${groups.length} 项 · ${total} 张图</span></div><p>同一奖项的材料合并展示：两图并列，三图及以上可轮播。ICPC / CCPC 材料按站主选择保留原有竞赛信息；未公开的材料可申请核验。</p><div class="honor-masonry">${groups.map(group => `<article class="honor-group"><header><h3><button type="button" data-public-proof="${esc(group.awardId)}">${esc(group.title)}</button></h3><span>${items(group).length} 张图</span></header>${markup(group)}<footer><button type="button" class="text-link" data-public-proof="${esc(group.awardId)}">查看这一项的全部图片 ↗</button></footer></article>`).join('')}</div></section>`;
+    return `<section class="public-honors"><div class="section-heading"><h2>奖牌与证书 <small>HONORS IN PICTURES</small></h2><span>${groups.length} 项 · ${total} 张图</span></div><p>同一奖项的材料合并展示：两图并列，三图及以上可轮播。ICPC / CCPC 保留原有竞赛信息；计算机设计大赛证书为脱敏副本，包含赛区晋级材料。未公开材料可申请核验。</p><div class="honor-masonry">${groups.map(group => `<article class="honor-group"><header><h3><button type="button" data-public-proof="${esc(group.awardId)}">${esc(group.title)}</button></h3><span>${items(group).length} 张图</span></header>${markup(group)}<footer><button type="button" class="text-link" data-public-proof="${esc(group.awardId)}">查看这一项的全部图片 ↗</button></footer></article>`).join('')}</div></section>`;
   }
   function setIndex(element, index) {
     const state = states.get(element);

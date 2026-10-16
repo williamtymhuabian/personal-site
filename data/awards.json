@@ -21,19 +21,47 @@
     "detail": "智能安全赛，全国总决赛；微型工厂模拟产线任务挑战。团队获奖。",
     "kind": "award",
     "phase": "过往经历",
-    "featured": true
+    "featured": true,
+    "stages": [
+      {
+        "id": "iscc-2025-regional",
+        "level": "区域赛",
+        "prize": "区域赛一等奖",
+        "detail": "智能安全赛，区域赛；微型工厂模拟产线任务挑战。团队获奖。"
+      },
+      {
+        "id": "iscc-2025-national",
+        "level": "全国总决赛",
+        "prize": "全国总决赛一等奖",
+        "detail": "智能安全赛，全国总决赛；微型工厂模拟产线任务挑战。团队获奖。"
+      }
+    ]
   },
   {
     "id": "lanqiao-2025-national",
     "year": "2025",
     "title": "第十六届蓝桥杯 · 程序设计",
     "prize": "全国总决赛二等奖",
-    "category": "程序设计",
+    "category": "算法竞赛",
     "level": "全国总决赛",
     "detail": "C/C++ 程序设计大学 B 组，全国总决赛二等奖。",
     "kind": "award",
     "phase": "过往经历",
-    "featured": true
+    "featured": true,
+    "stages": [
+      {
+        "id": "lanqiao-2025-hubei",
+        "level": "省赛",
+        "prize": "湖北赛区一等奖",
+        "detail": "C/C++ 程序设计大学 B 组，湖北赛区一等奖。"
+      },
+      {
+        "id": "lanqiao-2025-national",
+        "level": "全国总决赛",
+        "prize": "全国总决赛二等奖",
+        "detail": "C/C++ 程序设计大学 B 组，全国总决赛二等奖。"
+      }
+    ]
   },
   {
     "id": "icpc-2025-xian-invitational",
@@ -102,22 +130,24 @@
     "prize": "全国二等奖",
     "category": "创新设计",
     "level": "全国赛",
-    "detail": "团队作品《汲古澄源 碧境新生——海洋水体富营养化修复系统》，数媒静态设计—产品设计专业组，二等奖。",
+    "detail": "团队作品《汲古澄源 碧境新生——海洋水体富营养化修复系统》，数媒静态设计—产品设计专业组，二等奖。 同一作品获中南地区赛一等奖，经评选晋级全国赛；两阶段合并展示。",
     "kind": "award",
     "phase": "过往经历",
-    "featured": false
-  },
-  {
-    "id": "design-2025-ocean-regional",
-    "year": "2025",
-    "title": "第18届中国大学生计算机设计大赛 · 海洋修复系统",
-    "prize": "中南地区赛一等奖",
-    "category": "创新设计",
-    "level": "地区赛",
-    "detail": "团队作品《汲古澄源 碧境新生——海洋水体富营养化修复系统》，中南地区赛一等奖。与全国赛奖项分别记录。",
-    "kind": "award",
-    "phase": "过往经历",
-    "featured": false
+    "featured": false,
+    "stages": [
+      {
+        "id": "design-2025-ocean-regional",
+        "level": "地区赛",
+        "prize": "中南地区赛一等奖",
+        "detail": "团队作品《汲古澄源 碧境新生——海洋水体富营养化修复系统》，中南地区赛一等奖。"
+      },
+      {
+        "id": "design-2025-national",
+        "level": "全国赛",
+        "prize": "全国二等奖",
+        "detail": "团队作品《汲古澄源 碧境新生——海洋水体富营养化修复系统》，数媒静态设计—产品设计专业组，二等奖。 同一作品获中南地区赛一等奖，经评选晋级全国赛；两阶段合并展示。"
+      }
+    ]
   },
   {
     "id": "design-2025-literature",
@@ -172,7 +202,7 @@
     "year": "2025",
     "title": "团体程序设计天梯赛 · 湖北省",
     "prize": "团队三等奖",
-    "category": "程序设计",
+    "category": "算法竞赛",
     "level": "省赛",
     "detail": "2025 年团体程序设计天梯赛，湖北省“华山论剑”组团队三等奖。",
     "kind": "award",
@@ -184,36 +214,26 @@
     "year": "2025",
     "title": "第七届码蹄杯程序设计大赛",
     "prize": "国赛铜奖",
-    "category": "程序设计",
+    "category": "算法竞赛",
     "level": "全国赛",
     "detail": "本科院校赛道，国赛铜奖。",
     "kind": "award",
     "phase": "过往经历",
-    "featured": false
-  },
-  {
-    "id": "matibei-2025-hubei",
-    "year": "2025",
-    "title": "第七届码蹄杯程序设计大赛 · 湖北赛区",
-    "prize": "省赛银奖",
-    "category": "程序设计",
-    "level": "省赛",
-    "detail": "本科院校赛道，湖北赛区银奖。",
-    "kind": "award",
-    "phase": "过往经历",
-    "featured": false
-  },
-  {
-    "id": "iscc-2025-regional",
-    "year": "2025",
-    "title": "第22届全国大学生信息安全与对抗技术竞赛",
-    "prize": "区域赛一等奖",
-    "category": "信息安全",
-    "level": "区域赛",
-    "detail": "智能安全赛，区域赛；微型工厂模拟产线任务挑战。团队获奖。",
-    "kind": "award",
-    "phase": "过往经历",
-    "featured": false
+    "featured": false,
+    "stages": [
+      {
+        "id": "matibei-2025-hubei",
+        "level": "省赛",
+        "prize": "省赛银奖",
+        "detail": "本科院校赛道，湖北赛区银奖。"
+      },
+      {
+        "id": "matibei-2025-national",
+        "level": "全国赛",
+        "prize": "国赛铜奖",
+        "detail": "本科院校赛道，国赛铜奖。"
+      }
+    ]
   },
   {
     "id": "software-security-2025",
@@ -232,7 +252,7 @@
     "year": "2025",
     "title": "睿抗机器人开发者大赛 · 编程技能",
     "prize": "湖北赛区三等奖",
-    "category": "程序设计",
+    "category": "算法竞赛",
     "level": "省赛",
     "detail": "2025 年 RAICOM 编程技能竞赛项目，湖北赛区三等奖。",
     "kind": "award",
@@ -249,19 +269,21 @@
     "detail": "团队作品《“空灵守护”无人机辅助卡车自动避障系统》，总决赛二等奖。",
     "kind": "award",
     "phase": "过往经历",
-    "featured": false
-  },
-  {
-    "id": "network-2025-regional",
-    "year": "2025",
-    "title": "网络技术挑战赛 · 华中赛区",
-    "prize": "三等奖",
-    "category": "网络技术",
-    "level": "地区赛",
-    "detail": "团队作品《“空灵守护”无人机辅助卡车自动避障系统》，华中赛区三等奖。",
-    "kind": "award",
-    "phase": "过往经历",
-    "featured": false
+    "featured": false,
+    "stages": [
+      {
+        "id": "network-2025-regional",
+        "level": "地区赛",
+        "prize": "三等奖",
+        "detail": "团队作品《“空灵守护”无人机辅助卡车自动避障系统》，华中赛区三等奖。"
+      },
+      {
+        "id": "network-2025-national",
+        "level": "全国总决赛",
+        "prize": "总决赛二等奖",
+        "detail": "团队作品《“空灵守护”无人机辅助卡车自动避障系统》，总决赛二等奖。"
+      }
+    ]
   },
   {
     "id": "market-2025-hubei",
@@ -271,18 +293,6 @@
     "category": "调查分析",
     "level": "省赛",
     "detail": "湖北赛区本科组选拔赛，团队一等奖。证书日期为 2025 年 4 月 30 日。",
-    "kind": "award",
-    "phase": "过往经历",
-    "featured": false
-  },
-  {
-    "id": "adpc-2025-spring",
-    "year": "2025",
-    "title": "第六届全国大学生算法设计与编程挑战赛 · 春季赛",
-    "prize": "铜奖",
-    "category": "算法竞赛",
-    "level": "全国赛",
-    "detail": "2025 年度第六届全国大学生算法设计与编程挑战赛春季赛，铜奖。",
     "kind": "award",
     "phase": "过往经历",
     "featured": false
@@ -384,18 +394,6 @@
     "featured": false
   },
   {
-    "id": "lanqiao-2025-hubei",
-    "year": "2025",
-    "title": "第十六届蓝桥杯 · 程序设计",
-    "prize": "湖北赛区一等奖",
-    "category": "程序设计",
-    "level": "省赛",
-    "detail": "C/C++ 程序设计大学 B 组，湖北赛区一等奖。",
-    "kind": "award",
-    "phase": "过往经历",
-    "featured": false
-  },
-  {
     "id": "ican-2024",
     "year": "2024",
     "title": "iCAN 大学生创新创业大赛 · 绿色发展创新挑战赛",
@@ -417,19 +415,21 @@
     "detail": "团队作品《智瞳领航—智能盲人出行眼镜》，智能产品设计，本科及以上学历赛道。",
     "kind": "award",
     "phase": "过往经历",
-    "featured": false
-  },
-  {
-    "id": "digital-media-2024-hubei",
-    "year": "2024",
-    "title": "第十二届全国大学生数字媒体科技作品及创意竞赛",
-    "prize": "湖北省赛区二等奖",
-    "category": "创新设计",
-    "level": "省赛",
-    "detail": "团队作品《智瞳领航—智能盲人出行眼镜》，智能产品设计，本科及以上学历赛道。",
-    "kind": "award",
-    "phase": "过往经历",
-    "featured": false
+    "featured": false,
+    "stages": [
+      {
+        "id": "digital-media-2024-hubei",
+        "level": "省赛",
+        "prize": "湖北省赛区二等奖",
+        "detail": "团队作品《智瞳领航—智能盲人出行眼镜》，智能产品设计，本科及以上学历赛道。"
+      },
+      {
+        "id": "digital-media-2024-national",
+        "level": "全国总决赛",
+        "prize": "全国总决赛三等奖",
+        "detail": "团队作品《智瞳领航—智能盲人出行眼镜》，智能产品设计，本科及以上学历赛道。"
+      }
+    ]
   },
   {
     "id": "modeling-2024-hubei",
@@ -501,50 +501,54 @@
     "detail": "RAICOM 云平台技术与应用赛项，全国总决赛三等奖。",
     "kind": "award",
     "phase": "过往经历",
-    "featured": false
-  },
-  {
-    "id": "raicom-2024-cloud-hubei",
-    "year": "2024",
-    "title": "睿抗机器人开发者大赛 · 云平台技术与应用",
-    "prize": "湖北省二等奖",
-    "category": "网络技术",
-    "level": "省赛",
-    "detail": "RAICOM 云平台技术与应用竞赛项目，湖北省二等奖。",
-    "kind": "award",
-    "phase": "过往经历",
-    "featured": false
+    "featured": false,
+    "stages": [
+      {
+        "id": "raicom-2024-cloud-hubei",
+        "level": "省赛",
+        "prize": "湖北省二等奖",
+        "detail": "RAICOM 云平台技术与应用竞赛项目，湖北省二等奖。"
+      },
+      {
+        "id": "raicom-2024-cloud-national",
+        "level": "全国总决赛",
+        "prize": "全国总决赛三等奖",
+        "detail": "RAICOM 云平台技术与应用赛项，全国总决赛三等奖。"
+      }
+    ]
   },
   {
     "id": "raicom-2024-programming-national",
     "year": "2024",
     "title": "睿抗机器人开发者大赛 · 编程技能",
     "prize": "全国总决赛二等奖",
-    "category": "程序设计",
+    "category": "算法竞赛",
     "level": "全国总决赛",
     "detail": "RAICOM 编程技能竞赛项目，全国总决赛二等奖。",
     "kind": "award",
     "phase": "过往经历",
-    "featured": false
-  },
-  {
-    "id": "raicom-2024-programming-hubei",
-    "year": "2024",
-    "title": "睿抗机器人开发者大赛 · 编程技能",
-    "prize": "湖北省二等奖",
-    "category": "程序设计",
-    "level": "省赛",
-    "detail": "RAICOM 编程技能竞赛项目，湖北省二等奖。",
-    "kind": "award",
-    "phase": "过往经历",
-    "featured": false
+    "featured": false,
+    "stages": [
+      {
+        "id": "raicom-2024-programming-hubei",
+        "level": "省赛",
+        "prize": "湖北省二等奖",
+        "detail": "RAICOM 编程技能竞赛项目，湖北省二等奖。"
+      },
+      {
+        "id": "raicom-2024-programming-national",
+        "level": "全国总决赛",
+        "prize": "全国总决赛二等奖",
+        "detail": "RAICOM 编程技能竞赛项目，全国总决赛二等奖。"
+      }
+    ]
   },
   {
     "id": "lanqiao-2024-hubei",
     "year": "2024",
     "title": "第十五届蓝桥杯 · 程序设计",
     "prize": "湖北赛区二等奖",
-    "category": "程序设计",
+    "category": "算法竞赛",
     "level": "省赛",
     "detail": "C/C++ 程序设计大学 B 组，湖北赛区二等奖。",
     "kind": "award",
@@ -568,7 +572,7 @@
     "year": "2023",
     "title": "第五届全国高校计算机能力挑战赛 · C++",
     "prize": "湖北赛区二等奖",
-    "category": "程序设计",
+    "category": "算法竞赛",
     "level": "省赛",
     "detail": "程序设计挑战赛，C++ 科目，本研组，湖北赛区二等奖。",
     "kind": "award",
@@ -580,7 +584,7 @@
     "year": "2023",
     "title": "第五届全国高校计算机能力挑战赛 · C",
     "prize": "湖北赛区二等奖",
-    "category": "程序设计",
+    "category": "算法竞赛",
     "level": "省赛",
     "detail": "程序设计挑战赛，C 语言科目，本研组，湖北赛区二等奖。",
     "kind": "award",

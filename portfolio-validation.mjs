@@ -23,7 +23,8 @@ export function validatePortfolio({ papers, publicCertificates, community, award
   const certIds = new Set();
   for (const proof of publicCertificates) {
     fields(proof, ['awardId','title','image','alt','items','disclosure'], '公开证书');
-    if (!awards.some(a => a.id === proof.awardId && /^(icpc|ccpc)-/.test(a.id)) || certIds.has(proof.awardId)) throw new Error('公开证书关联无效或重复。');
+    if (!awards.some(a => a.id === proof.awardId && (/^(icpc|ccpc)-/.test(a.id)||a.id==='design-2025-national')) || certIds.has(proof.awardId)) throw new Error('公开证书关联无效或重复。');
+    if(proof.awardId==='design-2025-national'&&proof.disclosure!=='redacted')throw new Error('计算机设计大赛公开证书使用已审核的脱敏副本。');
     certIds.add(proof.awardId);
     if (!['complete','redacted'].includes(proof.disclosure)) throw new Error('公开材料必须明确选择完整展示或脱敏展示。');
     if (!(proof.image in approvedProofs) || proof.image !== `assets/public-honors/${proof.awardId}-${approvedProofs[proof.image]?.slice(0, 10)}.webp`) throw new Error('仅允许已经审核的公开图片。');

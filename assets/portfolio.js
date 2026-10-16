@@ -42,8 +42,7 @@
     return group ? `<button data-public-proof="${esc(id)}">查看图片 · ${group.items.length} 张 ↗</button>` : '';
   }
   function certificateGallery(awardIds) {
-    const allowed = awardIds ? new Set(awardIds) : null;
-    return window.HonorGallery.section(publicCertificates.filter(group => !allowed || allowed.has(group.awardId)));
+    return window.HonorGallery.section((awardIds?awardIds.map(id=>publicCertificates.find(group=>group.awardId===id)).filter(Boolean):publicCertificates));
   }
   let root = null;
   function mount(target) {

@@ -129,5 +129,35 @@
       }
     ],
     "disclosure": "complete"
+  },
+  {
+    "awardId": "design-2025-national",
+    "title": "第18届中国大学生计算机设计大赛 · 全国二等奖（含赛区晋级材料）",
+    "image": "assets/public-honors/design-2025-national-bbc463aca0.webp",
+    "alt": "全国二等奖证书公开副本：保留本人姓名、作品和奖项，已遮盖学校、其他作者、指导教师和证书编号。",
+    "items": [
+      {
+        "image": "assets/public-honors/design-2025-national-bbc463aca0.webp",
+        "alt": "全国二等奖证书公开副本：保留本人姓名、作品和奖项，已遮盖学校、其他作者、指导教师和证书编号。",
+        "kind": "certificate",
+        "width": 1807,
+        "height": 1279
+      },
+      {
+        "image": "assets/public-honors/design-2025-national-medal-a752634037.webp",
+        "alt": "第18届中国大学生计算机设计大赛全国二等奖实物奖牌。",
+        "kind": "medal",
+        "width": 1857,
+        "height": 1279
+      },
+      {
+        "image": "assets/public-honors/design-2025-national-regional-7bddfabbc5.webp",
+        "alt": "同一作品中南地区赛一等奖证书公开副本：保留本人姓名、作品和奖项，已遮盖其他队员、指导教师和证书编号。",
+        "kind": "certificate",
+        "width": 1555,
+        "height": 2200
+      }
+    ],
+    "disclosure": "redacted"
   }
 ]

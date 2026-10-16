@@ -4,6 +4,7 @@
 
 ## 已准备的设置
 
+- 2026-10-16 已核验 giscus 安装成功，真实留言页可加载 GitHub 登录入口。公共话题尚无留言时显示空状态，首次评论或回应后才会产生讨论。
 - 仓库：williamtymhuabian/personal-site，Discussions 已开启。
 - 分类：General。
 - 仓库 ID 与分类 ID 已写入 data/community.json；这些是公开标识，不是登录凭据。

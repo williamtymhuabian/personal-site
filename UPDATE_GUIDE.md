@@ -178,3 +178,11 @@ assets/public-honors/ 只保存已审核且获准公开的 WebP。当前算法�
 在 `data/friends.json` 数组中添加 `{ "id": "unique-id", "nickname": "昵称", "bio": "一句介绍", "url": "https://主页链接" }`。先确认朋友同意公开这些信息；主页尚无链接可将 url 留空。不要添加电话、邮箱、学号、住址或私有原件字段。名单为空时，网站显示整理中的真实状态。
 
 完整检查：`node --test privacy.test.mjs portfolio.test.mjs journey.test.mjs explore.test.mjs`，然后 `node build.mjs`。浏览器检查各方向交互、CCF 筛选/导出和手机布局后提交推送。
+
+## 同届赛事晋级的合并
+
+已有国赛和省／地区赛两条时，先核对同一年、同一赛道／作品，再将较低赛段写入主记录的 `stages`。数组按参赛过程排序，最后一项使用主记录 id、level、prize；每项包含 id、level、prize、detail。主记录沿用最高阶段 id，项目的 awardIds 去重为主记录，旧赛段 id 保留以兼容旧链接。不同年份、不同作品或独立邀请赛不要合并。
+
+不确定晋级关系时先保留独立记录。竞赛获奖统计按合并后的经历数量计算，阶段成绩照实展示。默认排序来自 `assets/award-model.js`，不是通过篡改证书级别实现。新增字段或赛段也要通过隐私检查。测试命令加入 `awards.test.mjs`。
+
+计算机设计大赛新增的三张公开副本已审核并记录 SHA256；后续替换图片须重新检查脱敏范围并更新精确白名单。原件与脱敏坐标仅保存在本机私有索引。

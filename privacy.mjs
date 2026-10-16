@@ -10,7 +10,8 @@ const fields = {
   education: ['school', 'degree', 'major', 'start', 'end', 'current'],
   social: ['name', 'label', 'url', 'symbol', 'handle'],
   contact: ['mode', 'githubIssueUrl', 'csdnUrl', 'email', 'douyinUrl'],
-  award: ['id', 'year', 'title', 'prize', 'category', 'level', 'detail', 'kind', 'phase', 'featured'],
+  award: ['id', 'year', 'title', 'prize', 'category', 'level', 'detail', 'kind', 'phase', 'featured', 'stages'],
+  stage: ['id', 'level', 'prize', 'detail'],
   project: ['id', 'title', 'year', 'type', 'status', 'description', 'tags', 'repoUrl', 'demoUrl', 'articleSlug', 'awardIds'],
 };
 function knownFields(object, type) {
@@ -61,6 +62,20 @@ export function validatePublicData({ profile, awards, projects }) {
     if (typeof a.featured !== 'boolean') throw new Error('featured 需要为 true 或 false。');
     publicText(a);
   });
+  const stageIds=new Set();
+  for(const a of awards){
+    if(a.stages===undefined)continue;
+    if(a.kind!=='award'||!Array.isArray(a.stages)||a.stages.length<2||a.stages.length>10)throw new Error('晋级记录需要至少两个同届赛段。');
+    for(const stage of a.stages){
+      knownFields(stage,'stage');id(stage.id);
+      if(stageIds.has(stage.id)||(stage.id!==a.id&&ids.has(stage.id)))throw new Error('晋级赛段 id 重复或关联其他奖项。');
+      stageIds.add(stage.id);
+      for(const key of ['level','prize','detail'])text(stage[key],`赛段 ${key}`);
+      publicText(stage);
+    }
+    const final=a.stages.at(-1);
+    if(final.id!==a.id||final.level!==a.level||final.prize!==a.prize)throw new Error('晋级记录的最后赛段必须与展示的最高奖项一致。');
+  }
   const projectIds = new Set();
   projects.forEach(p => {
     knownFields(p, 'project'); id(p.id);
