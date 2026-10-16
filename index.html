@@ -9,11 +9,27 @@
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('william-theme')||'light'}catch(e){}</script>
   <link rel="alternate" type="application/rss+xml" title="探索手记 RSS" href="./feed.xml">
-  <link rel="stylesheet" href="./assets/style.css?v=807447c703">
-  <script src="./assets/lab.js?v=807447c703" defer></script>
-  <script src="./assets/app.js?v=807447c703" defer></script>
+  <link rel="stylesheet" href="./assets/style.css?v=88831a4552">
+  <script src="./assets/lab.js?v=88831a4552" defer></script>
+  <script src="./assets/background.js?v=88831a4552" defer></script>
+  <script src="./assets/app.js?v=88831a4552" defer></script>
 </head>
 <body>
+  <canvas id="vln-background" aria-hidden="true"></canvas>
+  <div class="scene-info" id="scene-info" hidden>
+    <p class="scene-overline">WILLIAMTYM / VLN FIELD</p>
+    <h2>语言指路，协同探索。</h2>
+    <p>机器人 · 无人机 · 无人车</p>
+    <p class="scene-description">一个关于视觉语言导航的想象场景。点击地面放置共同目标，移动指针改变观察视角。</p>
+    <span class="scene-demo-note">程序绘制的视觉演示 · 不代表真实导航模型</span>
+  </div>
+  <div class="scene-dock" aria-label="VLN 背景控制">
+    <span class="scene-indicator" aria-hidden="true"></span>
+    <span class="scene-dock-title">VLN 协同导航</span>
+    <button id="scene-pause" type="button" aria-label="暂停背景动画">暂停</button>
+    <button id="scene-focus" type="button" aria-expanded="false" aria-controls="scene-info">沉浸漫游 ↗</button>
+    <span id="scene-status" class="sr-only" role="status"></span>
+  </div>
   <a class="skip-link" href="#main">跳到主要内容</a>
   <div class="site-shell">
     <aside class="sidebar" aria-label="网站侧栏">
