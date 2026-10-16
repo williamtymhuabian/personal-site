@@ -86,7 +86,7 @@ async function build() {
   const template = await readFile(path.join(root, 'src', 'template.html'), 'utf8');
   const serialized = JSON.stringify({ profile: { ...profile, awards }, posts, projects, papers, publicCertificates, community }).replaceAll('<', '\\u003c').replaceAll('\u2028', '\\u2028').replaceAll('\u2029', '\\u2029');
   const assetHash = createHash('sha256');
-  for (const file of ['app.js', 'lab.js', 'background.js', 'computer-labs.js', 'portfolio.js', 'style.css', 'computer-labs.css', 'portfolio.css', 'tech-theme.css']) assetHash.update(await readFile(path.join(root, 'assets', file)));
+  for (const file of ['app.js', 'lab.js', 'background.js', 'computer-labs.js', 'portfolio.js', 'style.css', 'computer-labs.css', 'portfolio.css']) assetHash.update(await readFile(path.join(root, 'assets', file)));
   const replacements = { TITLE: escapeHtml(profile.siteTitle), DESCRIPTION: escapeHtml(profile.description), NAME: escapeHtml(profile.name), ROLE: profile.role.split(' · ').map(escapeHtml).join('<br>'), MOTTO: escapeHtml(profile.motto), SITE_DATA: serialized, ASSET_VERSION: assetHash.digest('hex').slice(0, 10) };
   const html = template.replace(/\{\{(TITLE|DESCRIPTION|NAME|ROLE|MOTTO|SITE_DATA|ASSET_VERSION)\}\}/g, (_, key) => replacements[key]);
   await writeFile(path.join(root, 'index.html'), html, 'utf8');
@@ -101,7 +101,7 @@ await build();
 if (process.argv.includes('--serve')) {
   const port = Number(process.env.PORT || 4173);
   const allowed = new Map([['/', ['index.html', 'text/html; charset=utf-8']], ['/index.html', ['index.html', 'text/html; charset=utf-8']], ['/feed.xml', ['feed.xml', 'application/rss+xml; charset=utf-8']], ['/assets/app.js', ['assets/app.js', 'text/javascript; charset=utf-8']], ['/assets/lab.js', ['assets/lab.js', 'text/javascript; charset=utf-8']], ['/assets/background.js', ['assets/background.js', 'text/javascript; charset=utf-8']], ['/assets/style.css', ['assets/style.css', 'text/css; charset=utf-8']], ['/assets/favicon.svg', ['assets/favicon.svg', 'image/svg+xml']]]);
-  for (const file of ['computer-labs.js','portfolio.js','computer-labs.css','portfolio.css','tech-theme.css']) allowed.set('/assets/' + file, ['assets/' + file, file.endsWith('.css') ? 'text/css; charset=utf-8' : 'text/javascript; charset=utf-8']);
+  for (const file of ['computer-labs.js','portfolio.js','computer-labs.css','portfolio.css']) allowed.set('/assets/' + file, ['assets/' + file, file.endsWith('.css') ? 'text/css; charset=utf-8' : 'text/javascript; charset=utf-8']);
   const publicProofs = JSON.parse(await readFile(path.join(root, 'data', 'public-certificates.json'), 'utf8'));
   for (const proof of publicProofs) allowed.set('/' + proof.image, [proof.image, 'image/webp']);
   const server = http.createServer(async (request, response) => {

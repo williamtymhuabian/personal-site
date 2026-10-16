@@ -91,9 +91,9 @@ git push
 提交后在仓库 Actions 查看部署结果，成功后刷新网站即可。
 
 
-## 科技动态背景与计算机实验室
+## VLN 动态背景与计算机实验室
 
-背景由 assets/background.js 本地绘制，鼠标移动产生光场和近邻连接，点击产生信号脉冲。“沉浸视图”可完整浏览；Esc 返回阅读。可暂停，尊重系统减少动态效果设置。旧的 VLN / 具身路径实验保留在 #/lab。
+背景由 assets/background.js 本地绘制，恢复机器人、无人机与无人车动画。进入“沉浸漫游”后，移动鼠标改变视角，点击地面设置共同目标；Esc 返回阅读。可暂停，尊重系统减少动态效果设置。独立的具身路径实验保留在 #/lab。
 
 三个新增实验由 assets/computer-labs.js 与对应 CSS 维护，入口是 #/labs。深链接分别为 ?lab=sorting、?lab=neural、?lab=network。切换页面会停止计时器。
 
@@ -122,7 +122,7 @@ status 只能选 published（正式发表）或 preprint（公开预印本）。
 
 ## ICPC / CCPC 公开证书
 
-assets/public-honors/ 只保存 6 张经审核的永久脱敏 WebP。data/public-certificates.json 保存公开标题与相对图片路径；不包含原件位置。public-honors.mjs 保存对应 SHA256，构建时会检查文件没有被替换。
+assets/public-honors/ 只保存 6 张经审核的永久脱敏 WebP（含学校名称、校徽文字遮盖）。data/public-certificates.json 保存公开标题与相对图片路径；不包含原件位置。图片文件名带内容摘要，防止浏览器沿用旧缓存。public-honors.mjs 保存对应 SHA256，构建时会检查文件没有被替换。
 
 不要把原图直接覆盖这些文件。若需要更新公开副本，应在本地重新脱敏、去除元数据、逐张核对后，再更新精确白名单和摘要。其他原件仍使用人工申请流程。
 

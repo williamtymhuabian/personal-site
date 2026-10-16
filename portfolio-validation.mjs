@@ -25,7 +25,7 @@ export function validatePortfolio({ papers, publicCertificates, community, award
     fields(proof, ['awardId','title','image','alt'], '公开证书');
     if (!awards.some(a => a.id === proof.awardId && /^(icpc|ccpc)-/.test(a.id)) || certIds.has(proof.awardId)) throw new Error('公开证书关联无效或重复。');
     certIds.add(proof.awardId);
-    if (!(proof.image in approvedProofs) || proof.image !== `assets/public-honors/${proof.awardId}.webp`) throw new Error('仅允许已经审核的脱敏图片。');
+    if (!(proof.image in approvedProofs) || proof.image !== `assets/public-honors/${proof.awardId}-${approvedProofs[proof.image]?.slice(0, 10)}.webp`) throw new Error('仅允许已经审核的脱敏图片。');
     text(proof.title, '公开副本标题'); text(proof.alt, '公开副本说明');
   }
   fields(community, ['provider','repo','repoId','category','categoryId','enabled'], '交流设置');

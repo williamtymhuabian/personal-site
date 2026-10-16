@@ -52,7 +52,7 @@
   }
   function certificateButton(id) { return publicCertificates.some(c => c.awardId === id) ? `<button data-public-proof="${esc(id)}">公开证书 ↗</button>` : ''; }
   function certificateGallery() {
-    return publicCertificates.length ? `<section class="public-honors"><div class="section-heading"><h2>ICPC / CCPC 公开证书 <small>REDACTED COPIES</small></h2><span>${publicCertificates.length} 份</span></div><p>保留本人姓名和赛事奖项。其他人员信息、编号与二维码已永久遮盖；原件仍按需申请核验。</p><div class="certificate-grid">${publicCertificates.map(c => `<button class="certificate-card" data-public-proof="${esc(c.awardId)}"><img src="./${esc(c.image)}" alt="${esc(c.alt)}" loading="lazy" width="720" height="510"><span>${esc(c.title)}</span><small>查看公开脱敏副本 ↗</small></button>`).join('')}</div></section>` : '';
+    return publicCertificates.length ? `<section class="public-honors"><div class="section-heading"><h2>ICPC / CCPC 公开证书 <small>REDACTED COPIES</small></h2><span>${publicCertificates.length} 份</span></div><p>保留本人姓名和赛事奖项。学校名称、校徽文字、其他人员信息、编号与二维码已永久遮盖；原件仍按需申请核验。</p><div class="certificate-grid">${publicCertificates.map(c => `<button class="certificate-card" data-public-proof="${esc(c.awardId)}"><img src="./${esc(c.image)}" alt="${esc(c.alt)}" loading="lazy" width="720" height="510"><span>${esc(c.title)}</span><small>查看公开脱敏副本 ↗</small></button>`).join('')}</div></section>` : '';
   }
   let root = null, observer = null, timer = 0;
   function mount(target) {
