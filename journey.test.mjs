@@ -6,6 +6,16 @@ const read = async file => JSON.parse(await readFile(new URL(file, import.meta.u
 const stops = await read('./data/journeys.json'), awards = await read('./data/awards.json');
 
 test('current city records link to the correct award years', () => assert.doesNotThrow(() => validateJourneys(stops, awards)));
+test('tourism records remain separate from competition results', () => {
+  for (const city of ['yichang','wuxi','beijing']) {
+    const stop=stops.find(s=>s.id===city);assert(stop);
+    for (const event of stop.events) {assert.equal(event.kind,'travel');assert.equal(event.awardId,'');assert.equal(event.year,'');assert.equal(event.result,undefined);}
+  }
+  for (const patch of [{awardId:'icpc-2025-xian-regional'},{result:'no-award'}]) {
+    const data=structuredClone(stops);Object.assign(data.find(s=>s.id==='yichang').events[0],patch);
+    assert.throws(()=>validateJourneys(data,awards));
+  }
+});
 test('the added destinations link to the corresponding existing competitions', () => {
   for (const [city, awardId] of [['qingdao','raicom-2024-cloud-national'],['kunming','iscc-2025-national'],['wuhan','maker-2025-wuhan'],['huzhou','logistics-2025'],['wenzhou','network-2025-national']]) {
     assert(stops.find(s=>s.id===city).events.some(e=>e.awardId===awardId));

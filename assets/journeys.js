@@ -7,29 +7,36 @@
   let controller;
   const point = stop => [80 + (stop.longitude - 100) * 600 / 31, 50 + (46 - stop.latitude) * 440 / 25];
   // Leaders keep nearby cities independently selectable while dots retain their true coordinates.
-  const labelOffsets = {xian:[-82,-24],wuhan:[-78,-20],nanchang:[-90,3],fuzhou:[-76,17],changchun:[18,-16],hangzhou:[40,10],huzhou:[40,-36],wenzhou:[32,18],qingdao:[20,-24],kunming:[-72,18],chongqing:[-78,-20],zhengzhou:[-80,-35],guangzhou:[20,16]};
+  const labelOffsets = {xian:[-82,-24],wuhan:[-10,-55],nanchang:[-90,3],fuzhou:[-76,17],changchun:[18,-16],hangzhou:[40,10],huzhou:[40,-36],wenzhou:[32,18],qingdao:[20,-24],kunming:[-72,18],chongqing:[-78,-20],zhengzhou:[-80,-35],guangzhou:[20,16],yichang:[-84,22],wuxi:[104,-62],beijing:[-80,-22]};
   function mapMarkup() {
     const grid = [];
     for (let lon=100;lon<=130;lon+=5) { const [x]=point({longitude:lon,latitude:46});grid.push(`<path d="M${x} 50V490"/><text x="${x}" y="520">${lon}°E</text>`); }
     for (let lat=22;lat<=46;lat+=4) { const [,y]=point({longitude:100,latitude:lat});grid.push(`<path d="M80 ${y}H680"/><text x="45" y="${y+5}">${lat}°N</text>`); }
-    return `<svg class="journey-map" viewBox="0 0 760 550" aria-label="历史参赛城市地图，可点击城市；坐标为城市中心示意" tabindex="0"><defs><clipPath id="journey-coast-clip"><rect x="80" y="50" width="600" height="440"/></clipPath></defs><g data-map-layer><path class="journey-coastline" d="${coastline}" clip-path="url(#journey-coast-clip)"/><g class="journey-grid">${grid.join('')}</g>${journeys.map(stop => {
+    return `<svg class="journey-map" viewBox="0 0 760 550" aria-label="历史到访城市地图，可点击城市；坐标为城市中心示意" tabindex="0"><defs><clipPath id="journey-coast-clip"><rect x="80" y="50" width="600" height="440"/></clipPath></defs><g data-map-layer><path class="journey-coastline" d="${coastline}" clip-path="url(#journey-coast-clip)"/><g class="journey-grid">${grid.join('')}</g>${journeys.map(stop => {
       const [x,y]=point(stop), [dx,dy]=labelOffsets[stop.id] || [20,-16];
       const bx=x+dx, by=y+dy, endX=dx>0?bx:bx+62, endY=by+15;
-      return `<g data-map-city="${esc(stop.id)}" class="journey-marker" role="button" tabindex="0" aria-label="查看${esc(stop.city)}的${stop.events.length}段经历" aria-pressed="false"><path class="journey-leader" d="M${x} ${y}L${endX} ${endY}"/><circle class="marker-target" cx="${x}" cy="${y}" r="11"/><circle class="marker-ring" cx="${x}" cy="${y}" r="7"/><circle class="marker-core" cx="${x}" cy="${y}" r="3"/><rect class="journey-marker-label" x="${bx}" y="${by}" width="62" height="30" rx="4"/><text x="${bx+31}" y="${by+21}" text-anchor="middle">${esc(stop.city)}</text></g>`;
+      return `<g data-map-city="${esc(stop.id)}" class="journey-marker ${stop.events.every(e=>e.kind==='travel')?'travel-only':''}" role="button" tabindex="0" aria-label="查看${esc(stop.city)}的${stop.events.length}条记录" aria-pressed="false"><path class="journey-leader" d="M${x} ${y}L${endX} ${endY}"/><circle class="marker-target" cx="${x}" cy="${y}" r="11"/><circle class="marker-ring" cx="${x}" cy="${y}" r="7"/><circle class="marker-core" cx="${x}" cy="${y}" r="3"/><rect class="journey-marker-label" x="${bx}" y="${by}" width="62" height="30" rx="4"/><text x="${bx+31}" y="${by+21}" text-anchor="middle">${esc(stop.city)}</text></g>`;
     }).join('')}</g></svg>`;
   }
-  function markup() {
-    const total=journeys.reduce((n,s)=>n+s.events.length,0);
-    return `<section class="page-header journey-page-header"><p class="eyebrow">COMPETITIONS / PLACES / MEMORIES</p><h1>从赛场，走向更大的世界。</h1><p>记下做过的题，也记下走过的城市、到访的学校和赛场里的瞬间。</p></section><div class="journey-overview"><span><strong>${journeys.length}</strong> 座城市</span><span><strong>${total}</strong> 段参赛经历</span><span class="journey-overview-note">不止奖牌，也收藏过程。</span></div><section class="journey-atlas" aria-label="竞赛足迹"><div class="journey-map-panel"><div class="journey-map-head"><span class="tiny-label">FIELD ATLAS / 城市坐标地图</span><span>N ↑</span></div><div class="journey-map-viewport">${mapMarkup()}</div><div class="journey-map-controls"><button type="button" data-map-zoom="in" aria-label="放大地图">＋</button><button type="button" data-map-zoom="out" aria-label="缩小地图">−</button><button type="button" data-map-reset>复位</button><span data-map-scale role="status">100%</span></div><p class="journey-map-note">点击城市查看经历 · 放大后拖动 · 城市中心示意，无实时定位 · <a href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noopener noreferrer">Natural Earth</a></p></div><aside class="journey-selector"><h2>选择一站</h2><div class="journey-city-list">${journeys.map((s,i)=>`<button data-journey-city="${esc(s.id)}" aria-pressed="false"><span class="journey-city-index">${String(i+1).padStart(2,'0')}</span><strong>${esc(s.city)}</strong><span>${s.events.length} 段经历 ↗</span></button>`).join('')}</div><label for="journey-kind">展示内容</label><select id="journey-kind"><option value="all">全部参赛经历</option><option value="award">获奖经历</option><option value="participation">参赛与现场记录</option></select><p>坐标只对应城市；地点依据竞赛材料与本人补充。相册将随整理逐步补充。</p></aside></section><section id="journey-detail" class="journey-detail" aria-label="当前城市的参赛经历" aria-live="polite"></section>`;
+  const isCompetition = event => event.kind !== 'travel';
+  function markup(query = new URLSearchParams()) {
+    const competitions=journeys.reduce((n,s)=>n+s.events.filter(isCompetition).length,0);
+    const competitionCities=journeys.filter(s=>s.events.some(isCompetition)).length;
+    const view=query.get('view')==='competition'?'competition':'travel';
+    const video=profile.socials.find(s=>s.name==='视频号' && s.handle);
+    return `<section class="page-header journey-page-header"><p class="eyebrow">TRAVEL / COMPETITIONS / MEMORIES</p><h1>走向赛场，也走向远方。</h1><p>比赛也是一次旅行。把到访的城市、学校与沿途风景，慢慢收进同一幅地图。</p></section><div class="journey-overview"><span><strong>${journeys.length}</strong> 座到访城市</span><span><strong>${competitions}</strong> 段参赛经历</span><span class="journey-overview-note">赛场与远方，都值得记录。</span></div><section class="journey-atlas" data-journey-view="${view}" aria-label="旅行与竞赛足迹"><div class="journey-mode-tabs" role="group" aria-label="选择足迹地图"><button type="button" data-journey-view="travel" aria-pressed="${view==='travel'}">旅行地图 <span>${journeys.length} 城</span></button><button type="button" data-journey-view="competition" aria-pressed="${view==='competition'}">竞赛地图 <span>${competitionCities} 城</span></button><p>比赛到访的城市，也在旅行足迹里。</p></div><div class="journey-map-panel"><div class="journey-map-head"><span class="tiny-label" data-map-heading>TRAVEL ATLAS / 旅行足迹</span><span>N ↑</span></div><div class="journey-map-viewport">${mapMarkup()}</div><div class="journey-map-controls"><button type="button" data-map-zoom="in" aria-label="放大地图">＋</button><button type="button" data-map-zoom="out" aria-label="缩小地图">−</button><button type="button" data-map-reset>复位</button><span data-map-scale role="status">100%</span></div><div class="journey-map-legend"><span><i></i> 因赛到访</span><span><i class="legend-travel"></i> 旅行补充</span></div><p class="journey-map-note">点击城市查看记录 · 放大后拖动 · 城市中心示意，无实时定位 · <a href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noopener noreferrer">Natural Earth</a></p></div><aside class="journey-selector"><h2>选择一站</h2><div class="journey-city-list">${journeys.map((stop,i)=>`<button data-journey-city="${esc(stop.id)}" aria-pressed="false"><span class="journey-city-index">${String(i+1).padStart(2,'0')}</span><strong>${esc(stop.city)}</strong><span>${stop.events.length} 条记录 ↗</span></button>`).join('')}</div><label for="journey-kind">展示内容</label><select id="journey-kind"><option value="all">全部记录</option><option value="award">获奖经历</option><option value="participation">参赛与现场记录</option><option value="travel">旅行补充记录</option></select><p>旅行地图收录全部到访城市，竞赛地图只展示参赛地点。相册将随整理逐步补充。</p></aside></section><section id="journey-detail" class="journey-detail" aria-label="当前城市的到访记录" aria-live="polite"></section>${video?`<section class="journey-video-note"><div><span class="tiny-label">MORE MOMENTS / 影像记录</span><h2>让旅途，也留下影像。</h2><p>视频号账号：<code>${esc(video.handle)}</code></p></div><button type="button" class="text-link" data-copy-social="视频号">复制视频号账号 ↗</button></section>`:''}`;
   }
   function eventMarkup(event) {
     const award=profile.awards.find(a=>a.id===event.awardId), proof=publicCertificates.find(p=>p.awardId===event.awardId);
-    return `<article class="journey-event"><div class="journey-event-meta"><span>${esc(event.year || '年份待补充')}</span><span class="journey-event-kind">${event.kind==='award'?esc(award.prize):event.result==='no-award'?'参赛记录 · 无获奖':'参赛记录 · 成绩待补充'}</span></div><h3>${esc(event.title)}</h3>${event.school?`<p class="journey-school">到访学校 · ${esc(event.school)}</p>`:''}<p>${esc(event.summary)}</p>${event.photos.length?`<div class="journey-photos">${event.photos.map(photo=>`<figure><a href="./${esc(photo.image)}" target="_blank" rel="noopener noreferrer" aria-label="原尺寸查看：${esc(photo.alt)}"><img src="./${esc(photo.image)}" alt="${esc(photo.alt)}" loading="lazy"></a><figcaption>${esc(photo.caption)}</figcaption></figure>`).join('')}</div>`:`<div class="journey-photo-note"><span>FIELD NOTES / 待续</span><p>${event.kind==='participation'?'现场物料、赛场氛围与见闻，留待整理后分享。':'到访学校与城市的照片，将在整理后补充到这一站。'}</p></div>`}<div class="journey-event-links">${award?`<a class="text-link" href="#/awards?record=${esc(award.id)}">查看奖项记录 ↗</a>`:''}${proof?`<button class="text-link" data-public-proof="${esc(proof.awardId)}">查看证书与奖牌 ↗</button>`:''}</div></article>`;
+    return `<article class="journey-event"><div class="journey-event-meta"><span>${esc(event.year || '年份待补充')}</span><span class="journey-event-kind">${event.kind==='travel'?'旅行记录':event.kind==='award'?esc(award.prize):event.result==='no-award'?'参赛记录 · 无获奖':'参赛记录 · 成绩待补充'}</span></div><h3>${esc(event.title)}</h3>${event.school?`<p class="journey-school">到访学校 · ${esc(event.school)}</p>`:''}<p>${esc(event.summary)}</p>${event.photos.length?`<div class="journey-photos">${event.photos.map(photo=>`<figure><a href="./${esc(photo.image)}" target="_blank" rel="noopener noreferrer" aria-label="原尺寸查看：${esc(photo.alt)}"><img src="./${esc(photo.image)}" alt="${esc(photo.alt)}" loading="lazy"></a><figcaption>${esc(photo.caption)}</figcaption></figure>`).join('')}</div>`:`<div class="journey-photo-note"><span>FIELD NOTES / 待续</span><p>${event.kind==='travel'?'风景、街巷与旅途见闻，将随照片一起补充。':event.kind==='participation'?'现场物料、赛场氛围与旅途见闻，留待整理后分享。':'赛场、到访学校与城市风景的照片，将在整理后补充到这一站。'}</p></div>`}<div class="journey-event-links">${award?`<a class="text-link" href="#/awards?record=${esc(award.id)}">查看奖项记录 ↗</a>`:''}${proof?`<button class="text-link" data-public-proof="${esc(proof.awardId)}">查看证书与奖牌 ↗</button>`:''}</div></article>`;
   }
   function mount(scope, query) {
     const atlas=scope.querySelector('.journey-atlas');if(!atlas)return;
     controller=new AbortController();const on=(el,event,fn)=>el.addEventListener(event,fn,{signal:controller.signal});
-    let selected=journeys.find(s=>s.id===query.get('city')) || journeys[0], kind='all', zoom=1, tx=0, ty=0, drag=null;
+    let view=atlas.dataset.journeyView, kind='all', zoom=1, tx=0, ty=0, drag=null;
+    const visibleStop=stop=>view==='travel'||stop.events.some(isCompetition);
+    const matchesEvent=event=>(view==='travel'||isCompetition(event)) && (kind==='all'||event.kind===kind);
+    let selected=journeys.find(stop=>stop.id===query.get('city')&&visibleStop(stop)) || journeys.find(visibleStop);
     const svg=atlas.querySelector('svg'), layer=svg.querySelector('[data-map-layer]');
     const updateMap=()=>{
       const maxX=380*(zoom-1),maxY=275*(zoom-1);
@@ -40,20 +47,26 @@
       atlas.querySelector('[data-map-zoom="out"]').disabled=zoom===1;
     };
     const update=()=>{
+      atlas.dataset.journeyView=view;
+      for(const button of atlas.querySelectorAll('button[data-journey-view]')) button.setAttribute('aria-pressed',String(button.dataset.journeyView===view));
+      atlas.querySelector('[data-map-heading]').textContent=view==='travel'?'TRAVEL ATLAS / 旅行足迹':'COMPETITION ATLAS / 竞赛足迹';
+      atlas.querySelector('option[value="all"]').textContent=view==='travel'?'全部记录':'全部参赛经历';
+      const travelOption=atlas.querySelector('option[value="travel"]');travelOption.hidden=view==='competition';travelOption.disabled=view==='competition';
       for(const button of atlas.querySelectorAll('[data-journey-city],[data-map-city]')) {
         const city=button.dataset.journeyCity || button.dataset.mapCity, stop=journeys.find(s=>s.id===city);
-        const matches=stop.events.some(e=>kind==='all'||e.kind===kind);
+        button.toggleAttribute('hidden',!visibleStop(stop));
         button.setAttribute('aria-pressed',String(city===selected.id));
-        button.classList.toggle('is-muted',!matches);
+        button.classList.toggle('is-muted',!stop.events.some(matchesEvent));
       }
-      const events=selected.events.filter(e=>kind==='all'||e.kind===kind);
-      scope.querySelector('#journey-detail').innerHTML=`<div class="section-heading"><h2>${esc(selected.city)} <small>${selected.events.length} 段经历</small></h2><span>到访 · 记录 · 再出发</span></div><div class="journey-events">${events.length?events.map(eventMarkup).join(''):'<p class="journey-empty">这一站没有符合当前筛选的记录。试试切换展示内容或选择另一座城市。</p>'}</div>`;
+      const events=selected.events.filter(matchesEvent);
+      const note=view==='travel'?`<p class="journey-city-story">${selected.events.some(isCompetition)?'因比赛来到'+esc(selected.city)+'，赛场之外的城市风景与沿途见闻，也收录在这一站。':'把'+esc(selected.city)+'留在旅行地图里。照片、时间与旅途故事，将在整理后补充。'}</p>`:'';
+      scope.querySelector('#journey-detail').innerHTML=`<div class="section-heading"><h2>${esc(selected.city)} <small>${events.length} 条记录</small></h2><span>${view==='travel'?'到访 · 风景 · 记忆':'参赛 · 探索 · 再出发'}</span></div>${note}<div class="journey-events">${events.length?events.map(eventMarkup).join(''):'<p class="journey-empty">这一站没有符合当前筛选的记录。试试切换展示内容或选择另一座城市。</p>'}</div>`;
     };
-    const select=id=>{
-      selected=journeys.find(s=>s.id===id);update();
-      history.replaceState(null,'',`#/journeys?city=${encodeURIComponent(id)}`);
-    };
+    const updateUrl=()=>history.replaceState(null,'',`#/journeys?view=${view}&city=${encodeURIComponent(selected.id)}`);
+    const select=id=>{selected=journeys.find(s=>s.id===id);update();updateUrl();};
     on(atlas,'click',e=>{
+      const mode=e.target.closest('button[data-journey-view]');
+      if(mode){view=mode.dataset.journeyView;kind='all';atlas.querySelector('#journey-kind').value='all';if(!visibleStop(selected))selected=journeys.find(visibleStop);update();updateUrl();return;}
       const city=e.target.closest('[data-journey-city],[data-map-city]');
       if(city)select(city.dataset.journeyCity||city.dataset.mapCity);
       const control=e.target.closest('[data-map-zoom]');
@@ -61,7 +74,7 @@
       if(e.target.closest('[data-map-reset]')){zoom=1;tx=ty=0;updateMap();}
     });
     on(atlas,'keydown',e=>{const marker=e.target.closest('[data-map-city]');if(marker&&['Enter',' '].includes(e.key)){e.preventDefault();select(marker.dataset.mapCity);}});
-    on(atlas.querySelector('#journey-kind'),'change',e=>{kind=e.target.value;if(!selected.events.some(event=>kind==='all'||event.kind===kind)){const match=journeys.find(stop=>stop.events.some(event=>kind==='all'||event.kind===kind));if(match){select(match.id);return;}}update();});
+    on(atlas.querySelector('#journey-kind'),'change',e=>{kind=e.target.value;if(!selected.events.some(matchesEvent)){const match=journeys.find(stop=>visibleStop(stop)&&stop.events.some(matchesEvent));if(match){select(match.id);return;}}update();});
     on(svg,'pointerdown',e=>{if(zoom===1 || e.target.closest('[data-map-city]') || e.button!==0)return;drag={id:e.pointerId,x:e.clientX,y:e.clientY,tx,ty};svg.setPointerCapture(e.pointerId);svg.classList.add('dragging');});
     on(svg,'pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const r=svg.getBoundingClientRect(),ratio=Math.min(r.width/760,r.height/550);tx=drag.tx+(e.clientX-drag.x)/ratio;ty=drag.ty+(e.clientY-drag.y)/ratio;updateMap();});
     const release=()=>{drag=null;svg.classList.remove('dragging');};
@@ -71,7 +84,7 @@
   }
   function awardLink(awardId) {
     const stop=journeys.find(s=>s.events.some(e=>e.awardId===awardId));
-    return stop ? `<a href="#/journeys?city=${esc(stop.id)}">城市足迹 ↗</a>` : '';
+    return stop ? `<a href="#/journeys?view=competition&city=${esc(stop.id)}">城市足迹 ↗</a>` : '';
   }
   window.Journeys={markup,mount,awardLink,unmount(){controller?.abort();controller=null;}};
 })();

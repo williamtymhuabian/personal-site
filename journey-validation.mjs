@@ -19,9 +19,10 @@ export function validateJourneys(stops, awards) {
       allowed(event, ['id','awardId','title','year','kind','school','summary','photos','result']);
       if (!id(event.id) || events.has(event.id) || !text(event.title) || !text(event.summary)) throw new Error('足迹经历无效或重复。');
       events.add(event.id);
-      if (!['award','participation'].includes(event.kind) || (event.year!=='' && !/^20\d{2}$/.test(event.year)) || typeof event.school!=='string') throw new Error('足迹类型、年份或学校无效。');
+      if (!['award','participation','travel'].includes(event.kind) || (event.year!=='' && !/^20\d{2}$/.test(event.year)) || typeof event.school!=='string') throw new Error('足迹类型、年份或学校无效。');
       if (event.kind==='participation' && !['no-award','unconfirmed'].includes(event.result)) throw new Error('参赛记录需要明确成绩已确认未获奖或尚待补充。');
       if (event.kind==='award' && event.result!==undefined) throw new Error('获奖记录使用关联奖项中的成绩。');
+      if (event.kind==='travel' && (event.awardId!=='' || event.result!==undefined)) throw new Error('旅行记录不能填写奖项关联或竞赛成绩。');
       const award = awards.find(a => a.id===event.awardId);
       if (event.kind==='award' && (!award || award.kind!=='award' || award.year!==event.year)) throw new Error('足迹关联的奖项不存在或不匹配。');
       if (event.kind==='participation' && event.awardId!=='' && (!award || award.kind!=='participation')) throw new Error('参赛记录不能关联获奖。');

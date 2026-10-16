@@ -33,9 +33,10 @@
     },
     {
       "name": "视频号",
-      "label": "待添加主页",
+      "label": "复制视频号账号",
       "url": "",
-      "symbol": "play"
+      "symbol": "play",
+      "handle": "sphi9JNBWNUfo3i"
     }
   ],
   "school": "苏州大学",

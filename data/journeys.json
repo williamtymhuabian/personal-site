@@ -278,5 +278,59 @@
         "photos": []
       }
     ]
+  },
+  {
+    "id": "yichang",
+    "city": "宜昌",
+    "longitude": 111.28,
+    "latitude": 30.69,
+    "events": [
+      {
+        "id": "travel-yichang",
+        "awardId": "",
+        "title": "宜昌 · 旅行记录",
+        "year": "",
+        "kind": "travel",
+        "school": "",
+        "summary": "曾到访宜昌。旅行时间、照片与旅途见闻将在整理后补充。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "wuxi",
+    "city": "无锡",
+    "longitude": 120.31,
+    "latitude": 31.49,
+    "events": [
+      {
+        "id": "travel-wuxi",
+        "awardId": "",
+        "title": "无锡 · 旅行记录",
+        "year": "",
+        "kind": "travel",
+        "school": "",
+        "summary": "曾到访无锡。旅行时间、照片与旅途见闻将在整理后补充。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "beijing",
+    "city": "北京",
+    "longitude": 116.4,
+    "latitude": 39.9,
+    "events": [
+      {
+        "id": "travel-beijing",
+        "awardId": "",
+        "title": "北京 · 旅行记录",
+        "year": "",
+        "kind": "travel",
+        "school": "",
+        "summary": "曾到访北京。旅行时间、照片与旅途见闻将在整理后补充。",
+        "photos": []
+      }
+    ]
   }
 ]

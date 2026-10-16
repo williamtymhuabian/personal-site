@@ -40,7 +40,7 @@
   const categoryIcon = category => ({ '建站手记': 'git', '技术实践': 'code', '历史阅读': 'history', '随记': 'note' }[category] || 'note');
   const categoryStyle = category => ({ '建站手记': 'git', '技术实践': 'tech', '历史阅读': 'history', '随记': 'note' }[category] || 'note');
   const categoryUrl = category => `#/posts?category=${encodeURIComponent(category)}`;
-  const navItems = [['/', 'home', '首页'], ['/labs', 'code', '计算机实验室'], ['/papers', 'note', '论文与研究'], ['/posts', 'book', '全部手记'], ['/projects', 'code', '项目与实践'], ['/awards', 'award', '竞赛与成果'], ['/journeys', 'pin', '竞赛足迹'], ['/publish', 'rss', '发布与订阅'], ['/community', 'github', '留言与交流'], ['/favorites', 'folder', '我的收藏'], ['/archives', 'archive', '文章归档'], ['/about', 'user', '关于我']];
+  const navItems = [['/', 'home', '首页'], ['/labs', 'code', '计算机实验室'], ['/papers', 'note', '论文与研究'], ['/posts', 'book', '全部手记'], ['/projects', 'code', '项目与实践'], ['/awards', 'award', '竞赛与成果'], ['/journeys', 'pin', '足迹与旅行'], ['/publish', 'rss', '发布与订阅'], ['/community', 'github', '留言与交流'], ['/favorites', 'folder', '我的收藏'], ['/archives', 'archive', '文章归档'], ['/about', 'user', '关于我']];
   document.getElementById('main-nav').innerHTML = navItems.map(([route, symbol, label]) => `<a class="nav-link" href="#${route}" data-route="${route}">${icon(symbol)}<span>${label}</span></a>`).join('');
   document.getElementById('sidebar-socials').innerHTML = profile.socials.filter(s => safeUrl(s.url)).map(s => `<a class="social-icon" href="${esc(safeUrl(s.url))}" target="_blank" rel="noopener noreferrer" aria-label="打开 ${esc(s.name)} 主页">${icon(s.symbol)}</a>`).join('');
   document.getElementById('search-symbol').innerHTML = icon('search');
@@ -67,7 +67,7 @@
     <div class="home-columns"><section><div class="section-heading"><h2>最近手记 <small>LATEST NOTES</small></h2><a href="#/posts">全部文章 ${icon('arrow')}</a></div><div>${posts.slice(0, 4).map(postCard).join('')}</div><a class="subscribe-inline" href="./feed.xml">${icon('rss')} 订阅最新手记 <span>RSS ↗</span></a></section>
     <aside class="home-aside" aria-label="手记分类与关注"><section class="side-section"><h2 class="side-title">${icon('folder')} 手记分类</h2><div class="category-list">${categories.map(c => `<a class="category-button" href="${categoryUrl(c)}"><span>${esc(c)}</span><span>${String(posts.filter(p => p.category === c).length).padStart(2, '0')}</span></a>`).join('')}</div></section>
     <section class="side-section currently"><span class="tiny-label">RESEARCH DIRECTION / 研究兴趣</span><p>具身智能<br>在行动中理解世界。</p><span>从一个可运行的小实验开始，<br>记录问题、过程与真实结果。</span><a class="text-link" href="#/lab" style="margin-top:12px">进入交互实验室 ↗</a></section><section class="side-section"><h2 class="side-title">${icon('external')} 在别处找到我</h2>${socials()}</section></aside></div>
-    <section class="home-labs"><div class="section-heading"><h2>动手理解计算 <small>COMPUTER LABS</small></h2><a href="#/labs">全部实验 ↗</a></div><div class="lab-discovery-grid"><a href="#/labs?lab=sorting"><span>01 / ALGORITHMS</span><h3>让排序过程可见</h3><p>单步观察比较和交换，看看算法怎样推进。</p><strong>排序算法 ↗</strong></a><a href="#/labs?lab=neural"><span>02 / AI</span><h3>从输入到激活</h3><p>调节输入和权重，理解感知机的输出。</p><strong>神经网络 ↗</strong></a><a href="#/labs?lab=network"><span>03 / SYSTEMS</span><h3>追踪一个数据包</h3><p>改变网络链路，观察路由如何响应。</p><strong>计算机网络 ↗</strong></a></div></section><a class="journey-home-link" href="#/journeys"><div><strong>把竞赛，连成一幅足迹。</strong><p>跨越 ${journeys.length} 座城市，收藏参赛经历与赛场之外的见闻。</p></div><span>打开城市地图 ↗</span></a><section class="awards-preview"><div class="section-heading"><h2>走过的路 <small>SELECTED HONORS</small></h2><a href="#/awards">全部竞赛与成果 ${icon('arrow')}</a></div><div class="award-grid">${selected.map(awardMini).join('')}</div></section>`;
+    <section class="home-labs"><div class="section-heading"><h2>动手理解计算 <small>COMPUTER LABS</small></h2><a href="#/labs">全部实验 ↗</a></div><div class="lab-discovery-grid"><a href="#/labs?lab=sorting"><span>01 / ALGORITHMS</span><h3>让排序过程可见</h3><p>单步观察比较和交换，看看算法怎样推进。</p><strong>排序算法 ↗</strong></a><a href="#/labs?lab=neural"><span>02 / AI</span><h3>从输入到激活</h3><p>调节输入和权重，理解感知机的输出。</p><strong>神经网络 ↗</strong></a><a href="#/labs?lab=network"><span>03 / SYSTEMS</span><h3>追踪一个数据包</h3><p>改变网络链路，观察路由如何响应。</p><strong>计算机网络 ↗</strong></a></div></section><a class="journey-home-link" href="#/journeys"><div><strong>把赛场与旅行，连成一幅足迹。</strong><p>走过 ${journeys.length} 座城市，收藏参赛经历与沿途风景。</p></div><span>打开城市地图 ↗</span></a><section class="awards-preview"><div class="section-heading"><h2>走过的路 <small>SELECTED HONORS</small></h2><a href="#/awards">全部竞赛与成果 ${icon('arrow')}</a></div><div class="award-grid">${selected.map(awardMini).join('')}</div></section>`;
   }
 
   function pageHeader(kicker, title, description) { return `<header class="page-header"><p class="eyebrow">${kicker}</p><h1>${title}</h1><p>${description}</p></header>`; }
@@ -148,7 +148,7 @@
     else if (route === '/archives') html = renderArchives();
     else if (route === '/projects') html = renderProjects();
     else if (route === '/awards') html = renderAwards(query);
-    else if (route === '/journeys') html = window.Journeys.markup();
+    else if (route === '/journeys') html = window.Journeys.markup(query);
     else if (route === '/about') html = renderAbout();
     else if (route === '/lab') html = renderLab();
     else if (route === '/labs') html = renderComputerLabs();

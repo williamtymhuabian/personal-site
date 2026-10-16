@@ -4,7 +4,7 @@
 
 在 profile.json 修改学校、专业、研究方向等信息。certificateContact.email 是你明确同意公开的联系邮箱。不要放入登录密码、令牌或其他私有账号信息。
 
-抖音和小红书数字账号不等同于平台网页的内部用户 ID。目前页面提供复制账号功能，访客在 App 内搜索。获得账号的“分享主页”完整链接后，再填写相应 social 的 url；不要直接拿数字账号拼接 user/profile 地址。
+抖音、小红书和视频号账号不等同于平台网页的内部用户 ID。目前页面提供复制账号功能，访客在 App 内搜索。获得账号的“分享主页”完整链接后，再填写相应 social 的 url；不要直接拿数字账号拼接 user/profile 地址。
 
 ## 新增研究生竞赛记录
 
@@ -155,3 +155,11 @@ assets/public-honors/ 只保存已审核且获准公开的 WebP。当前算法�
 
 - 重复到访同一城市时保留独立事件 id 和相册入口，不能因为年份未知而合并掉真实的次数。当前重庆、郑州各两次，广州一次；日期补充后按对应事件更新。
 - 地图密集城市通过引导线连接真实城市中心与可点击标签，标签布局在 `assets/journeys.js` 的 labelOffsets 中维护，避免遮挡邻近城市。
+
+
+## 旅行地图与视频号
+
+- 在城市 events 中用 kind: travel 增加独立旅行记录；awardId、school 未有信息时留空，未知年份留空，纯旅行不得填写 result。照片按原有审核流程关联，不编造旅行日期、景点或次数。
+- 默认旅行地图包含全部到访城市，比赛出行也属于旅行。独立旅行记录和参赛经历共用地图，不需要为每次比赛复制一条旅行记录；参赛次数只统计 award 与 participation。
+- 可用 `#/journeys?view=travel&city=beijing` 或 `#/journeys?view=competition&city=xian` 分享对应视图。竞赛视图不显示纯旅行城市，筛选切换会校正当前选中城市。
+- 视频号账号在 profile.json 的 socials 中维护 handle；当前为 sphi9JNBWNUfo3i。取得真实分享主页链接后再填 url，此前使用复制账号功能。
