@@ -112,7 +112,7 @@ node build.mjs
 
 `#/papers` 是论文页面，数据由 `data/papers.json` 维护，目前为空，不把投稿截图当作已发表成果。论文页支持公开论文链接、代码、BibTeX、检索和收藏。
 
-收藏存入访客的 localStorage；不是跨设备账号同步。留言与共享点赞使用 giscus / GitHub Discussions，配置在 `data/community.json`。应用未授权时，页面明确提示并提供 GitHub 留言和邮件入口，不显示虚构点赞数。安装和更新步骤见 `COMMUNITY_GUIDE.md`。
+收藏存入访客的 localStorage；不是跨设备账号同步。留言与共享点赞使用 giscus / GitHub Discussions，配置在 `data/community.json`。文章、项目、实验室、城市和期刊会议有独立交流话题。页面先核对应用安装与公开配置；未授权或连接失败时，提供留言草稿、GitHub 确认发布和邮件入口，不显示虚构点赞数。安装完成后刷新或重新连接即可启用组件。安装和更新步骤见 `COMMUNITY_GUIDE.md`。
 
 验证：`node --test privacy.test.mjs portfolio.test.mjs journey.test.mjs explore.test.mjs`，然后 `node build.mjs`。
 

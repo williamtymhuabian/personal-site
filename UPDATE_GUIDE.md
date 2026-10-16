@@ -130,7 +130,7 @@ assets/public-honors/ 只保存已审核且获准公开的 WebP。当前算法�
 
 访客收藏无需登录，保存在当前浏览器。清理浏览器数据会丢失收藏；不会同步到其他设备。论文、手记、项目与实验都有收藏或交流入口。
 
-留言与共享点赞走 GitHub Discussions，由站主安装 giscus 后启用；详见 COMMUNITY_GUIDE.md。不要把 GitHub 密码、登录令牌或应用私钥写入前端配置。
+留言与共享点赞走 GitHub Discussions，站主安装 giscus 后，刷新留言页即可自动核对并连接；详见 COMMUNITY_GUIDE.md。未安装时仍可准备草稿并前往 GitHub 确认发起讨论，预填正文中的话题标记请保留，方便以后关联。不要把 GitHub 密码、登录令牌或应用私钥写入前端配置。
 
 
 ## 给同一奖项添加奖牌或更多图片

@@ -60,7 +60,7 @@
       }
       const events=selected.events.filter(matchesEvent);
       const note=view==='travel'?`<p class="journey-city-story">${selected.events.some(isCompetition)?'因比赛来到'+esc(selected.city)+'，赛场之外的城市风景与沿途见闻，也收录在这一站。':'把'+esc(selected.city)+'留在旅行地图里。照片、时间与旅途故事，将在整理后补充。'}</p>`:'';
-      scope.querySelector('#journey-detail').innerHTML=`<div class="section-heading"><h2>${esc(selected.city)} <small>${events.length} 条记录</small></h2><span>${view==='travel'?'到访 · 风景 · 记忆':'参赛 · 探索 · 再出发'}</span></div>${note}<div class="journey-events">${events.length?events.map(eventMarkup).join(''):'<p class="journey-empty">这一站没有符合当前筛选的记录。试试切换展示内容或选择另一座城市。</p>'}</div>`;
+      scope.querySelector('#journey-detail').innerHTML=`<div class="section-heading"><h2>${esc(selected.city)} <small>${events.length} 条记录</small></h2><span>${view==='travel'?'到访 · 风景 · 记忆':'参赛 · 探索 · 再出发'}</span></div>${note}<div class="journey-events">${events.length?events.map(eventMarkup).join(''):'<p class="journey-empty">这一站没有符合当前筛选的记录。试试切换展示内容或选择另一座城市。</p>'}</div><div class="journey-discussion">${window.Portfolio.actions('journey:'+selected.id)}</div>`;
     };
     const updateUrl=()=>history.replaceState(null,'',`#/journeys?view=${view}&city=${encodeURIComponent(selected.id)}`);
     const select=id=>{selected=journeys.find(s=>s.id===id);update();updateUrl();};

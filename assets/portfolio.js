@@ -1,6 +1,7 @@
 (() => {
   'use strict';
-  const { profile, posts, projects, papers = [], publicCertificates = [], community = {} } = JSON.parse(document.querySelector('#site-data').textContent);
+  const siteData=JSON.parse(document.querySelector('#site-data').textContent);
+  const { profile, posts, projects, papers = [], publicCertificates = [], community = {}, communityHashes }=siteData;
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const icons = {
     heart: '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>',
@@ -8,18 +9,9 @@
     arrow: '<path d="M5 12h14m-6-6 6 6-6 6"/>', paper: '<path d="M5 3h10l4 4v14H5ZM14 3v5h5M8 12h8m-8 4h6"/>'
   };
   const icon = name => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] || icons.paper}</svg>`;
-  const labEntries = [
-    { key: 'lab:sorting', title: '排序算法实验室', info: '单步比较、播放与算法切换', href: '#/labs?lab=sorting' },
-    { key: 'lab:neural', title: '神经网络感知实验室', info: '输入、权重与激活函数', href: '#/labs?lab=neural' },
-    { key: 'lab:network', title: '网络路由实验室', info: '链路、数据包与最短路径', href: '#/labs?lab=network' },
-    { key: 'lab:embodied', title: '具身导航实验室', info: '保留的机器人路径规划实验', href: '#/lab' }
-  ];
-  const entries = () => [
-    ...posts.map(p => ({ key: 'post:' + p.slug, title: p.title, info: `手记 · ${p.category}`, href: '#/post/' + p.slug })),
-    ...projects.map(p => ({ key: 'project:' + p.id, title: p.title, info: `项目 · ${p.year}`, href: '#/projects' })),
-    ...papers.map(p => ({ key: 'paper:' + p.id, title: p.title, info: `论文 · ${p.year} · ${p.venue}`, href: '#/papers?paper=' + p.id })),
-    ...labEntries
-  ];
+  const entryList=window.TopicModel.entries(siteData);
+  const entryIndex=new Map(entryList.map(entry=>[entry.key,entry]));
+  const entries=()=>entryList;
   let saved = new Set();
   function readSaved() { try { const ids = JSON.parse(localStorage.getItem('william-bookmarks') || '[]'); saved = new Set(Array.isArray(ids) ? ids.filter(id => typeof id === 'string') : []); } catch { saved = new Set(); } }
   readSaved();
@@ -40,15 +32,10 @@
     return `<header class="page-header"><p class="eyebrow">YOUR READING DESK</p><h1>我的收藏</h1><p>留住想再读的文章、想继续尝试的实验和感兴趣的项目。收藏保存在当前浏览器，清除浏览器数据会一并清除。</p></header><div class="favorites-list">${favorites.map(e => `<article class="favorite-card"><div><span class="tiny-label">${esc(e.info)}</span><h2><a href="${esc(e.href)}">${esc(e.title)} ↗</a></h2></div><button data-bookmark="${esc(e.key)}" aria-pressed="true" aria-label="取消收藏：${esc(e.title)}">${icon('save')} 取消收藏</button></article>`).join('') || '<div class="research-empty"><h2>给好奇心留个位置。</h2><p>点击文章、项目或实验下方的“收藏”，下次可以在这里继续。</p><a class="primary-link" href="#/labs">探索实验室 ↗</a></div>'}</div>`;
   }
   function communityMarkup(query = new URLSearchParams()) {
-    const topicKey = query.get('topic') || 'general';
-    const topic = entries().find(e => e.key === topicKey);
-    const validKey = topic?.key || 'general';
-    const title = topic?.title || '网站交流';
-    const issue = new URL('https://github.com/' + community.repo + '/discussions/new');
-    issue.searchParams.set('category', 'general');
-    issue.searchParams.set('title', 'Williamtym · ' + validKey);
-    issue.searchParams.set('body', `交流主题：${title}\n页面：${profile.siteUrl}${topic?.href || '#/community'}\n\n我想讨论：\n`);
-    return `<header class="page-header"><p class="eyebrow">IDEAS ARE BETTER TOGETHER</p><h1>留言与交流</h1><p>聊一个问题，分享一个思路，或者告诉我你想看到怎样的实验。</p></header><section class="community-context"><span class="tiny-label">CURRENT CONVERSATION</span><h2>${esc(title)}</h2><div>${topic ? `<a class="text-link" href="${esc(topic.href)}">回到对应内容 ↗</a>` : ''}<a class="text-link" href="#/community">网站公共留言板 ↗</a></div></section><div class="community-notice">留言与点赞公开展示，请围绕内容交流。请勿填写手机号、住址或证件信息。</div><section class="community-panel" aria-label="留言与点赞"><div id="discussion-host" data-topic="${esc(validKey)}"><p class="discussion-loading">正在准备留言区…</p></div><div id="discussion-fallback" ${community.enabled ? 'hidden' : ''}><h2>到 GitHub 继续交流</h2><p>${community.enabled ? '留言组件暂时无法加载，可以打开 GitHub 交流页继续留言。' : '当前通过 GitHub 讨论区交流，登录后可留言或用表情点赞。站内评论将后续开放。'}</p><div class="hero-actions"><a class="primary-link" href="${esc(issue.href)}" target="_blank" rel="noopener noreferrer">GitHub 留言 ↗</a><a class="text-link" href="https://github.com/${esc(community.repo)}/discussions" target="_blank" rel="noopener noreferrer">查看讨论与点赞 ↗</a><a class="text-link" href="mailto:${esc(profile.certificateContact.email)}">邮件联系 ↗</a></div></div></section><p class="research-note">公开留言与点赞使用 GitHub 身份；收藏无需登录，只保存在你的浏览器。</p>`;
+    const requested=query.get('topic')||'general',entry=entryIndex.get(requested)||entryIndex.get('general');
+    const links=window.TopicModel.links({profile,community,entry,hash:communityHashes[entry.key]});
+    const topics=entryList.filter(e=>!e.key.startsWith('venue:')||e.key===entry.key);
+    return `<header class="page-header"><p class="eyebrow">QUESTIONS / NOTES / CONVERSATIONS</p><h1>留言与交流</h1><p>交流文章、实验和旅途见闻。讨论期刊与会议时，也欢迎附上可核对的官方来源。</p></header><section class="community-context"><span class="tiny-label">CURRENT CONVERSATION</span><h2>${esc(entry.title)}</h2><label for="community-topic">选择话题</label><select id="community-topic">${topics.map(e=>`<option value="${esc(e.key)}" ${e.key===entry.key?'selected':''}>${esc(e.title)}</option>`).join('')}</select><div>${entry.key!=='general'?`<a class="text-link" href="${esc(entry.href)}">回到对应内容 ↗</a>`:''}<a class="text-link" href="#/community">网站公共留言板 ↗</a></div></section>${requested!==entry.key?'<p class="community-notice">未找到这个话题，已回到公共留言板。</p>':''}<p class="community-notice">留言与表情点赞使用 GitHub 身份，内容公开。请勿填写私人联系方式、住址或证件信息；材料核验请使用邮件。</p><section class="community-panel" aria-label="留言与点赞"><div class="community-connection"><p id="community-connection" role="status">正在准备留言区…</p><button type="button" class="text-link" data-community-retry>重新连接</button></div><div id="discussion-host" data-topic="${esc(entry.key)}" hidden></div><div class="community-thread-links"><a id="community-thread" class="text-link" href="${esc(links.search)}" target="_blank" rel="noopener noreferrer">查找这个话题的已有留言 ↗</a><a class="text-link" href="https://github.com/${esc(community.repo)}/discussions" target="_blank" rel="noopener noreferrer">全部讨论 ↗</a></div><details id="discussion-fallback" open><summary>通过 GitHub 或邮件交流</summary><p>先查看已有留言，回复对应话题；尚无讨论时，可以在下面写好内容，再到 GitHub 确认发起。</p><label for="community-message">想交流的内容 <span id="community-count">0 / 600</span></label><textarea id="community-message" maxlength="600" placeholder="例如：实验在哪一步遇到问题？你尝试过什么？希望继续讨论哪篇论文？"></textarea><div class="hero-actions"><a id="community-publish" class="primary-link" aria-disabled="true" href="${esc(links.create)}" target="_blank" rel="noopener noreferrer">在 GitHub 确认发布 ↗</a><button type="button" class="text-link" id="community-copy">复制留言</button><a id="community-email" class="text-link" href="${esc(links.email)}">改用邮件联系 ↗</a></div></details></section><p class="research-note">网页不会代替你提交留言。首次站内留言或表情回应会创建相应 GitHub 讨论；收藏仍只保存在你的浏览器。</p>`;
   }
   function certificateButton(id) {
     const group = publicCertificates.find(c => c.awardId === id);
@@ -58,30 +45,15 @@
     const allowed = awardIds ? new Set(awardIds) : null;
     return window.HonorGallery.section(publicCertificates.filter(group => !allowed || allowed.has(group.awardId)));
   }
-  let root = null, observer = null, timer = 0;
+  let root = null;
   function mount(target) {
     root = target;
     window.HonorGallery.mount(root);
     readSaved();
     root.querySelector('#paper-search-form')?.addEventListener('submit', event => { event.preventDefault(); const value = root.querySelector('#paper-search').value.trim(); location.hash = '/papers' + (value ? '?q=' + encodeURIComponent(value) : ''); });
-    const host = root.querySelector('#discussion-host');
-    if (host) {
-      if (!community.enabled || !community.repoId || !community.categoryId) host.hidden = true;
-      else {
-        const script = document.createElement('script');
-        script.src = 'https://giscus.app/client.js'; script.async = true; script.crossOrigin = 'anonymous';
-        const attributes = { repo: community.repo, 'repo-id': community.repoId, category: community.category, 'category-id': community.categoryId, mapping: 'specific', term: 'Williamtym · ' + host.dataset.topic, strict: '1', 'reactions-enabled': '1', 'emit-metadata': '0', 'input-position': 'top', theme: document.documentElement.dataset.theme === 'dark' ? 'dark_dimmed' : 'light', lang: 'zh-CN', loading: 'lazy' };
-        for (const [key, value] of Object.entries(attributes)) script.setAttribute('data-' + key, value);
-        script.addEventListener('error', showFallback);
-        host.replaceChildren(script);
-        timer = setTimeout(showFallback, 16000);
-        observer = new MutationObserver(() => { const iframe = host.querySelector('iframe'); if (iframe) { iframe.title = 'GitHub 留言与点赞'; clearTimeout(timer); } });
-        observer.observe(host, { childList: true });
-      }
-    }
+    window.CommunityClient.mount(root);
   }
-  function showFallback() { if (root?.querySelector('#discussion-fallback')) root.querySelector('#discussion-fallback').hidden = false; }
-  function unmount() { window.HonorGallery.unmount(); observer?.disconnect(); observer = null; clearTimeout(timer); root = null; }
+  function unmount(){window.HonorGallery.unmount();window.CommunityClient.unmount();root=null;}
   const announce = text => { const el = document.querySelector('#toast'); el.textContent = text; el.classList.add('visible'); setTimeout(() => el.classList.remove('visible'), 3000); };
   document.addEventListener('click', event => {
     const bookmark = event.target.closest('[data-bookmark]');
