@@ -12,9 +12,11 @@
   <link rel="stylesheet" href="./assets/style.css?v={{ASSET_VERSION}}">
   <link rel="stylesheet" href="./assets/computer-labs.css?v={{ASSET_VERSION}}">
   <link rel="stylesheet" href="./assets/portfolio.css?v={{ASSET_VERSION}}">
+  <link rel="stylesheet" href="./assets/honors.css?v={{ASSET_VERSION}}">
   <script src="./assets/lab.js?v={{ASSET_VERSION}}" defer></script>
   <script src="./assets/background.js?v={{ASSET_VERSION}}" defer></script>
   <script src="./assets/computer-labs.js?v={{ASSET_VERSION}}" defer></script>
+  <script src="./assets/honors.js?v={{ASSET_VERSION}}" defer></script>
   <script src="./assets/portfolio.js?v={{ASSET_VERSION}}" defer></script>
   <script src="./assets/app.js?v={{ASSET_VERSION}}" defer></script>
 </head>
@@ -55,7 +57,7 @@
   <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-title"><div class="search-dialog-head"><span class="tiny-label">HONORS & RECORDS / 经历记录</span><button class="icon-button dialog-close" aria-label="关闭详情"></button></div><h2 id="detail-title"></h2><p id="detail-body"></p><button class="primary-link" id="detail-request">申请查看证明材料 ↗</button><p class="detail-footnote">证明材料由站主私下保管，申请后人工审核并决定是否提供。</p></dialog>
   <dialog id="request-dialog" class="request-dialog" aria-labelledby="request-title"><div class="search-dialog-head"><span class="tiny-label">REQUEST ACCESS / 申请核验</span><button class="icon-button dialog-close" aria-label="关闭申请"></button></div><h2 id="request-title">申请查看证明材料</h2><p id="request-record"></p><label for="request-purpose">查看用途</label><textarea id="request-purpose" maxlength="300" placeholder="例如：招聘核验、项目合作。请勿在此填写证件号、手机号等私人信息。"></textarea><label for="request-message">申请内容 <span>可复制后通过私信发送</span></label><textarea id="request-message" readonly></textarea><button class="text-link" id="copy-request">复制申请内容</button><div id="request-channels" class="request-channels"></div><p class="request-notice">GitHub Issue 是公开记录，请勿填写私人联系方式或上传证书。申请不等于获批，站主会核对用途后，通过双方确认的私下渠道提供必要材料。</p></dialog>
   <div id="toast" role="status" class="toast"></div>
-  <dialog id="public-proof-dialog" class="public-proof-dialog" aria-labelledby="public-proof-title"><div class="search-dialog-head"><h2 id="public-proof-title">公开证书</h2><button class="icon-button dialog-close" aria-label="关闭证书"></button></div><p>公开脱敏副本 · 保留本人姓名，学校名称、其他人员信息及编号已遮盖。</p><img alt=""><div class="hero-actions"><a class="primary-link" download>下载公开副本 ↓</a><button class="text-link" data-request="general">申请核验原件 ↗</button></div></dialog>
+  <dialog id="public-proof-dialog" class="public-proof-dialog" aria-labelledby="public-proof-title"><div class="search-dialog-head"><h2 id="public-proof-title">奖牌与证书</h2><button class="icon-button dialog-close" aria-label="关闭证书"></button></div><p>公开脱敏副本 · 保留本人姓名，学校名称、其他人员信息及编号已遮盖。</p><div id="public-proof-media"></div><div class="hero-actions"><button class="text-link" data-request="general">申请核验原件 ↗</button></div></dialog>
   <noscript><div class="noscript-note">{{NAME}} 的探索手记：苏州大学计算机科学与技术硕士研究生，记录算法、技术实践与历史阅读。请开启 JavaScript 浏览文章、项目与获奖经历。</div></noscript>
   <script id="site-data" type="application/json">{{SITE_DATA}}</script>
 </body>

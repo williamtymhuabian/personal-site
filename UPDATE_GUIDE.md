@@ -122,7 +122,7 @@ status 只能选 published（正式发表）或 preprint（公开预印本）。
 
 ## ICPC / CCPC 公开证书
 
-assets/public-honors/ 只保存 6 张经审核的永久脱敏 WebP（含学校名称、校徽文字遮盖）。data/public-certificates.json 保存公开标题与相对图片路径；不包含原件位置。图片文件名带内容摘要，防止浏览器沿用旧缓存。public-honors.mjs 保存对应 SHA256，构建时会检查文件没有被替换。
+assets/public-honors/ 只保存已审核的永久脱敏 WebP（含学校名称、校徽文字遮盖）。data/public-certificates.json 按奖项保存公开标题、主证书及 items 图片数组；不包含原件位置。图片文件名带内容摘要，防止浏览器沿用旧缓存。public-honors.mjs 保存对应 SHA256，构建时会检查文件没有被替换。
 
 不要把原图直接覆盖这些文件。若需要更新公开副本，应在本地重新脱敏、去除元数据、逐张核对后，再更新精确白名单和摘要。其他原件仍使用人工申请流程。
 
@@ -131,3 +131,12 @@ assets/public-honors/ 只保存 6 张经审核的永久脱敏 WebP（含学校�
 访客收藏无需登录，保存在当前浏览器。清理浏览器数据会丢失收藏；不会同步到其他设备。论文、手记、项目与实验都有收藏或交流入口。
 
 留言与共享点赞走 GitHub Discussions，由站主安装 giscus 后启用；详见 COMMUNITY_GUIDE.md。不要把 GitHub 密码、登录令牌或应用私钥写入前端配置。
+
+
+## 给同一奖项添加奖牌或更多图片
+
+在 data/public-certificates.json 对应奖项的 items 中添加脱敏后的图片信息：image、alt、kind（certificate 或 medal）、width、height。主证书放在第一张，保留该组 image/alt 与第一张一致。
+
+每组一张单图、两张并列、三张及以上自动出现轮播控件。不要靠重复图片凑轮播，也不要改变奖项数量。公开前逐张检查学校/校徽文字、他人信息、编号和二维码已永久遮盖，且没有 EXIF 等元数据。更新精确白名单与 SHA256，再构建。
+
+本科国家级大创条目的 id 是 national-undergraduate-innovation。已填写 2024 年立项的“面向 AIoT 应用的空地协同推理方法”，本人角色为项目成员。后续更新具体工作或结题情况时修改该项目即可，不要新增重复项目。科研项目经历不计入竞赛获奖数。

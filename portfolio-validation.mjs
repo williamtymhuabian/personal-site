@@ -22,11 +22,20 @@ export function validatePortfolio({ papers, publicCertificates, community, award
   }
   const certIds = new Set();
   for (const proof of publicCertificates) {
-    fields(proof, ['awardId','title','image','alt'], '公开证书');
+    fields(proof, ['awardId','title','image','alt','items'], '公开证书');
     if (!awards.some(a => a.id === proof.awardId && /^(icpc|ccpc)-/.test(a.id)) || certIds.has(proof.awardId)) throw new Error('公开证书关联无效或重复。');
     certIds.add(proof.awardId);
     if (!(proof.image in approvedProofs) || proof.image !== `assets/public-honors/${proof.awardId}-${approvedProofs[proof.image]?.slice(0, 10)}.webp`) throw new Error('仅允许已经审核的脱敏图片。');
     text(proof.title, '公开副本标题'); text(proof.alt, '公开副本说明');
+    if (!Array.isArray(proof.items) || !proof.items.length || proof.items.length > 20 || proof.items[0].image !== proof.image) throw new Error('公开材料需要包含主证书，且每组最多20张。');
+    const images = new Set();
+    for (const item of proof.items) {
+      fields(item, ['image','alt','kind','width','height'], '公开图片');
+      if (!Object.hasOwn(approvedProofs, item.image) || !item.image.startsWith(`assets/public-honors/${proof.awardId}-`) || !item.image.endsWith(`-${approvedProofs[item.image]?.slice(0,10)}.webp`) || images.has(item.image)) throw new Error('仅允许本奖项已审核、无重复的脱敏图片。');
+      images.add(item.image);
+      if (!['certificate','medal'].includes(item.kind) || !Number.isInteger(item.width) || !Number.isInteger(item.height) || item.width < 1 || item.height < 1 || item.width > 12000 || item.height > 12000) throw new Error('公开图片的类型或尺寸无效。');
+      text(item.alt, '公开图片说明');
+    }
   }
   fields(community, ['provider','repo','repoId','category','categoryId','enabled'], '交流设置');
   if (community.provider !== 'giscus' || community.repo !== 'williamtymhuabian/personal-site' || typeof community.enabled !== 'boolean') throw new Error('交流服务设置无效。');

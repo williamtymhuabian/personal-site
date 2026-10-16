@@ -50,13 +50,18 @@
     issue.searchParams.set('body', `交流主题：${title}\n页面：${profile.siteUrl}${topic?.href || '#/community'}\n\n我想讨论：\n`);
     return `<header class="page-header"><p class="eyebrow">IDEAS ARE BETTER TOGETHER</p><h1>留言与交流</h1><p>聊一个问题，分享一个思路，或者告诉我你想看到怎样的实验。</p></header><section class="community-context"><span class="tiny-label">CURRENT CONVERSATION</span><h2>${esc(title)}</h2><div>${topic ? `<a class="text-link" href="${esc(topic.href)}">回到对应内容 ↗</a>` : ''}<a class="text-link" href="#/community">网站公共留言板 ↗</a></div></section><div class="community-notice">留言与点赞公开展示，请围绕内容交流。请勿填写手机号、住址或证件信息。</div><section class="community-panel" aria-label="留言与点赞"><div id="discussion-host" data-topic="${esc(validKey)}"><p class="discussion-loading">正在准备留言区…</p></div><div id="discussion-fallback" ${community.enabled ? 'hidden' : ''}><h2>到 GitHub 继续交流</h2><p>${community.enabled ? '留言组件暂时无法加载，可以打开 GitHub 交流页继续留言。' : '当前通过 GitHub 讨论区交流，登录后可留言或用表情点赞。站内评论将后续开放。'}</p><div class="hero-actions"><a class="primary-link" href="${esc(issue.href)}" target="_blank" rel="noopener noreferrer">GitHub 留言 ↗</a><a class="text-link" href="https://github.com/${esc(community.repo)}/discussions" target="_blank" rel="noopener noreferrer">查看讨论与点赞 ↗</a><a class="text-link" href="mailto:${esc(profile.certificateContact.email)}">邮件联系 ↗</a></div></div></section><p class="research-note">公开留言与点赞使用 GitHub 身份；收藏无需登录，只保存在你的浏览器。</p>`;
   }
-  function certificateButton(id) { return publicCertificates.some(c => c.awardId === id) ? `<button data-public-proof="${esc(id)}">公开证书 ↗</button>` : ''; }
-  function certificateGallery() {
-    return publicCertificates.length ? `<section class="public-honors"><div class="section-heading"><h2>ICPC / CCPC 公开证书 <small>REDACTED COPIES</small></h2><span>${publicCertificates.length} 份</span></div><p>保留本人姓名和赛事奖项。学校名称、校徽文字、其他人员信息、编号与二维码已永久遮盖；原件仍按需申请核验。</p><div class="certificate-grid">${publicCertificates.map(c => `<button class="certificate-card" data-public-proof="${esc(c.awardId)}"><img src="./${esc(c.image)}" alt="${esc(c.alt)}" loading="lazy" width="720" height="510"><span>${esc(c.title)}</span><small>查看公开脱敏副本 ↗</small></button>`).join('')}</div></section>` : '';
+  function certificateButton(id) {
+    const group = publicCertificates.find(c => c.awardId === id);
+    return group ? `<button data-public-proof="${esc(id)}">查看图片 · ${group.items.length} 张 ↗</button>` : '';
+  }
+  function certificateGallery(awardIds) {
+    const allowed = awardIds ? new Set(awardIds) : null;
+    return window.HonorGallery.section(publicCertificates.filter(group => !allowed || allowed.has(group.awardId)));
   }
   let root = null, observer = null, timer = 0;
   function mount(target) {
     root = target;
+    window.HonorGallery.mount(root);
     readSaved();
     root.querySelector('#paper-search-form')?.addEventListener('submit', event => { event.preventDefault(); const value = root.querySelector('#paper-search').value.trim(); location.hash = '/papers' + (value ? '?q=' + encodeURIComponent(value) : ''); });
     const host = root.querySelector('#discussion-host');
@@ -76,7 +81,7 @@
     }
   }
   function showFallback() { if (root?.querySelector('#discussion-fallback')) root.querySelector('#discussion-fallback').hidden = false; }
-  function unmount() { observer?.disconnect(); observer = null; clearTimeout(timer); root = null; }
+  function unmount() { window.HonorGallery.unmount(); observer?.disconnect(); observer = null; clearTimeout(timer); root = null; }
   const announce = text => { const el = document.querySelector('#toast'); el.textContent = text; el.classList.add('visible'); setTimeout(() => el.classList.remove('visible'), 3000); };
   document.addEventListener('click', event => {
     const bookmark = event.target.closest('[data-bookmark]');
@@ -94,11 +99,7 @@
     if (proof) {
       const record = publicCertificates.find(c => c.awardId === proof.dataset.publicProof);
       if (!record) return;
-      const dialog = document.querySelector('#public-proof-dialog');
-      dialog.querySelector('#public-proof-title').textContent = record.title;
-      const image = dialog.querySelector('img'); image.src = './' + record.image; image.alt = record.alt;
-      const download = dialog.querySelector('[download]'); download.href = './' + record.image; download.download = record.awardId + '-public.webp';
-      dialog.showModal();
+      window.HonorGallery.open(record, Number(proof.dataset.proofIndex) || 0);
     }
     const citation = event.target.closest('[data-bibtex]');
     if (citation) {

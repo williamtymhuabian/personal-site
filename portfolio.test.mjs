@@ -10,10 +10,20 @@ const data = { papers: await read('./data/papers.json'), publicCertificates: awa
 const samplePaper = { id:'research-example',title:'A research record',authors:['Williamtym'],year:'2026',venue:'Public preprint',status:'preprint',abstract:'Example used only in validation tests.',tags:['VLN'],doiUrl:'https://example.org/paper',pdfUrl:'',codeUrl:'',bibtex:'' };
 
 test('current portfolio has only reviewed public evidence and valid research settings', () => assert.doesNotThrow(() => validatePortfolio(data)));
-test('only the six reviewed certificate images pass the public path guard', () => {
-  assert.equal(Object.keys(approvedProofs).length, 6);
+test('only reviewed certificate and medal images pass the public path guard', () => {
+  assert.equal(Object.keys(approvedProofs).length, new Set(data.publicCertificates.flatMap(group => group.items.map(item => item.image))).size);
   assert.doesNotThrow(() => validatePublishPaths(Object.keys(approvedProofs)));
   for (const file of ['assets/public-honors/new.webp','assets/public-honors/original.png','assets/public-honors/../original.webp']) assert.throws(() => validatePublishPaths([file]));
+});
+test('unreviewed, duplicate and unrelated gallery images cannot be published', () => {
+  for (const change of [g => g.items.push(g.items[0]),g => g.items[0].image='assets/public-honors/raw.webp',g => g.items[0].sourcePath='private.jpg',g => g.items[0].kind='original']) {
+    const value=structuredClone(data);change(value.publicCertificates[0]);assert.throws(() => validatePortfolio(value));
+  }
+});
+test('the 2023 mathematics certificates count as one award', () => {
+  assert.equal(data.awards.filter(a => a.id==='math-national-2023').length,1);
+  assert.equal(data.awards.filter(a => a.id==='math-hubei-2023').length,0);
+  assert.match(data.awards.find(a => a.id==='math-national-2023').detail,/两份证书合并/);
 });
 test('certificate image bytes still match the reviewed redacted copies', async () => await checkPublicFiles(fileURLToPath(new URL('.', import.meta.url))));
 test('unreviewed evidence, unrelated awards and hidden source fields are rejected', () => {

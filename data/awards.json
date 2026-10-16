@@ -588,25 +588,13 @@
     "featured": false
   },
   {
-    "id": "math-hubei-2023",
-    "year": "2023",
-    "title": "第十二届湖北省大学生数学竞赛",
-    "prize": "壹等奖",
-    "category": "数学竞赛",
-    "level": "省赛",
-    "detail": "非数学 A 类，壹等奖。",
-    "kind": "award",
-    "phase": "过往经历",
-    "featured": false
-  },
-  {
     "id": "math-national-2023",
     "year": "2023",
-    "title": "第十五届全国大学生数学竞赛",
+    "title": "第十五届全国大学生数学竞赛（含湖北省证书）",
     "prize": "一等奖",
     "category": "数学竞赛",
-    "level": "证书未注明赛段",
-    "detail": "非数学 A 类，一等奖。所提供证书未注明决赛阶段，本条不标注为全国总决赛。",
+    "level": "赛区赛",
+    "detail": "2023 年非数学 A 类一等奖，同时获发全国竞赛与第十二届湖北省大学生数学竞赛证书，两份证书合并为一次获奖记录。所提供证书未注明决赛阶段，不计为全国总决赛。",
     "kind": "award",
     "phase": "过往经历",
     "featured": false

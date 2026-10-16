@@ -17,6 +17,25 @@
     "awardIds": []
   },
   {
+    "id": "national-undergraduate-innovation",
+    "title": "面向 AIoT 应用的空地协同推理方法",
+    "year": "2024",
+    "type": "国家级大创 · 创新训练项目",
+    "status": "2024 年立项 · 项目成员",
+    "description": "本科阶段参与的国家级大学生创新训练项目，2024 年 11 月 19 日立项，本人为项目成员。围绕 AIoT 应用的快速推理，研究无人机空中节点与地面边缘—云设施的协同计算。项目方案包含基于泰勒评估准则与贪婪策略的神经网络剪枝、按层时延预测的模型划分，以及资源受限节点上的协同部署。",
+    "tags": [
+      "AIoT",
+      "空地协同",
+      "模型剪枝",
+      "模型划分",
+      "边缘计算"
+    ],
+    "repoUrl": "",
+    "demoUrl": "",
+    "articleSlug": "",
+    "awardIds": []
+  },
+  {
     "id": "shieldnel",
     "title": "ShieldNel——基于 LLM 的网络暴力监控与安全系统",
     "year": "2025",
