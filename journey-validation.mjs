@@ -13,13 +13,15 @@ export function validateJourneys(stops, awards) {
     if (!id(stop.id) || cities.has(stop.id) || !text(stop.city)) throw new Error('足迹城市无效或重复。');
     cities.add(stop.id);
     if (!Number.isFinite(stop.longitude) || !Number.isFinite(stop.latitude) || Math.abs(stop.longitude)>180 || Math.abs(stop.latitude)>85) throw new Error('城市坐标无效。');
-    if (stop.longitude<106 || stop.longitude>131 || stop.latitude<24 || stop.latitude>46) throw new Error('新城市超出当前地图范围，请同步扩展地图投影与海岸线。');
+    if (stop.longitude<100 || stop.longitude>131 || stop.latitude<21 || stop.latitude>46) throw new Error('新城市超出当前地图范围，请同步扩展地图投影与海岸线。');
     if (!Array.isArray(stop.events) || !stop.events.length) throw new Error('足迹城市需要关联经历。');
     for (const event of stop.events) {
-      allowed(event, ['id','awardId','title','year','kind','school','summary','photos']);
+      allowed(event, ['id','awardId','title','year','kind','school','summary','photos','result']);
       if (!id(event.id) || events.has(event.id) || !text(event.title) || !text(event.summary)) throw new Error('足迹经历无效或重复。');
       events.add(event.id);
       if (!['award','participation'].includes(event.kind) || (event.year!=='' && !/^20\d{2}$/.test(event.year)) || typeof event.school!=='string') throw new Error('足迹类型、年份或学校无效。');
+      if (event.kind==='participation' && !['no-award','unconfirmed'].includes(event.result)) throw new Error('参赛记录需要明确成绩已确认未获奖或尚待补充。');
+      if (event.kind==='award' && event.result!==undefined) throw new Error('获奖记录使用关联奖项中的成绩。');
       const award = awards.find(a => a.id===event.awardId);
       if (event.kind==='award' && (!award || award.kind!=='award' || award.year!==event.year)) throw new Error('足迹关联的奖项不存在或不匹配。');
       if (event.kind==='participation' && event.awardId!=='' && (!award || award.kind!=='participation')) throw new Error('参赛记录不能关联获奖。');

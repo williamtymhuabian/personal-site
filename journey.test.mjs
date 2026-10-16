@@ -6,6 +6,20 @@ const read = async file => JSON.parse(await readFile(new URL(file, import.meta.u
 const stops = await read('./data/journeys.json'), awards = await read('./data/awards.json');
 
 test('current city records link to the correct award years', () => assert.doesNotThrow(() => validateJourneys(stops, awards)));
+test('the added destinations link to the corresponding existing competitions', () => {
+  for (const [city, awardId] of [['qingdao','raicom-2024-cloud-national'],['kunming','iscc-2025-national'],['wuhan','maker-2025-wuhan'],['huzhou','logistics-2025'],['wenzhou','network-2025-national']]) {
+    assert(stops.find(s=>s.id===city).events.some(e=>e.awardId===awardId));
+  }
+});
+test('repeat visits remain separate without inventing years or results', () => {
+  for (const [city, count] of [['chongqing',2],['zhengzhou',2],['guangzhou',1]]) {
+    const events=stops.find(s=>s.id===city).events;
+    assert.equal(events.length,count);
+    for (const event of events) {assert.equal(event.kind,'participation');assert.equal(event.year,'');assert.equal(event.result,'unconfirmed');assert.equal(event.awardId,'');}
+  }
+  const data=structuredClone(stops);delete data.find(s=>s.id==='guangzhou').events[0].result;
+  assert.throws(()=>validateJourneys(data,awards));
+});
 test('participation cannot be relabelled as an award', () => {
   const data=structuredClone(stops), event=data.find(s=>s.id==='hangzhou').events[0];
   assert.equal(event.kind,'participation');assert.equal(event.awardId,'');

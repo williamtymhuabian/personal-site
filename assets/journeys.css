@@ -7,6 +7,12 @@
 @media(max-width:800px){.journey-atlas{grid-template-columns:1fr}.journey-selector{border-left:0;border-top:1px solid var(--line)}.journey-city-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.journey-city-list button{padding:10px 6px;gap:7px}.journey-city-list button>span:last-child{display:none}.journey-selector>p{margin-bottom:0}.journey-selector label{margin-top:16px}.journey-selector select{max-width:260px}.journey-map{min-height:0}.journey-events{grid-template-columns:1fr}.journey-overview{gap:17px}.journey-overview-note{width:100%;margin:0}}
 @media(max-width:450px){.journey-map-panel{padding:10px}.journey-map-note{font-size:11px}.journey-map-head .tiny-label{font-size:10px;letter-spacing:.5px}.journey-event{padding:18px}.journey-event h3{font-size:18px}.journey-detail>.section-heading{align-items:start;gap:10px;flex-wrap:wrap}.journey-detail>.section-heading>span{font-size:12px}.journey-home-link{align-items:start;flex-direction:column}.journey-photos{grid-template-columns:1fr}.education-history{padding:20px 0}.education-step{padding-left:15px}}
 
-@media(max-width:650px){.journey-marker text{font-size:28px}}
+
 
 .award-actions>a{font-size:12px;white-space:nowrap;color:var(--accent)}
+
+/* City labels use leader lines, so dense destinations stay independently selectable. */
+.journey-marker text{font-size:19px;stroke:none;fill:var(--ink)}.journey-marker-label{fill:var(--paper);stroke:var(--line);stroke-width:1}.journey-leader{stroke:var(--accent);stroke-width:1;fill:none;opacity:.5;pointer-events:none}.journey-marker[aria-pressed=true] .journey-marker-label,.journey-marker:focus .journey-marker-label{stroke:var(--accent);stroke-width:2}.journey-marker[aria-pressed=true] .journey-marker-label{fill:var(--accent-soft)}
+.journey-city-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 8px}.journey-city-list button{display:grid;grid-template-columns:17px minmax(0,1fr);gap:2px 5px;padding:9px 3px;min-width:0}.journey-city-index{grid-row:1/3}.journey-city-list button>span:last-child{display:block;grid-column:2;margin:0;font-size:11px}.journey-selector{padding:20px 15px}
+@media(max-width:800px){.journey-city-list{grid-template-columns:repeat(3,minmax(0,1fr))}.journey-selector{padding:17px}.journey-selector label{margin-top:17px}}
+@media(max-width:360px){.journey-city-list{grid-template-columns:repeat(2,minmax(0,1fr))}}

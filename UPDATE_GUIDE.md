@@ -145,10 +145,13 @@ assets/public-honors/ 只保存已审核且获准公开的 WebP。当前算法�
 ## 更新教育经历和竞赛足迹
 
 - 当前身份修改 `profile.json` 的学校、专业、学历与 role；完整教育经历在 `educationHistory` 中维护，月份为 YYYY-MM，当前阶段 end 为空。首页不堆叠完整时间线，头像链接会进入教育经历区。
-- `data/journeys.json` 按城市维护 longitude / latitude（城市中心）与 events。地图自动依据坐标布局；新城市若超出当前东部区域范围，应同时调整 `assets/journeys.js` 的投影范围、经纬网与海岸线裁切，不能静默落在图外。
-- 每条赛事填写 id、title、year（未知留空）、kind、school（未知留空）、summary、photos。有奖项时填写真实 awardId；没有获奖的参赛经历使用 participation，不能关联获奖记录。杭州决赛的年份、学校待补充，保留参赛与氛围分享定位。
+- `data/journeys.json` 按城市维护 longitude / latitude（城市中心）与 events。地图自动依据坐标布局；当前地图范围为东经 100—131 度、北纬 21—46 度；新城市若超出范围，应同时调整 `assets/journeys.js` 的投影范围、经纬网与海岸线裁切，不能静默落在图外。
+- 每条赛事填写 id、title、year（未知留空）、kind、school（未知留空）、summary、photos。有奖项时填写真实 awardId；现场参赛经历使用 participation；result 为 no-award（已确认未获奖）或 unconfirmed（成绩待补充），不能关联获奖记录。未确认成绩不能写成未获奖。杭州决赛的年份、学校待补充，保留参赛与氛围分享定位。
 - 每张现场照片先检查人脸、姓名牌、学号、电话、门牌、车票与二维码，避免公开住宿、宿舍和即时行程；去除 EXIF/GPS 后生成 WebP 展示副本。上传前仍需人工检查画面，去元数据并不能隐藏画面本身的位置线索。不要直接复制整批原图进仓库。
 - 照片存为 `assets/journeys/城市id-内容简名-SHA256前10位.webp`，将完整 SHA256 写入 `travel-media.mjs`。对应赛事 photos 中填写 image、alt、caption；校验会拒绝未审核照片、额外私人字段或错误奖项关联。无照片时留空数组，无需占位图片。
 - 学校邮箱和完整竞赛证书依本人选择公开。若将来想降低关联风险，可改用独立联系邮箱并调整公开副本；网页删除不能保证第三方副本、缓存或 Git 历史中的旧版本消失。
 
 完成后执行 `node --test privacy.test.mjs portfolio.test.mjs journey.test.mjs` 和 `node build.mjs`，核对网页后再提交推送。
+
+- 重复到访同一城市时保留独立事件 id 和相册入口，不能因为年份未知而合并掉真实的次数。当前重庆、郑州各两次，广州一次；日期补充后按对应事件更新。
+- 地图密集城市通过引导线连接真实城市中心与可点击标签，标签布局在 `assets/journeys.js` 的 labelOffsets 中维护，避免遮挡邻近城市。

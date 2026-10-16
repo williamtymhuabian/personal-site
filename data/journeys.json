@@ -42,6 +42,16 @@
         "school": "华中科技大学",
         "summary": "2025 ICPC China Hubei (Wuhan) National Invitational Programming Contest，团队铜奖。",
         "photos": []
+      },
+      {
+        "id": "maker-2025-wuhan",
+        "awardId": "maker-2025-wuhan",
+        "title": "中美青年创客大赛 · 武汉赛区",
+        "year": "2025",
+        "kind": "award",
+        "school": "",
+        "summary": "2025 年中美青年创客大赛武汉赛区一等奖。",
+        "photos": []
       }
     ]
   },
@@ -113,6 +123,158 @@
         "kind": "participation",
         "school": "",
         "summary": "一次值得记录的决赛经历。这里将收录参赛物料、赛场氛围与沿途见闻。",
+        "photos": [],
+        "result": "no-award"
+      }
+    ]
+  },
+  {
+    "id": "qingdao",
+    "city": "青岛",
+    "longitude": 120.38,
+    "latitude": 36.07,
+    "events": [
+      {
+        "id": "raicom-2024-cloud-national",
+        "awardId": "raicom-2024-cloud-national",
+        "title": "睿抗机器人开发者大赛 · 云平台技术与应用",
+        "year": "2024",
+        "kind": "award",
+        "school": "",
+        "summary": "RAICOM 云平台技术与应用赛项，全国总决赛三等奖。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "kunming",
+    "city": "昆明",
+    "longitude": 102.83,
+    "latitude": 24.88,
+    "events": [
+      {
+        "id": "iscc-2025-national",
+        "awardId": "iscc-2025-national",
+        "title": "第22届全国大学生信息安全与对抗技术竞赛",
+        "year": "2025",
+        "kind": "award",
+        "school": "",
+        "summary": "智能安全赛，全国总决赛；微型工厂模拟产线任务挑战。团队获奖。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "huzhou",
+    "city": "湖州",
+    "longitude": 120.09,
+    "latitude": 30.89,
+    "events": [
+      {
+        "id": "logistics-2025",
+        "awardId": "logistics-2025",
+        "title": "“新青年吴兴杯”第九届全国大学生物流设计大赛",
+        "year": "2025",
+        "kind": "award",
+        "school": "",
+        "summary": "“新青年吴兴杯”第九届全国大学生物流设计大赛，本科组团队二等奖。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "wenzhou",
+    "city": "温州",
+    "longitude": 120.7,
+    "latitude": 28.0,
+    "events": [
+      {
+        "id": "network-2025-national",
+        "awardId": "network-2025-national",
+        "title": "第十届网络技术挑战赛",
+        "year": "2025",
+        "kind": "award",
+        "school": "",
+        "summary": "团队作品《“空灵守护”无人机辅助卡车自动避障系统》，总决赛二等奖。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "chongqing",
+    "city": "重庆",
+    "longitude": 106.55,
+    "latitude": 29.56,
+    "events": [
+      {
+        "id": "ccpc-chongqing-visit-1",
+        "awardId": "",
+        "title": "CCPC · 重庆 · 第 1 次记录",
+        "year": "",
+        "kind": "participation",
+        "result": "unconfirmed",
+        "school": "重庆大学虎溪校区",
+        "summary": "曾赴重庆大学虎溪校区参加 CCPC。具体年份、赛段与成绩待补充；参赛见闻与现场照片将在整理后分享。",
+        "photos": []
+      },
+      {
+        "id": "ccpc-chongqing-visit-2",
+        "awardId": "",
+        "title": "CCPC · 重庆 · 第 2 次记录",
+        "year": "",
+        "kind": "participation",
+        "result": "unconfirmed",
+        "school": "重庆大学虎溪校区",
+        "summary": "曾赴重庆大学虎溪校区参加 CCPC。具体年份、赛段与成绩待补充；参赛见闻与现场照片将在整理后分享。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "zhengzhou",
+    "city": "郑州",
+    "longitude": 113.63,
+    "latitude": 34.75,
+    "events": [
+      {
+        "id": "ccpc-zhengzhou-visit-1",
+        "awardId": "",
+        "title": "CCPC · 郑州 · 第 1 次记录",
+        "year": "",
+        "kind": "participation",
+        "result": "unconfirmed",
+        "school": "郑州轻工业大学",
+        "summary": "曾赴郑州轻工业大学参加 CCPC。具体年份、赛段与成绩待补充；参赛见闻与现场照片将在整理后分享。",
+        "photos": []
+      },
+      {
+        "id": "ccpc-zhengzhou-visit-2",
+        "awardId": "",
+        "title": "CCPC · 郑州 · 第 2 次记录",
+        "year": "",
+        "kind": "participation",
+        "result": "unconfirmed",
+        "school": "郑州轻工业大学",
+        "summary": "曾赴郑州轻工业大学参加 CCPC。具体年份、赛段与成绩待补充；参赛见闻与现场照片将在整理后分享。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "guangzhou",
+    "city": "广州",
+    "longitude": 113.26,
+    "latitude": 23.13,
+    "events": [
+      {
+        "id": "icpc-guangzhou-visit-1",
+        "awardId": "",
+        "title": "ICPC · 广州",
+        "year": "",
+        "kind": "participation",
+        "result": "unconfirmed",
+        "school": "香港科技大学（广州）",
+        "summary": "曾赴香港科技大学（广州）参加 ICPC。具体年份、赛段与成绩待补充；参赛见闻与现场照片将在整理后分享。",
         "photos": []
       }
     ]
