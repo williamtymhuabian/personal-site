@@ -41,8 +41,8 @@
     const group = publicCertificates.find(c => c.awardId === id);
     return group ? `<button data-public-proof="${esc(id)}">查看图片 · ${group.items.length} 张 ↗</button>` : '';
   }
-  function certificateGallery(awardIds) {
-    return window.HonorGallery.section((awardIds?awardIds.map(id=>publicCertificates.find(group=>group.awardId===id)).filter(Boolean):publicCertificates));
+  function certificateGallery(awardIds,options) {
+    return window.HonorGallery.section((awardIds?awardIds.map(id=>publicCertificates.find(group=>group.awardId===id)).filter(Boolean):publicCertificates),options);
   }
   let root = null;
   function mount(target) {
