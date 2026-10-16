@@ -1,13 +1,13 @@
-// Approved irreversible redactions; changing a file requires reviewing it again.
+// Approved public honor images; changing a file requires reviewing it again.
 export const approvedProofs = Object.freeze({
-  "assets/public-honors/icpc-2025-xian-regional-a6e01f1ef5.webp": "a6e01f1ef57c000e40a5d1788f247b0401e9a7777f88dfda8c44e2a67d1554cb",
-  "assets/public-honors/icpc-2025-xian-invitational-cb40289bd5.webp": "cb40289bd56f2a14f183feb31845d8ffd4a346177415d2222bdc27d0ccd9037e",
-  "assets/public-honors/icpc-2025-xian-invitational-medal-6a046e1e9f.webp": "6a046e1e9fc2c3628ad14c18c0ba075921c186b6dc96c81ca52d1bb66c233880",
-  "assets/public-honors/icpc-2025-nanchang-bd4357002b.webp": "bd4357002b9f92b77a15c43e71f83a3948faf394ab0477d39f9af7339b2a4653",
-  "assets/public-honors/icpc-2025-nanchang-medal-821a412d4e.webp": "821a412d4e733a5e703597bd86ff7e35a180381122db2e415bf843596accc3e6",
-  "assets/public-honors/icpc-2025-wuhan-206a14f3b1.webp": "206a14f3b1a31ba7d9999f1678923128f61649f065a4aafb24d19f23dddf7bed",
-  "assets/public-honors/icpc-2025-wuhan-medal-1a8d1f1b43.webp": "1a8d1f1b4389d3d8538affa33ebc2b94ea727daefff5712a1611364b844f7305",
-  "assets/public-honors/ccpc-2025-fuzhou-88e817daee.webp": "88e817daee30e78c244134eb9be5096c1e166b13012a367a70ee4288c40c4677",
-  "assets/public-honors/ccpc-2025-northeast-1b8a2472e3.webp": "1b8a2472e377a916453b51d43890ace6064b88234864e8b30a3218df5dc4cab2",
-  "assets/public-honors/ccpc-2025-northeast-medal-63479c8153.webp": "63479c8153dee68035bec441cb9a0f42f76464e273228189543b88f5b98faa84"
+  "assets/public-honors/icpc-2025-xian-regional-aade931d94.webp": "aade931d94febfb469a368978bd0660dad2363c79e72cd3e5f8e4b88364bebf4",
+  "assets/public-honors/icpc-2025-xian-invitational-3a8031fa7d.webp": "3a8031fa7dd8a0d0c177d8afa3d165e20f3e77d30686caa9082f5967d13dbfb7",
+  "assets/public-honors/icpc-2025-xian-invitational-medal-7b093ba46f.webp": "7b093ba46f050c27f60da0121ce427bdfd7d1a0a6861ba0dd1ec7e460ad4da29",
+  "assets/public-honors/icpc-2025-nanchang-be7af90b08.webp": "be7af90b08281d1f393b91547913bc37ee41e3d32c19388498cfb1ac20701e6b",
+  "assets/public-honors/icpc-2025-nanchang-medal-405e205c70.webp": "405e205c70a7765c16b8dce61aec3f13737142f1dab0c26549619b6ed7c1f462",
+  "assets/public-honors/icpc-2025-wuhan-065e1d1023.webp": "065e1d10235a9747bc281fd81d3b83a22f483f0f5d9e12db789e21469cdf83bb",
+  "assets/public-honors/icpc-2025-wuhan-medal-69e52dbb4c.webp": "69e52dbb4c369bdebe3b601369e77c98f11b93ee2d98a5d5777f084a0d5ca900",
+  "assets/public-honors/ccpc-2025-fuzhou-3d9a502921.webp": "3d9a5029218971b035c08db56b5a6edf7b25b48b1a8504f45db4ee9fd02637ca",
+  "assets/public-honors/ccpc-2025-northeast-eb66301619.webp": "eb663016192c661e0d6301369005ef6e2ddb1457a805206e934e729aee8030a4",
+  "assets/public-honors/ccpc-2025-northeast-medal-dc13eca76f.webp": "dc13eca76f69cb066f708da1adfa0ccbb24da48d7abb5d332da900ef856c2966"
 });

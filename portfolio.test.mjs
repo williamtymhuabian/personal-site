@@ -25,7 +25,12 @@ test('the 2023 mathematics certificates count as one award', () => {
   assert.equal(data.awards.filter(a => a.id==='math-hubei-2023').length,0);
   assert.match(data.awards.find(a => a.id==='math-national-2023').detail,/两份证书合并/);
 });
-test('certificate image bytes still match the reviewed redacted copies', async () => await checkPublicFiles(fileURLToPath(new URL('.', import.meta.url))));
+test('certificate image bytes still match the reviewed public copies', async () => await checkPublicFiles(fileURLToPath(new URL('.', import.meta.url))));
+test('each honor group explicitly selects its approved disclosure policy', () => {
+  for (const disclosure of [undefined,'private','raw-original']) {
+    const value=structuredClone(data);value.publicCertificates[0].disclosure=disclosure;assert.throws(() => validatePortfolio(value));
+  }
+});
 test('unreviewed evidence, unrelated awards and hidden source fields are rejected', () => {
   for (const change of [p => p.image='https://example.org/original.jpg',p => p.awardId='unknown',p => p.sourcePath='original.pdf']) {
     const value=structuredClone(data); change(value.publicCertificates[0]); assert.throws(() => validatePortfolio(value));

@@ -87,7 +87,7 @@ export async function checkPublicFiles(root) {
   validatePublishPaths(await publicFiles(root));
   for (const [file, expected] of Object.entries(approvedProofs)) {
     const actual = createHash('sha256').update(await readFile(path.join(root, file))).digest('hex');
-    if (actual !== expected) throw new Error(`公开证书副本已改变，请重新检查脱敏范围：${file}`);
+    if (actual !== expected) throw new Error(`公开证书副本已改变，请重新审核公开范围：${file}`);
   }
   let tracked;
   try { tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).split('\0').filter(Boolean); }
