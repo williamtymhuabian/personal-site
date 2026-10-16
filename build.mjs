@@ -2,6 +2,8 @@ import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import http from 'node:http';
+import { createHash } from 'node:crypto';
+import { validatePublicData, checkPublicFiles } from './privacy.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -55,6 +57,10 @@ function markdown(source) {
 }
 async function build() {
   const profile = JSON.parse(await readFile(path.join(root, 'profile.json'), 'utf8'));
+  const awards = JSON.parse(await readFile(path.join(root, 'data', 'awards.json'), 'utf8'));
+  const projects = JSON.parse(await readFile(path.join(root, 'data', 'projects.json'), 'utf8'));
+  validatePublicData({ profile, awards, projects });
+  await checkPublicFiles(root);
   const directory = path.join(root, 'content');
   const files = (await readdir(directory)).filter(f => f.endsWith('.md')).sort();
   const posts = [];
@@ -68,21 +74,28 @@ async function build() {
     const slug = filename.slice(0, -3);
     if (!/^[a-z0-9-]+$/.test(slug)) throw new Error(`文章文件名请用小写英文、数字和短横线：${filename}`);
     const rendered = markdown(match[2]);
-    posts.push({ slug, ...meta, tags: (meta.tags || '').split(',').map(t => t.trim()).filter(Boolean), pinned: meta.pinned === 'true', readTime: Math.max(1, Math.ceil(match[2].length / 500)), searchText: match[2].replace(/[#*`~>]/g, ''), ...rendered });
+    posts.push({ slug, ...meta, tags: (meta.tags || '').split(',').map(t => t.trim()).filter(Boolean), pinned: meta.pinned === 'true', readTime: Math.max(1, Math.ceil(match[2].length / 500)), searchText: match[2].replace(/[#*`~>]/g, ''), markdown: match[2], ...rendered });
   }
   if (!posts.length) throw new Error('请至少保留一篇文章。');
   posts.sort((a, b) => Number(b.pinned) - Number(a.pinned) || b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
   const template = await readFile(path.join(root, 'src', 'template.html'), 'utf8');
-  const serialized = JSON.stringify({ profile, posts }).replaceAll('<', '\\u003c').replaceAll('\u2028', '\\u2028').replaceAll('\u2029', '\\u2029');
-  const replacements = { TITLE: escapeHtml(profile.siteTitle), DESCRIPTION: escapeHtml(profile.description), NAME: escapeHtml(profile.name), ROLE: escapeHtml(profile.role).replace(' · ', '<br>'), MOTTO: escapeHtml(profile.motto), SITE_DATA: serialized };
-  const html = template.replace(/\{\{(TITLE|DESCRIPTION|NAME|ROLE|MOTTO|SITE_DATA)\}\}/g, (_, key) => replacements[key]);
+  const serialized = JSON.stringify({ profile: { ...profile, awards }, posts, projects }).replaceAll('<', '\\u003c').replaceAll('\u2028', '\\u2028').replaceAll('\u2029', '\\u2029');
+  const assetHash = createHash('sha256');
+  for (const file of ['app.js', 'lab.js', 'style.css']) assetHash.update(await readFile(path.join(root, 'assets', file)));
+  const replacements = { TITLE: escapeHtml(profile.siteTitle), DESCRIPTION: escapeHtml(profile.description), NAME: escapeHtml(profile.name), ROLE: profile.role.split(' · ').map(escapeHtml).join('<br>'), MOTTO: escapeHtml(profile.motto), SITE_DATA: serialized, ASSET_VERSION: assetHash.digest('hex').slice(0, 10) };
+  const html = template.replace(/\{\{(TITLE|DESCRIPTION|NAME|ROLE|MOTTO|SITE_DATA|ASSET_VERSION)\}\}/g, (_, key) => replacements[key]);
   await writeFile(path.join(root, 'index.html'), html, 'utf8');
-  console.log(`已生成 index.html：${posts.length} 篇文章，${profile.awards.length} 条获奖记录。`);
+  const siteUrl = profile.siteUrl.replace(/\/?$/, '/');
+  const xml = value => String(value).replace(/[<>&"']/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;' }[c]));
+  const chronological = [...posts].sort((a, b) => b.date.localeCompare(a.date));
+  const rss = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>${xml(profile.siteTitle)}</title><link>${xml(siteUrl)}</link><description>${xml(profile.description)}</description><language>zh-cn</language><atom:link href="${xml(siteUrl)}feed.xml" rel="self" type="application/rss+xml"/>${chronological.map(post => `<item><title>${xml(post.title)}</title><link>${xml(siteUrl)}#/post/${post.slug}</link><guid isPermaLink="true">${xml(siteUrl)}#/post/${post.slug}</guid><pubDate>${new Date(`${post.date}T00:00:00+08:00`).toUTCString()}</pubDate><description>${xml(post.summary)}</description><content:encoded>${xml(post.html)}</content:encoded></item>`).join('')}</channel></rss>\n`;
+  await writeFile(path.join(root, 'feed.xml'), rss, 'utf8');
+  console.log(`公开数据检查通过。已生成 ${posts.length} 篇文章、${awards.length} 条经历、${projects.length} 个项目和 RSS 订阅。`);
 }
 await build();
 if (process.argv.includes('--serve')) {
   const port = Number(process.env.PORT || 4173);
-  const allowed = new Map([['/', ['index.html', 'text/html; charset=utf-8']], ['/index.html', ['index.html', 'text/html; charset=utf-8']], ['/assets/app.js', ['assets/app.js', 'text/javascript; charset=utf-8']], ['/assets/style.css', ['assets/style.css', 'text/css; charset=utf-8']], ['/assets/favicon.svg', ['assets/favicon.svg', 'image/svg+xml']]]);
+  const allowed = new Map([['/', ['index.html', 'text/html; charset=utf-8']], ['/index.html', ['index.html', 'text/html; charset=utf-8']], ['/feed.xml', ['feed.xml', 'application/rss+xml; charset=utf-8']], ['/assets/app.js', ['assets/app.js', 'text/javascript; charset=utf-8']], ['/assets/lab.js', ['assets/lab.js', 'text/javascript; charset=utf-8']], ['/assets/style.css', ['assets/style.css', 'text/css; charset=utf-8']], ['/assets/favicon.svg', ['assets/favicon.svg', 'image/svg+xml']]]);
   const server = http.createServer(async (request, response) => {
     const pathname = new URL(request.url, 'http://localhost').pathname;
     const entry = allowed.get(pathname);

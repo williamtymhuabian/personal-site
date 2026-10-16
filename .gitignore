@@ -9,3 +9,8 @@ Thumbs.db
 .idea/
 __pycache__/
 *.tmp
+/.private/
+/certificates/
+/certificate-originals/
+*.private.json
+*.private.txt

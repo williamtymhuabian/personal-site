@@ -1,20 +1,53 @@
 {
   "name": "Williamtym",
   "siteTitle": "Williamtym · 探索手记",
-  "description": "计算机科学与技术硕士研究生。记录技术实践、算法思考与历史阅读，在探索中慢慢积累。",
-  "role": "计算机科学与技术 · 硕士研究生",
+  "description": "Williamtym，苏州大学计算机科学与技术硕士研究生。记录技术实践、算法思考、竞赛经历与历史阅读。",
+  "role": "苏州大学 · 计算机科学与技术 · 硕士研究生",
   "motto": "保持好奇，认真求证。",
   "socials": [
-    { "name": "GitHub", "label": "代码与项目", "url": "https://github.com/williamtymhuabian", "symbol": "github" },
-    { "name": "CSDN", "label": "技术文章", "url": "https://blog.csdn.net/Williamtym", "symbol": "code" },
-    { "name": "小红书", "label": "待添加主页", "url": "", "symbol": "book" },
-    { "name": "抖音", "label": "待添加主页", "url": "", "symbol": "video" },
-    { "name": "视频号", "label": "待添加主页", "url": "", "symbol": "play" }
+    {
+      "name": "GitHub",
+      "label": "代码与项目",
+      "url": "https://github.com/williamtymhuabian",
+      "symbol": "github"
+    },
+    {
+      "name": "CSDN",
+      "label": "技术文章",
+      "url": "https://blog.csdn.net/Williamtym",
+      "symbol": "code"
+    },
+    {
+      "name": "小红书",
+      "label": "哗变 · 复制账号",
+      "url": "",
+      "symbol": "book",
+      "handle": "18993673163"
+    },
+    {
+      "name": "抖音",
+      "label": "williamtym · 复制账号",
+      "url": "",
+      "symbol": "video",
+      "handle": "68346784777"
+    },
+    {
+      "name": "视频号",
+      "label": "待添加主页",
+      "url": "",
+      "symbol": "play"
+    }
   ],
-  "awards": [
-    { "year": "2025", "title": "ICPC 全国邀请赛 · 南昌站", "prize": "银奖", "category": "算法竞赛", "detail": "2025 ICPC China National Invitational Programming Contest (Nanchang)，团队 Night Without Dawn，Silver Medal。已核对所提供的团队证书。" },
-    { "year": "2025", "title": "第十六届蓝桥杯全国总决赛", "prize": "二等奖", "category": "程序设计", "detail": "C/C++ 程序设计大学 B 组，全国总决赛二等奖。已核对所提供的个人获奖证书。" },
-    { "year": "2025", "title": "中国大学生计算机设计大赛", "prize": "全国二等奖", "category": "团队作品", "detail": "第 18 届中国大学生计算机设计大赛，团队作品《汲古澄源 碧境新生——海洋水体富营养化修复系统》，数媒静态设计—产品设计专业组，二等奖。已核对所提供的团队证书。" },
-    { "year": "2024", "title": "全国大学生数学建模竞赛", "prize": "湖北赛区一等奖", "category": "数学建模", "detail": "2024 年全国大学生数学建模竞赛，湖北赛区一等奖。已核对所提供的团队证书。" }
-  ]
+  "school": "苏州大学",
+  "major": "计算机科学与技术",
+  "education": "硕士研究生",
+  "certificateContact": {
+    "mode": "manual",
+    "githubIssueUrl": "https://github.com/williamtymhuabian/personal-site/issues/new",
+    "csdnUrl": "https://blog.csdn.net/Williamtym",
+    "email": "20264258022@stu.suda.edu.cn",
+    "douyinUrl": ""
+  },
+  "researchFocus": "具身智能",
+  "siteUrl": "https://williamtymhuabian.github.io/personal-site/"
 }
