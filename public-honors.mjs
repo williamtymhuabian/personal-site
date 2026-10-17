@@ -11,7 +11,7 @@ export const approvedProofs = Object.freeze({
   "assets/public-honors/ccpc-2025-northeast-eb66301619.webp": "eb663016192c661e0d6301369005ef6e2ddb1457a805206e934e729aee8030a4",
   "assets/public-honors/ccpc-2025-northeast-medal-dc13eca76f.webp": "dc13eca76f69cb066f708da1adfa0ccbb24da48d7abb5d332da900ef856c2966",
   "assets/public-honors/icpc-2025-xian-regional-medal-8bfad23d78.webp": "8bfad23d78ac7317dc0675198faf615603169129dbb1fa6b4851e99bab9af15a",
-  "assets/public-honors/design-2025-national-bbc463aca0.webp": "bbc463aca0cdb013558918385a47f2133b2c522ede593fb6445504b3cfb609be",
+  "assets/public-honors/design-2025-national-af2f0283ac.webp": "af2f0283ac259e9f8ae68b53733317d7763a109fe1d00970e371a5ca79616639",
   "assets/public-honors/design-2025-national-medal-a752634037.webp": "a752634037cabdbb6b937be88772e87aeaf3c865f2d47ea82aef9d618553a95a",
-  "assets/public-honors/design-2025-national-regional-7bddfabbc5.webp": "7bddfabbc5bdc25245c4cf1ffdb60f16916c64d1f021c54e1e245884ded932dd"
+  "assets/public-honors/design-2025-national-regional-4898e6b9c3.webp": "4898e6b9c3b0faaeaa5acdd20cded8e86aac43a2af4ae6826638f54e7587adbf"
 });

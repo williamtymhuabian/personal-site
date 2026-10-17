@@ -43,9 +43,9 @@ test('progression stages reject private fields, conflicting IDs and mismatched f
     const copy=structuredClone(data);mutate(copy.awards.find(a=>a.stages));assert.throws(()=>validatePublicData(copy));
   }
 });
-test('computer-design material includes both certificates and medal under its redacted disclosure policy',()=>{
+test('computer-design material includes both certificates and medal under its approved complete disclosure policy',()=>{
   const proof=portfolio.publicCertificates.find(g=>g.awardId==='design-2025-national');
-  assert.equal(proof.disclosure,'redacted');
+  assert.equal(proof.disclosure,'complete');
   assert.deepEqual(proof.items.map(i=>i.kind),['certificate','medal','certificate']);
-  const copy=structuredClone(portfolio);copy.publicCertificates.find(g=>g.awardId===proof.awardId).disclosure='complete';assert.throws(()=>validatePortfolio(copy));
+  const copy=structuredClone(portfolio);copy.publicCertificates.find(g=>g.awardId===proof.awardId).disclosure='redacted';assert.throws(()=>validatePortfolio(copy));
 });
