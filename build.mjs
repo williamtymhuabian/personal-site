@@ -118,6 +118,7 @@ if (process.argv.includes('--serve')) {
   const port = Number(process.env.PORT || 4173);
   const allowed = new Map([['/', ['index.html', 'text/html; charset=utf-8']], ['/index.html', ['index.html', 'text/html; charset=utf-8']], ['/feed.xml', ['feed.xml', 'application/rss+xml; charset=utf-8']], ['/assets/app.js', ['assets/app.js', 'text/javascript; charset=utf-8']], ['/assets/lab.js', ['assets/lab.js', 'text/javascript; charset=utf-8']], ['/assets/background.js', ['assets/background.js', 'text/javascript; charset=utf-8']], ['/assets/style.css', ['assets/style.css', 'text/css; charset=utf-8']], ['/assets/favicon.svg', ['assets/favicon.svg', 'image/svg+xml']]]);
   for (const file of ['computer-labs.js','portfolio.js','honors.js','computer-labs.css','portfolio.css','honors.css','journeys.js','journeys.css','field-labs.js','research-desk.js','explore.css', 'topic-model.js', 'community.js', 'community.css', 'award-model.js', 'deadline-model.js', 'deadline-desk.js', 'deadline-desk.css']) allowed.set('/assets/' + file, ['assets/' + file, file.endsWith('.css') ? 'text/css; charset=utf-8' : 'text/javascript; charset=utf-8']);
+  allowed.set('/assets/avatar.jpg', ['assets/avatar.jpg', 'image/jpeg']);
   const publicProofs = JSON.parse(await readFile(path.join(root, 'data', 'public-certificates.json'), 'utf8'));
   for (const proof of publicProofs) for (const item of proof.items) allowed.set('/' + item.image, [item.image, 'image/webp']);
   const journeys = JSON.parse(await readFile(path.join(root, 'data', 'journeys.json'), 'utf8'));

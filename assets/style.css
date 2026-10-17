@@ -55,3 +55,5 @@ body.scene-focus{overflow:hidden}
 }
 @media(max-width:380px){.scene-dock-title{display:none}.search-trigger kbd{display:none}.topbar-actions{gap:5px}.hero-actions{gap:12px}.hero-stats{column-gap:14px}}
 @media(prefers-reduced-motion:reduce){#vln-background,.main-shell{transition:none}}
+
+.avatar img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}

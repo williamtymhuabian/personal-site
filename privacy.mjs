@@ -5,6 +5,9 @@ import { approvedProofs } from './public-honors.mjs';
 import { approvedTravelPhotos } from './travel-media.mjs';
 import { execFileSync } from 'node:child_process';
 
+// User-approved public profile image; keep other personal photos blocked.
+const approvedAvatars = { 'assets/avatar.jpg': '3f5c1fbb75824ca3c8a4f04c14c82f0db1129765b293b632f3087ba1fbd19707' };
+
 const fields = {
   profile: ['name', 'siteTitle', 'description', 'role', 'motto', 'socials', 'school', 'major', 'education', 'educationHistory', 'researchFocus', 'siteUrl', 'certificateContact'],
   education: ['school', 'degree', 'major', 'start', 'end', 'current'],
@@ -91,7 +94,7 @@ export function validatePublicData({ profile, awards, projects }) {
 export function validatePublishPaths(files) {
   for (const input of files) {
     const name = input.replaceAll('\\', '/');
-    if (name === 'data/public-certificates.json' || Object.hasOwn(approvedProofs, name) || Object.hasOwn(approvedTravelPhotos, name)) continue;
+    if (name === 'data/public-certificates.json' || Object.hasOwn(approvedProofs, name) || Object.hasOwn(approvedTravelPhotos, name) || Object.hasOwn(approvedAvatars, name)) continue;
     if (/(^|\/)(\.private|certificates|certificate-originals|获奖证书)(\/|$)|\.private\.(json|txt)$|证书|certificate(?!-request)/i.test(name)) throw new Error(`禁止将证书或私有索引放入公开发布文件：${name}`);
     if (/\.(pdf|docx?|heic|tiff?)$/i.test(name)) throw new Error(`公开站点不接收原始文档：${name}。请将核验材料保留在站点外。`);
     if (/\.(png|jpe?g|gif|webp)$/i.test(name) && !name.startsWith('assets/projects/')) throw new Error(`图片须为已审核的证书或足迹副本，或位于公开项目插图目录 assets/projects/：${name}。证书请勿放入项目目录。`);
@@ -110,9 +113,9 @@ async function publicFiles(directory, prefix = '') {
 }
 export async function checkPublicFiles(root) {
   validatePublishPaths(await publicFiles(root));
-  for (const [file, expected] of Object.entries({...approvedProofs, ...approvedTravelPhotos})) {
+  for (const [file, expected] of Object.entries({...approvedProofs, ...approvedTravelPhotos, ...approvedAvatars})) {
     const actual = createHash('sha256').update(await readFile(path.join(root, file))).digest('hex');
-    if (actual !== expected) throw new Error(`公开证书副本已改变，请重新审核公开范围：${file}`);
+    if (actual !== expected) throw new Error(`已审核的公开图片已改变，请重新审核公开范围：${file}`);
   }
   let tracked;
   try { tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).split('\0').filter(Boolean); }
