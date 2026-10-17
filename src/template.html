@@ -31,6 +31,7 @@
   <script src="./assets/deadline-desk.js?v={{ASSET_VERSION}}" defer></script>
   <script src="./assets/research-desk.js?v={{ASSET_VERSION}}" defer></script>
   <script src="./assets/app.js?v={{ASSET_VERSION}}" defer></script>
+  <script src="./assets/visitors.js?v={{ASSET_VERSION}}" defer></script>
 </head>
 <body>
   <canvas id="vln-background" aria-hidden="true"></canvas>
@@ -61,8 +62,12 @@
     </aside>
     <div class="main-shell">
       <header class="topbar"><div class="breadcrumb"><span>{{NAME}}</span><span class="breadcrumb-slash">/</span><span id="page-label">首页</span></div><div class="topbar-actions"><button class="search-trigger" id="search-open" aria-label="搜索文章、论文、竞赛与项目"><span id="search-symbol"></span><span>搜索手记</span><kbd>Ctrl K</kbd></button><button class="icon-button" id="theme-toggle" aria-label="切换到深色主题"></button></div></header>
+      <section class="visitor-welcome" id="visitor-welcome" aria-labelledby="visitor-greeting">
+        <div><span class="tiny-label">WELCOME / 很高兴与你相遇</span><h2 id="visitor-greeting">欢迎来到 Williamtym 的探索手记。</h2><p id="visitor-message">这里记录技术实践、科研探索与旅途，欢迎留下你的想法。</p><div class="visitor-links"><a href="#/posts">翻阅手记 ↗</a><a href="#/community">留个言 ↗</a></div></div>
+        <button id="welcome-close" class="welcome-close" type="button" aria-label="本次浏览不再显示欢迎提示">×</button>
+      </section>
       <main id="main" tabindex="-1"></main>
-      <footer class="site-footer"><span>© <span id="copyright-year"></span> {{NAME}}<span class="footer-dot">·</span>保持好奇，持续记录</span><a href="#/about">关于这片小天地 <span aria-hidden="true">↗</span></a></footer>
+      <footer class="site-footer"><span>© <span id="copyright-year"></span> {{NAME}}<span class="footer-dot">·</span>保持好奇，持续记录</span><a href="#/about">关于这片小天地 <span aria-hidden="true">↗</span></a><div class="visitor-statistics"><span>全站访问次数 <strong id="visitor-count" aria-live="polite">等待统计</strong></span><details><summary>统计说明</summary><p>由 <a href="https://busuanzi.9420.ltd/" target="_blank" rel="noopener noreferrer">不蒜子</a> 提供汇总计数。按整页打开或刷新累计，站内切换栏目不重复计数；这是访问次数，不是独立访客人数，也无法补回接入前的访问记录。</p><p>统计服务会接收 IP 等网络信息和公开站点地址；本站不发送搜索词、记事本或其他本地保存内容。初访与回访提示仅依据当前浏览器记录判断，清除记录后会重新显示初访提示。</p><button id="visitor-statistics-toggle" type="button" aria-pressed="false">停止本浏览器后续统计</button></details></div></footer>
     </div>
   </div>
   <dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title"><div class="search-dialog-head"><h2 id="search-title">搜索手记</h2><button class="icon-button dialog-close" aria-label="关闭搜索"></button></div><label class="sr-only" for="search-input">输入标题、关键词或标签</label><input id="search-input" type="search" placeholder="试试 VLN、ICPC、算法……" autocomplete="off"><div id="search-results" aria-live="polite"></div><p class="search-hint">输入关键词搜索所有文章<span><kbd>Esc</kbd> 关闭</span></p></dialog>
