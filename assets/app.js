@@ -40,7 +40,7 @@
   const categoryIcon = category => ({ '建站手记': 'git', '技术实践': 'code', '历史阅读': 'history', '随记': 'note' }[category] || 'note');
   const categoryStyle = category => ({ '建站手记': 'git', '技术实践': 'tech', '历史阅读': 'history', '随记': 'note' }[category] || 'note');
   const categoryUrl = category => `#/posts?category=${encodeURIComponent(category)}`;
-  const navItems = [['/', 'home', '首页'], ['/labs', 'code', '计算机实验室'], ['/papers', 'note', '论文与研究'], ['/venues', 'book', '期刊与会议'], ['/posts', 'book', '全部手记'], ['/projects', 'code', '项目与实践'], ['/awards', 'award', '竞赛与成果'], ['/journeys', 'pin', '足迹与旅行'], ['/publish', 'rss', '发布与订阅'], ['/community', 'github', '留言与交流'], ['/favorites', 'folder', '我的收藏'], ['/archives', 'archive', '文章归档'], ['/friends', 'user', '朋友们'], ['/about', 'user', '关于我']];
+  const navItems = [['/', 'home', '首页'], ['/labs', 'code', '计算机实验室'], ['/papers', 'note', '论文与研究'], ['/venues', 'book', '期刊与会议'], ['/notebook', 'note', 'DDL 记事本'], ['/posts', 'book', '全部手记'], ['/projects', 'code', '项目与实践'], ['/awards', 'award', '竞赛与成果'], ['/journeys', 'pin', '足迹与旅行'], ['/publish', 'rss', '发布与订阅'], ['/community', 'github', '留言与交流'], ['/favorites', 'folder', '我的收藏'], ['/archives', 'archive', '文章归档'], ['/friends', 'user', '朋友们'], ['/about', 'user', '关于我']];
   document.getElementById('main-nav').innerHTML = navItems.map(([route, symbol, label]) => `<a class="nav-link" href="#${route}" data-route="${route}">${icon(symbol)}<span>${label}</span></a>`).join('');
   document.getElementById('sidebar-socials').innerHTML = profile.socials.filter(s => safeUrl(s.url)).map(s => `<a class="social-icon" href="${esc(safeUrl(s.url))}" target="_blank" rel="noopener noreferrer" aria-label="打开 ${esc(s.name)} 主页">${icon(s.symbol)}</a>`).join('');
   document.getElementById('search-symbol').innerHTML = icon('search');
@@ -151,6 +151,7 @@
     window.Journeys.unmount();
     window.FieldLabs.unmount();
     window.ResearchDesk.unmount();
+    window.DeadlineDesk.unmount();
     document.title = profile.siteTitle;
     let html;
     if (route === '/') html = renderHome();
@@ -163,6 +164,7 @@
     else if (route === '/lab') html = renderLab();
     else if (route === '/labs') html = renderComputerLabs(query);
     else if (route === '/venues') html = window.ResearchDesk.markup(query);
+    else if (route === '/notebook') html = window.DeadlineDesk.pageMarkup();
     else if (route === '/friends') html = window.ResearchDesk.friendsMarkup();
     else if (route === '/papers') html = window.Portfolio.paperMarkup(query);
     else if (route === '/favorites') html = window.Portfolio.favoritesMarkup();
@@ -177,6 +179,7 @@
     window.Journeys.mount(main, query);
     window.FieldLabs.mount(main);
     window.ResearchDesk.mount(main);
+    window.DeadlineDesk.mount(main);
     bindPageControls(query);
     const activeRoute = route.startsWith('/post/') ? '/posts' : route === '/lab' ? '/labs' : route;
     document.getElementById('page-label').textContent = navItems.find(n => n[0] === activeRoute)?.[2] || '页面未找到';

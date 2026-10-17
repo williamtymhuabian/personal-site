@@ -57,5 +57,6 @@
     on(window,'focus',paint);on(window,'storage',event=>{if(event.key===key)try{records=read();paint();status('已同步本浏览器另一标签页的记事。');}catch{status('另一标签页的记事格式无法读取，保留当前页面记录。');}});
     api={openVenue:id=>open(null,id)};paint();timer=setInterval(paint,60000);
   }
-  window.DeadlineDesk={markup,mount,officialLink,openVenue:id=>api?.openVenue(id),unmount(){controller?.abort();controller=null;clearInterval(timer);api=null;document.querySelector('#ddl-dialog')?.close();}};
+  function pageMarkup(){return `<section class="page-header"><p class="eyebrow">DEADLINES / MY NOTEBOOK</p><h1>DDL 记事本</h1><p>把投稿截止、专刊事项和自己的准备计划放在一处，按时间逐项推进。</p><a class="text-link" href="#/venues">浏览 CCF 期刊与会议目录 ↗</a></section>${markup()}`;}
+  window.DeadlineDesk={markup,pageMarkup,mount,officialLink,openVenue:id=>api?.openVenue(id),unmount(){controller?.abort();controller=null;clearInterval(timer);api=null;document.querySelector('#ddl-dialog')?.close();}};
 })();
