@@ -186,3 +186,13 @@ assets/public-honors/ 只保存已审核且获准公开的 WebP。当前算法�
 不确定晋级关系时先保留独立记录。竞赛获奖统计按合并后的经历数量计算，阶段成绩照实展示。默认排序来自 `assets/award-model.js`，不是通过篡改证书级别实现。新增字段或赛段也要通过隐私检查。测试命令加入 `awards.test.mjs`。
 
 计算机设计大赛新增的三张公开副本已审核并记录 SHA256；后续替换图片须重新检查脱敏范围并更新精确白名单。原件与脱敏坐标仅保存在本机私有索引。
+
+## 更新官方 DDL 与官网入口
+
+编辑 `data/venue-deadlines.json`，先直接核对主办方或出版社的当届 CFP／作者指南，保留 `sourceUrl`。每条 `venueId` 必须指向 CCF 目录实际条目，不给目录外期刊伪造 CCF 类别。十个方向均可添加，尚未核对截止时刻的条目用 `pending`，备注写明“本站日期未录入／待核对”，不要据此断言官网尚未公布。
+
+`mode` 为 `deadline`（投稿或专刊截止）、`pending`（日期待核对）、`rolling`（常规投稿指南）或 `plan`（个人计划）。`localDateTime` 仅用于有日期的两种模式，格式 `YYYY-MM-DDTHH:mm`，需要时可附 `:ss`；`zone` 使用 `assets/deadline-model.js` 支持的明确 UTC 偏移。以官网公布值为准，注意年度、轮次、时区及夏令时，不能把修订、终稿或会议举办日期作为新投稿 DDL。更新核对时间时同时更新数据顶层与各条目的 `checkedAt`。
+
+主论文、摘要注册、补充材料分开建条目，并在备注标明先决条件。会议官网模板可能仍有往年内容，不能只看网页地址中的年份。期刊专刊需要自己的征稿来源和日期；常规投稿指南不填统一 DDL。
+
+构建校验与测试：`node --test deadline.test.mjs awards.test.mjs community.test.mjs privacy.test.mjs portfolio.test.mjs journey.test.mjs explore.test.mjs`，然后 `node build.mjs`。浏览器重点检查 AoE 与北京时间换算、备份导入导出、ICS 提醒、数据持久化和手机布局。用户在页面中写的个人记录不进入仓库，不要把个人备份作为官方参考数据上传。

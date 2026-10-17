@@ -9,6 +9,7 @@ import { validateJourneys } from './journey-validation.mjs';
 import { validateExplore } from './explore-validation.mjs';
 import TopicModel from './assets/topic-model.js';
 import AwardModel from './assets/award-model.js';
+import {validateDeadlines} from './deadline-validation.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -71,6 +72,8 @@ async function build() {
   const fields = JSON.parse(await readFile(path.join(root, 'data', 'fields.json'), 'utf8'));
   const friends = JSON.parse(await readFile(path.join(root, 'data', 'friends.json'), 'utf8'));
   const ccfCatalog = JSON.parse(await readFile(path.join(root, 'data', 'ccf-catalog.json'), 'utf8'));
+  const venueDeadlines=JSON.parse(await readFile(path.join(root,'data','venue-deadlines.json'),'utf8'));
+  validateDeadlines(venueDeadlines,ccfCatalog);
   validateExplore({ fields, friends, ccfCatalog });
   validatePublicData({ profile, awards, projects });
   validatePortfolio({ papers, publicCertificates, community, awards });
@@ -97,9 +100,9 @@ async function build() {
   const communityEntries=TopicModel.entries({profile,posts,projects,papers,fields,journeys,ccfCatalog});
   if(new Set(communityEntries.map(e=>e.key)).size!==communityEntries.length)throw new Error('交流话题标识重复。');
   const communityHashes=Object.fromEntries(communityEntries.map(e=>[e.key,createHash('sha1').update(TopicModel.term(e.key)).digest('hex')]));
-  const serialized = JSON.stringify({ profile: { ...profile, awards }, posts, projects, papers, publicCertificates, community, journeys, fields, friends, ccfCatalog, communityHashes }).replaceAll('<', '\\u003c').replaceAll('\u2028', '\\u2028').replaceAll('\u2029', '\\u2029');
+  const serialized = JSON.stringify({ profile: { ...profile, awards }, posts, projects, papers, publicCertificates, community, journeys, fields, friends, ccfCatalog, venueDeadlines, communityHashes }).replaceAll('<', '\\u003c').replaceAll('\u2028', '\\u2028').replaceAll('\u2029', '\\u2029');
   const assetHash = createHash('sha256');
-  for (const file of ['app.js', 'lab.js', 'background.js', 'computer-labs.js', 'portfolio.js', 'honors.js', 'honors.css', 'style.css', 'computer-labs.css', 'portfolio.css', 'journeys.js', 'journeys.css', 'field-labs.js', 'research-desk.js', 'explore.css', 'topic-model.js', 'community.js', 'community.css', 'award-model.js']) assetHash.update(await readFile(path.join(root, 'assets', file)));
+  for (const file of ['app.js', 'lab.js', 'background.js', 'computer-labs.js', 'portfolio.js', 'honors.js', 'honors.css', 'style.css', 'computer-labs.css', 'portfolio.css', 'journeys.js', 'journeys.css', 'field-labs.js', 'research-desk.js', 'explore.css', 'topic-model.js', 'community.js', 'community.css', 'award-model.js', 'deadline-model.js', 'deadline-desk.js', 'deadline-desk.css']) assetHash.update(await readFile(path.join(root, 'assets', file)));
   const replacements = { TITLE: escapeHtml(profile.siteTitle), DESCRIPTION: escapeHtml(profile.description), NAME: escapeHtml(profile.name), ROLE: profile.role.split(' · ').map(escapeHtml).join('<br>'), MOTTO: escapeHtml(profile.motto), SITE_DATA: serialized, ASSET_VERSION: assetHash.digest('hex').slice(0, 10) };
   const html = template.replace(/\{\{(TITLE|DESCRIPTION|NAME|ROLE|MOTTO|SITE_DATA|ASSET_VERSION)\}\}/g, (_, key) => replacements[key]);
   await writeFile(path.join(root, 'index.html'), html, 'utf8');
@@ -114,7 +117,7 @@ await build();
 if (process.argv.includes('--serve')) {
   const port = Number(process.env.PORT || 4173);
   const allowed = new Map([['/', ['index.html', 'text/html; charset=utf-8']], ['/index.html', ['index.html', 'text/html; charset=utf-8']], ['/feed.xml', ['feed.xml', 'application/rss+xml; charset=utf-8']], ['/assets/app.js', ['assets/app.js', 'text/javascript; charset=utf-8']], ['/assets/lab.js', ['assets/lab.js', 'text/javascript; charset=utf-8']], ['/assets/background.js', ['assets/background.js', 'text/javascript; charset=utf-8']], ['/assets/style.css', ['assets/style.css', 'text/css; charset=utf-8']], ['/assets/favicon.svg', ['assets/favicon.svg', 'image/svg+xml']]]);
-  for (const file of ['computer-labs.js','portfolio.js','honors.js','computer-labs.css','portfolio.css','honors.css','journeys.js','journeys.css','field-labs.js','research-desk.js','explore.css', 'topic-model.js', 'community.js', 'community.css', 'award-model.js']) allowed.set('/assets/' + file, ['assets/' + file, file.endsWith('.css') ? 'text/css; charset=utf-8' : 'text/javascript; charset=utf-8']);
+  for (const file of ['computer-labs.js','portfolio.js','honors.js','computer-labs.css','portfolio.css','honors.css','journeys.js','journeys.css','field-labs.js','research-desk.js','explore.css', 'topic-model.js', 'community.js', 'community.css', 'award-model.js', 'deadline-model.js', 'deadline-desk.js', 'deadline-desk.css']) allowed.set('/assets/' + file, ['assets/' + file, file.endsWith('.css') ? 'text/css; charset=utf-8' : 'text/javascript; charset=utf-8']);
   const publicProofs = JSON.parse(await readFile(path.join(root, 'data', 'public-certificates.json'), 'utf8'));
   for (const proof of publicProofs) for (const item of proof.items) allowed.set('/' + item.image, [item.image, 'image/webp']);
   const journeys = JSON.parse(await readFile(path.join(root, 'data', 'journeys.json'), 'utf8'));
