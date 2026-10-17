@@ -1,5 +1,24 @@
 [
   {
+    "id": "pickgo-lab",
+    "title": "PickGo Lab · 底盘与机械臂搬运仿真",
+    "year": "2026",
+    "type": "机器人仿真实践",
+    "status": "运动仿真、视觉与 MCP 已验证",
+    "description": "轻量运动学实验项目：浏览器可单文件离线演示取物、托盘固定、绕障运输与投放；本机服务让网页、Python 和 MCP 共用场景，另提供原视觉函数的 RGB-D 输入验证。当前不含真实设备后端，视觉检测尚未接入自动搬运闭环。27 项现有测试通过。",
+    "tags": [
+      "机器人仿真",
+      "Python",
+      "JavaScript",
+      "MCP",
+      "计算机视觉"
+    ],
+    "repoUrl": "https://github.com/williamtymhuabian/pickgo-lab",
+    "demoUrl": "",
+    "articleSlug": "pickgo-lab",
+    "awardIds": []
+  },
+  {
     "id": "field-notes",
     "title": "探索手记 · 个人知识站",
     "year": "2026",
