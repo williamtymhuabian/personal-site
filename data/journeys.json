@@ -291,6 +291,24 @@
     ]
   },
   {
+    "id": "nanjing",
+    "city": "南京",
+    "longitude": 118.78,
+    "latitude": 32.06,
+    "events": [
+      {
+        "id": "design-2025-national-nanjing",
+        "awardId": "design-2025-national",
+        "title": "中国大学生计算机设计大赛 · 全国赛",
+        "year": "2025",
+        "kind": "award",
+        "school": "",
+        "summary": "赴南京参加2025年（第18届）中国大学生计算机设计大赛全国赛，团队作品《汲古澄源 碧境新生——海洋水体富营养化修复系统》获全国二等奖。同一作品由中南地区赛一等奖晋级全国赛，奖项记录与证书、奖牌合并展示。",
+        "photos": []
+      }
+    ]
+  },
+  {
     "id": "yichang",
     "city": "宜昌",
     "longitude": 111.28,
