@@ -8,4 +8,8 @@
 - [公共领域使用说明](https://www.naturalearthdata.com/about/terms-of-use/)
 - 获取日期：2026-10-18。
 
-本地简图先显示在道路图层下方。道路瓦片发生错误或连续 8 秒未完成当前视口加载时，页面停止该次道路图层加载并切换到本地简图；按钮允许手动重新加载道路图或主动使用本地简图。城市点、点选和足迹记录不依赖外部地图服务，也不获取访客位置。
+道路图块优先使用标准 OpenStreetMap；失败或 10 秒无响应时，按图块尝试 OSM France / HOT 道路服务，再重试首选来源一次。成功图块保留，不能因单块失败而移除整张道路图层。两路均不可用时明确显示连接状态，不把简图当作道路地图已加载。
+
+手机与电脑采用同一来源和加载逻辑。页面可选择标准道路、备用道路，或主动选择简图；简图不再自动替换整张道路图层。缩放和切换城市只请求当前视口需要的图块，不批量下载。
+
+备用服务：[OSM France 底图](https://www.openstreetmap.fr/fonds-de-carte/)、[服务使用说明](https://www.openstreetmap.fr/usage/)、[公开图块接口](https://wiki.openstreetmap.org/wiki/FR:Serveurs/tile.openstreetmap.fr)。当前站点为公开、低流量的个人记录网站；如后续转为商业地图服务，应重新核对相应服务条件。

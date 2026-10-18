@@ -3,42 +3,47 @@ import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
-const {mount}=createRequire(import.meta.url)('./assets/journey-map.js');
-
-function setup(){
-  const layers=new Set(),pending=new Map(),created=[],attributes=new Set();let id=0,click;
-  const map={createPane:()=>({style:{}}),hasLayer:layer=>layers.has(layer),removeLayer:layer=>layers.delete(layer),attributionControl:{addAttribution:value=>attributes.add(value),removeAttribution:value=>attributes.delete(value)}};
-  const layer=()=>({handlers:{},on(name,fn){this.handlers[name]=fn;return this;},off(){this.handlers={};return this;},addTo(){layers.add(this);return this;},emit(name){this.handlers[name]?.();}});
-  const land=layer(),L={geoJSON:()=>land,tileLayer:()=>{const tiles=layer();created.push(tiles);return tiles;}};
-  const button={disabled:false,setAttribute(){},addEventListener(_,fn){click=fn;},removeEventListener(){click=null;}},container={dataset:{}},status={};
-  const controller=new AbortController();
-  const instance=mount({map,L,geometry:{},container,status,button,signal:controller.signal,setTimer:fn=>{pending.set(++id,fn);return id;},clearTimer:id=>pending.delete(id)});
-  return {instance,controller,layers,land,created,container,status,button,pending,attributes,click:()=>click?.(),expire:()=>{const jobs=[...pending.values()];pending.clear();for(const fn of jobs)fn();}};
+const {mount,loadTile}=createRequire(import.meta.url)('./assets/journey-map.js');
+function node(){return {children:[],setAttribute(){},removeAttribute(name){delete this[name];},appendChild(child){this.children.push(child);}};}
+function loader(){
+  const images=[],pending=new Map(),results=[];let id=0;
+  const tile=node(),cancel=loadTile({tile,urls:['primary','backup','primary'],createImage:()=>{const image=node();images.push(image);return image;},done:(error,value)=>results.push({error,value}),setTimer:fn=>{pending.set(++id,fn);return id;},clearTimer:id=>pending.delete(id)});
+  return {images,pending,results,tile,cancel,expire(){const jobs=[...pending.values()];pending.clear();for(const fn of jobs)fn();}};
 }
+test('a failed primary tile gets a full road tile from the backup source',()=>{
+  const s=loader(),late=s.images[0].onload;s.images[0].onerror();assert.equal(s.images[1].src,'backup');
+  late();assert.equal(s.results.length,0);s.images[1].onload();assert.equal(s.results.length,1);assert.equal(s.results[0].error,null);assert.equal(s.tile.children[0],s.images[1]);assert.equal(s.pending.size,0);
+});
+test('stalled tiles try both road sources and one bounded retry before reporting failure',()=>{
+  const s=loader();s.expire();assert.equal(s.images[1].src,'backup');s.expire();assert.equal(s.images[2].src,'primary');s.expire();assert.equal(s.results.length,1);assert(s.results[0].error);assert.equal(s.pending.size,0);
+});
+test('unloading a pending tile cancels its retry and ignores late success',()=>{
+  const s=loader(),late=s.images[0].onload;s.cancel();s.expire();late();assert.equal(s.results.length,0);assert.equal(s.images.length,1);assert.equal(s.pending.size,0);
+});
+function setup(){
+  const layers=new Set(),pending=new Map(),created=[],attributes=new Set(),images=[];let id=0,click,change;
+  const map={createPane:()=>({style:{}}),hasLayer:layer=>layers.has(layer),removeLayer:layer=>layers.delete(layer),attributionControl:{addAttribution:value=>attributes.add(value),removeAttribution:value=>attributes.delete(value)}};
+  const layer=()=>({handlers:{},on(name,fn){this.handlers[name]=fn;return this;},off(){this.handlers={};return this;},addTo(){layers.add(this);return this;},emit(name,event){this.handlers[name]?.(event);}});
+  const land=layer(),L={geoJSON:()=>land,tileLayer:url=>{const tiles=layer();tiles.url=url;created.push(tiles);return tiles;},Util:{template:(url,coords)=>url.replace(/\{(\w+)\}/g,(_,key)=>coords[key])}};
+  const button={setAttribute(){},addEventListener(_,fn){click=fn;},removeEventListener(){click=null;}},source={value:'standard',addEventListener(_,fn){change=fn;},removeEventListener(){change=null;}},container={dataset:{}},status={};
+  const controller=new AbortController();
+  mount({map,L,geometry:{},container,status,button,source,signal:controller.signal,createElement:tag=>{const el=node();if(tag==='img')images.push(el);return el;},setTimer:fn=>{pending.set(++id,fn);return id;},clearTimer:id=>pending.delete(id)});
+  return {controller,layers,land,created,container,status,button,source,pending,attributes,images,click:()=>click?.(),choose(value){source.value=value;change?.();}};
+}
+test('one failed tile does not discard the road layer or select the simplified map',()=>{
+  const s=setup(),tiles=s.created[0];tiles.emit('tileload');tiles.emit('tileerror');tiles.emit('load');
+  assert.equal(s.container.dataset.basemap,'partial');assert(s.layers.has(tiles));assert.equal(s.source.value,'standard');assert.match(s.status.textContent,/切换道路来源/);
+});
+test('total road failure is reported honestly without claiming a successful local substitution',()=>{
+  const s=setup(),tiles=s.created[0];tiles.emit('tileerror');tiles.emit('load');assert.equal(s.container.dataset.basemap,'unavailable');assert(s.layers.has(tiles));assert.equal(s.source.value,'standard');
+});
+test('only explicit selection switches to the overview, and retry restores a road source',()=>{
+  const s=setup();s.choose('backup');assert.match(s.created[1].url,/openstreetmap\.fr/);s.choose('local');assert.equal(s.container.dataset.basemap,'local');assert.equal(s.layers.size,1);s.click();assert.equal(s.source.value,'standard');assert.equal(s.created.length,3);
+});
+test('navigation cancels active images, retries, handlers and layers',()=>{
+  const s=setup();s.created[0].createTile({x:1,y:2,z:3},()=>{});assert.equal(s.pending.size,1);const late=s.images[0].onload;s.controller.abort();late();assert.equal(s.pending.size,0);assert.equal(s.layers.size,0);assert.equal(s.attributes.size,0);s.click();assert.equal(s.created.length,1);
+});
 
-test('a tile error keeps a local map visible and stops the failed remote layer',()=>{
-  const s=setup();assert(s.layers.has(s.land));assert.equal(s.container.dataset.basemap,'loading');
-  s.created[0].emit('tileerror');
-  assert.equal(s.container.dataset.basemap,'local');assert(s.layers.has(s.land));assert(!s.layers.has(s.created[0]));assert.equal(s.pending.size,0);assert.match(s.button.textContent,/加载道路底图/);
-});
-test('a connection that never settles falls back without waiting for an error event',()=>{
-  const s=setup();s.expire();assert.equal(s.container.dataset.basemap,'local');assert.equal(s.layers.size,1);assert.match(s.status.textContent,/较慢/);
-});
-test('successful loading cancels the timeout; a later stalled viewport also falls back',()=>{
-  const s=setup(),tiles=s.created[0];tiles.emit('loading');tiles.emit('tileload');tiles.emit('load');
-  assert.equal(s.container.dataset.basemap,'online');assert.equal(s.pending.size,0);
-  tiles.emit('loading');s.expire();assert.equal(s.container.dataset.basemap,'local');
-});
-test('manual retry can recover while a late callback from the old request is ignored',()=>{
-  const s=setup(),old=s.created[0],late=old.handlers.load;old.emit('tileerror');s.click();
-  assert.equal(s.created.length,2);late();assert.equal(s.container.dataset.basemap,'loading');
-  const next=s.created[1];next.emit('tileload');next.emit('load');assert.equal(s.container.dataset.basemap,'online');assert(s.layers.has(s.land));
-});
-test('manual local mode stops requests and aborting navigation cleans timers and layers',()=>{
-  const s=setup();s.click();assert.equal(s.container.dataset.basemap,'local');assert.equal(s.pending.size,0);
-  s.click();assert.equal(s.pending.size,1);s.controller.abort();assert.equal(s.pending.size,0);assert.equal(s.layers.size,0);assert.equal(s.attributes.size,0);
-  s.click();s.expire();assert.equal(s.created.length,2);
-});
 test('the packaged fallback contains usable closed polygon geometry with no remote dependency',async()=>{
   const context={window:{}};vm.runInNewContext(await readFile(new URL('./assets/journey-basemap.js',import.meta.url),'utf8'),context);
   const data=context.window.JourneyBasemap;assert.equal(data.type,'FeatureCollection');assert.equal(data.features.length,177);
