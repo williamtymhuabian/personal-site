@@ -397,5 +397,23 @@
         "photos": []
       }
     ]
+  },
+  {
+    "id": "qinhuangdao",
+    "city": "秦皇岛",
+    "longitude": 119.59,
+    "latitude": 39.94,
+    "events": [
+      {
+        "id": "travel-qinhuangdao-friends",
+        "awardId": "",
+        "title": "秦皇岛 · 与高中好友相聚",
+        "year": "",
+        "kind": "travel",
+        "school": "东北大学秦皇岛校区",
+        "summary": "到访东北大学秦皇岛校区，和高中好友相聚。旅行时间、照片与旅途见闻将在整理后补充。",
+        "photos": []
+      }
+    ]
   }
 ]
