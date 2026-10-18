@@ -4,8 +4,8 @@
     "title": "PickGo Lab · 底盘与机械臂搬运仿真",
     "year": "2026",
     "type": "机器人仿真实践",
-    "status": "v0.3.0 · RGB 视频输入与视觉验证",
-    "description": "浏览器运动学仿真与本机 RGB 视觉验证：支持内置／USB 摄像头、送检帧与结果对应、逐帧识别和设备释放；网页、Python 与 MCP 继续共用仿真场景。本轮 36 项测试通过，另复现固定停车位可达性实验。真实深度、视觉控制闭环及实体机器人后端尚未实现。",
+    "status": "RGB 摄像头接入与视觉验证",
+    "description": "浏览器运动学仿真与本机 RGB 视觉验证：支持内置／USB 摄像头、送检帧与结果对应、逐帧识别和设备释放；网页、Python 与 MCP 共用仿真场景。配套文章整理相机选型、RGB-D 对齐和三维定位的开发路线；真实深度与视觉控制闭环待实现。",
     "tags": [
       "机器人仿真",
       "Python",
@@ -15,7 +15,7 @@
     ],
     "repoUrl": "https://github.com/williamtymhuabian/pickgo-lab",
     "demoUrl": "",
-    "articleSlug": "pickgo-lab-v030",
+    "articleSlug": "pickgo-lab-camera",
     "awardIds": []
   },
   {

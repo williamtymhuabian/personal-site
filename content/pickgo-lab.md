@@ -7,7 +7,7 @@ tags: 机器人仿真, Python, MCP, 计算机视觉, 项目实践
 pinned: false
 ---
 
-本文记录 2026-10-17 的版本。RGB 摄像头接入与后续验证见 [v0.3.0 更新实践](https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab-v030)。
+本文记录 2026-10-17 的版本。RGB 摄像头接入与后续验证见 [摄像头与深度开发实践](https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab-camera)。
 
 如果要验证一个“移动到目标附近、抓取物体、运输并投放”的机器人流程，除了看最终动画，还需要知道：动作推进到了哪一步，暂停后能否继续，不同控制入口看到的状态是否一致，以及视觉函数到底输出了什么。
 

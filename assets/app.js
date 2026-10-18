@@ -134,6 +134,10 @@
   }
 
   function renderArticle(slug) {
+    if (slug === 'pickgo-lab-v030') {
+      slug = 'pickgo-lab-camera';
+      history.replaceState(null, '', '#/post/' + slug);
+    }
     const post = posts.find(p => p.slug === slug);
     if (!post) return notFound();
     document.title = `${post.title} — ${profile.name}`;
