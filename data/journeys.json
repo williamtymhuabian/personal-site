@@ -343,5 +343,41 @@
         "photos": []
       }
     ]
+  },
+  {
+    "id": "chengde",
+    "city": "承德",
+    "longitude": 117.96,
+    "latitude": 40.95,
+    "events": [
+      {
+        "id": "travel-chengde",
+        "awardId": "",
+        "title": "承德 · 旅行记录",
+        "year": "",
+        "kind": "travel",
+        "school": "",
+        "summary": "曾到访承德。旅行时间、照片与旅途见闻将在整理后补充。",
+        "photos": []
+      }
+    ]
+  },
+  {
+    "id": "shanghai",
+    "city": "上海",
+    "longitude": 121.46,
+    "latitude": 31.22,
+    "events": [
+      {
+        "id": "travel-shanghai",
+        "awardId": "",
+        "title": "上海 · 旅行记录",
+        "year": "",
+        "kind": "travel",
+        "school": "",
+        "summary": "曾到访上海。旅行时间、照片与旅途见闻将在整理后补充。",
+        "photos": []
+      }
+    ]
   }
 ]
