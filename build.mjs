@@ -41,6 +41,15 @@ function markdown(source) {
     }
     if (marker) { flush(); fence = marker[1]; language = marker[2]; continue; }
     if (!line.trim()) { flush(); continue; }
+    const picture = line.match(/^!\[([^\]]*)\]\((https:\/\/[^\s)]+)\)$/);
+    if (picture) {
+      const source = new URL(picture[2]);
+      if (source.protocol !== 'https:' || source.username || source.password) throw new Error('文章图片需要公开 HTTPS 地址。');
+      flush();
+      const caption = escapeHtml(picture[1]), src = escapeHtml(source.href);
+      html.push(`<figure class="article-figure"><a href="${src}" target="_blank" rel="noopener noreferrer" aria-label="原尺寸查看：${caption}"><img src="${src}" alt="${caption}" loading="lazy" decoding="async"></a><figcaption>${caption}</figcaption></figure>`);
+      continue;
+    }
     const heading = line.match(/^(#{1,3})\s+(.+)$/);
     if (heading) {
       flush();
@@ -119,6 +128,11 @@ if (process.argv.includes('--serve')) {
   const allowed = new Map([['/', ['index.html', 'text/html; charset=utf-8']], ['/index.html', ['index.html', 'text/html; charset=utf-8']], ['/feed.xml', ['feed.xml', 'application/rss+xml; charset=utf-8']], ['/assets/app.js', ['assets/app.js', 'text/javascript; charset=utf-8']], ['/assets/lab.js', ['assets/lab.js', 'text/javascript; charset=utf-8']], ['/assets/background.js', ['assets/background.js', 'text/javascript; charset=utf-8']], ['/assets/style.css', ['assets/style.css', 'text/css; charset=utf-8']], ['/assets/favicon.svg', ['assets/favicon.svg', 'image/svg+xml']]]);
   for (const file of ['vendor/leaflet/leaflet.js','vendor/leaflet/leaflet.css','visitors.js','computer-labs.js','portfolio.js','honors.js','computer-labs.css','portfolio.css','honors.css','journeys.js','journeys.css','field-labs.js','research-desk.js','explore.css', 'topic-model.js', 'community.js', 'community.css', 'award-model.js', 'deadline-model.js', 'deadline-desk.js', 'deadline-desk.css']) allowed.set('/assets/' + file, ['assets/' + file, file.endsWith('.css') ? 'text/css; charset=utf-8' : 'text/javascript; charset=utf-8']);
   allowed.set('/assets/avatar.jpg', ['assets/avatar.jpg', 'image/jpeg']);
+  const projectMedia = path.join(root, 'assets', 'projects');
+  for (const file of await readdir(projectMedia)) {
+    const suffix = file.match(/^[a-z0-9][a-z0-9_-]*\.(png|jpe?g|webp|gif)$/i)?.[1].toLowerCase();
+    if (suffix) allowed.set('/assets/projects/' + file, ['assets/projects/' + file, suffix === 'jpg' ? 'image/jpeg' : 'image/' + suffix]);
+  }
   const publicProofs = JSON.parse(await readFile(path.join(root, 'data', 'public-certificates.json'), 'utf8'));
   for (const proof of publicProofs) for (const item of proof.items) allowed.set('/' + item.image, [item.image, 'image/webp']);
   const journeys = JSON.parse(await readFile(path.join(root, 'data', 'journeys.json'), 'utf8'));
