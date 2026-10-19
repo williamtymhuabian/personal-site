@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Williamtym · 探索手记</title><link>https://williamtymhuabian.github.io/personal-site/</link><description>Williamtym，苏州大学计算机科学与技术硕士研究生。记录技术实践、算法思考、竞赛经历与历史阅读。</description><language>zh-cn</language><atom:link href="https://williamtymhuabian.github.io/personal-site/feed.xml" rel="self" type="application/rss+xml"/><item><title>PickGo Lab 摄像头实践：从 RGB 识别走向深度感知</title><link>https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab-camera</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab-camera</guid><pubDate>Sat, 17 Oct 2026 16:00:00 GMT</pubDate><description>接通浏览器与本机 OpenCV 的 RGB 识别链路，梳理 D435、D405、D455 的使用场景，并规划 RGB-D 对齐、三维定位与可回放实验的下一步代码。</description><content:encoded>&lt;p&gt;这次给 PickGo Lab 增加了 RGB 摄像头输入：浏览器采集彩色画面，本机 Python 调用原颜色与矩形识别函数，再将检测结果绘制到对应的送检帧上。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Williamtym · 探索手记</title><link>https://williamtymhuabian.github.io/personal-site/</link><description>Williamtym，苏州大学计算机科学与技术硕士研究生。记录技术实践、算法思考、竞赛经历与历史阅读。</description><language>zh-cn</language><atom:link href="https://williamtymhuabian.github.io/personal-site/feed.xml" rel="self" type="application/rss+xml"/><item><title>AI Infra 学习笔记：先看清一次生成</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-infra-first-inference</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-infra-first-inference</guid><pubDate>Sun, 18 Oct 2026 16:00:00 GMT</pubDate><description>从逐 token 生成和 KV Cache 入手，梳理大模型推理的学习顺序，也记下第一组对照实验准备怎样做。</description><content:encoded>&lt;p&gt;最近开始整理 AI Infra 的学习内容。推理引擎、缓存、调度、算子和分布式，每个词后面都有不少东西要看。我暂时把范围收在大模型推理上，先追一个具体问题：输入一段文字后，程序怎样一步步生成回答？&lt;/p&gt;
+&lt;p&gt;这条线能把模型计算和系统实现接起来。理解一次生成以后，再看显存为什么不够、多个请求怎样一起执行，源码里的设计会更容易对上具体的问题。&lt;/p&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;一次生成里发生了什么&lt;/h2&gt;
+&lt;p&gt;起步准备选 &lt;a href=&quot;https://huggingface.co/Qwen/Qwen3-0.6B&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Qwen3-0.6B&lt;/a&gt;，先处理一条输入，观察每次前向计算的输入和输出。&lt;/p&gt;
+&lt;p&gt;文本经过 tokenizer 变成 token ID 序列。模型给出词表上各个候选 token 的分数，也就是 logits；生成循环从最后一个输入位置的分数里选择下一个 token，再把它接到上下文后面。&lt;/p&gt;
+&lt;p&gt;这里有两个容易混淆的地方。第一，token 数和汉字数、字符数并不相等。第二，最后一个位置的 logits 用来预测接下来的 token，并不是把输入末尾的 token 再输出一次。&lt;/p&gt;
+&lt;p&gt;我打算先把这段循环自己写出来。暂时只处理单条、无 padding 的输入，用贪心选择固定生成几步，方便逐个核对 token。等这一段清楚了，再加停止条件和多请求处理。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;缓存到底省掉了哪部分计算&lt;/h2&gt;
+&lt;p&gt;可以先看一个小例子：输入有 4 个 token，继续生成 3 个 token。完整重算时，每次都把当前全部序列送进模型；使用缓存时，第一次处理完整输入，之后只送入上一步新生成的 token。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-text&quot;&gt;完整重算的前向输入长度：4 → 5 → 6
+使用缓存的前向输入长度：4 → 1 → 1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;KV Cache 保存的是各层已经处理过的位置对应的 Key 和 Value。后续步骤复用它们，减少重复计算；新的 Query 仍需要访问历史 KV。随着上下文变长，缓存占用和访问开销也会变化。&lt;a href=&quot;https://huggingface.co/docs/transformers/en/cache_explanation&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Transformers 缓存原理&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;因此，后续前向只输入一个 token，并不意味着模型只看得到这一个 token。实现循环时，位置和 attention mask 也要与历史缓存对应。&lt;/p&gt;
+&lt;p&gt;第一组实验就围绕这两条生成路径展开。我会先核对输出，再比较耗时和显存：固定模型版本、输入 token、生成长度和采样方式，保存每一步的输入长度与生成 token。出现分歧时，从第一个不同的位置查起，检查缓存、位置、掩码和数值误差。&lt;/p&gt;
+&lt;p&gt;计时前先预热，并处理好 GPU 异步执行的同步问题。每轮原始结果都保留，短输入和长输入分别比较。缓存能省掉多少时间，要由实际工作负载下的测量回答。&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;带着一条请求读推理引擎&lt;/h2&gt;
+&lt;p&gt;接下来准备读 &lt;a href=&quot;https://github.com/GeeeekExplorer/nano-vllm&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Nano-vLLM&lt;/a&gt;。阅读时先追踪一条请求：它在哪里创建，何时进入调度，怎样送到模型执行，生成结束后又怎样释放缓存。&lt;/p&gt;
+&lt;p&gt;我会沿着这条顺序记笔记：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-text&quot;&gt;提交请求 → 保存序列状态 → 调度批次 → 分配缓存块
+        → 执行模型 → 更新生成结果 → 继续调度或结束&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;重点看状态怎样变化。等待队列里存的是什么？一个批次能放进哪些请求？缓存块不够时怎样处理？请求完成以后，哪些资源能够回收？这些问题比按文件顺序从头读到尾更适合我现在的起点。&lt;/p&gt;
+&lt;p&gt;笔记里除了函数名，还要记下它接收什么、修改什么，以及下一个调用在哪里。必要时给少量请求加上可关闭的日志，先观察状态流转，正式计时再关闭日志。&lt;/p&gt;
+&lt;p&gt;等离线生成这一段清楚后，再用 &lt;a href=&quot;https://github.com/sgl-project/mini-sglang/blob/main/docs/structures.md&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Mini-SGLang 的结构说明&lt;/a&gt;去看服务端：请求怎样经过接口、文本处理、调度与模型执行，各个进程之间传递的对象是什么。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;性能数字先把口径写清楚&lt;/h2&gt;
+&lt;p&gt;后面做实验时，我最想避免的是留下一个没法解释的“每秒多少 token”。&lt;/p&gt;
+&lt;p&gt;一批请求全部完成的总时间，可以用来计算这批任务的输出吞吐量；它不能直接代替每条请求的首 token 延迟。用户等待第一个 token 的时间、后续 token 的输出间隔和请求总耗时，需要分别记录。相关指标的定义可以对照 &lt;a href=&quot;https://docs.vllm.ai/en/latest/design/metrics/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;vLLM 的指标文档&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;实验记录还需要说明：计时是否包含模型加载、编译、文本编码和输出解码，输入输出长度是多少，是否忽略 EOS，以及缓存处于什么状态。即使两个程序都输出 tokens/s，计时范围不同，也很难直接比较。&lt;/p&gt;
+&lt;p&gt;前缀缓存也值得单独做一次实验。我想比较共享同一段 token 前缀的请求与不同前缀的请求，同时记录实际匹配的缓存长度。仅凭一组耗时下降，还不足以判断收益来自哪里；需要把命中情况和缓存开关等条件一起核对。&lt;/p&gt;
+&lt;p&gt;目前先把逐 token 循环和缓存对照做好。后续文章再放实际代码、每轮测量和遇到的问题。读引擎时发现的疑问，也从这些具体记录里继续往下追。&lt;/p&gt;</content:encoded></item><item><title>PickGo Lab 摄像头实践：从 RGB 识别走向深度感知</title><link>https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab-camera</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab-camera</guid><pubDate>Sat, 17 Oct 2026 16:00:00 GMT</pubDate><description>接通浏览器与本机 OpenCV 的 RGB 识别链路，梳理 D435、D405、D455 的使用场景，并规划 RGB-D 对齐、三维定位与可回放实验的下一步代码。</description><content:encoded>&lt;p&gt;这次给 PickGo Lab 增加了 RGB 摄像头输入：浏览器采集彩色画面，本机 Python 调用原颜色与矩形识别函数，再将检测结果绘制到对应的送检帧上。&lt;/p&gt;
 &lt;p&gt;真正需要理清的，是从“能看到画面”到“知道物体在哪里”之间的步骤。彩色视频、有效深度、相机坐标和机器人坐标，各自需要独立验证。这篇记录已完成的 RGB 接入，也整理下一步深度开发的具体路线。&lt;/p&gt;
 &lt;p&gt;项目地址：&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;PickGo Lab&lt;/a&gt;。&lt;/p&gt;
 &lt;h2 id=&quot;section-1&quot;&gt;一、先跑通 RGB 采集与识别&lt;/h2&gt;
