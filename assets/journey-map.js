@@ -4,6 +4,25 @@
     {id:'standard',name:'标准道路地图',url:'https://tile.openstreetmap.org/{z}/{x}/{y}.png'},
     {id:'backup',name:'备用道路地图',url:'https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'}
   ];
+  function viewport({map,getPoints,requestFrame=requestAnimationFrame,cancelFrame=cancelAnimationFrame}){
+    let overview=true,frame=null,disposed=false;
+    const moved=()=>{overview=false;};
+    map.on('dragstart',moved);map.on('zoomstart',moved);
+    function fit(){
+      if(disposed)return;
+      map.stop();map.fitBounds(getPoints(),{padding:[18,24],maxZoom:6,animate:false});overview=true;
+    }
+    function focus(point){
+      if(disposed)return;
+      overview=false;map.stop();map.setView(point,Math.min(map.getMaxZoom(),Math.max(map.getZoom(),9)),{animate:false});
+    }
+    function resize(){
+      if(disposed||frame!==null)return;
+      frame=requestFrame(()=>{frame=null;if(disposed)return;map.invalidateSize({animate:false,debounceMoveend:true});if(overview)fit();});
+    }
+    function dispose(){disposed=true;if(frame!==null)cancelFrame(frame);frame=null;map.off('dragstart',moved);map.off('zoomstart',moved);}
+    return {fit,focus,resize,dispose};
+  }
   // Retry only the failed tile; successful road tiles stay intact.
   function loadTile({tile,urls,done,createImage=()=>document.createElement('img'),setTimer=setTimeout,clearTimer=clearTimeout,onBackup=()=>{}}){
     let image=null,timer=null,index=0,closed=false,generation=0;
@@ -82,5 +101,5 @@
     if(signal?.aborted)dispose();else online();
     return {dispose};
   }
-  return {mount,loadTile};
+  return {mount,loadTile,viewport};
 });

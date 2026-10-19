@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
-const {mount,loadTile}=createRequire(import.meta.url)('./assets/journey-map.js');
+const {mount,loadTile,viewport}=createRequire(import.meta.url)('./assets/journey-map.js');
 function node(){return {children:[],setAttribute(){},removeAttribute(name){delete this[name];},appendChild(child){this.children.push(child);}};}
 function loader(){
   const images=[],pending=new Map(),results=[];let id=0;
@@ -51,4 +51,27 @@ test('the packaged fallback contains usable closed polygon geometry with no remo
     const polygons=feature.geometry.type==='Polygon'?[feature.geometry.coordinates]:feature.geometry.coordinates;
     for(const polygon of polygons)for(const ring of polygon){assert(ring.length>=4);assert.equal(JSON.stringify(ring[0]),JSON.stringify(ring.at(-1)));for(const [x,y]of ring){assert(Number.isFinite(x)&&x>=-180&&x<=180);assert(Number.isFinite(y)&&y>=-90&&y<=90);}}
   }
+});
+
+function viewportSetup(){
+  const events={},calls=[],jobs=new Map();let id=0,points=[[30,110],[40,120]],zoom=4;
+  const map={on:(name,fn)=>{events[name]=fn;},off:name=>{delete events[name];},stop(){},
+    fitBounds(value,options){calls.push(['fit',value,options]);events.zoomstart?.();},
+    setView(point,value){zoom=value;calls.push(['focus',point,value]);events.zoomstart?.();},
+    getZoom:()=>zoom,getMaxZoom:()=>16,invalidateSize:options=>calls.push(['resize',options])};
+  const view=viewport({map,getPoints:()=>points,requestFrame:fn=>{jobs.set(++id,fn);return id;},cancelFrame:id=>jobs.delete(id)});
+  return {view,events,calls,jobs,setPoints(value){points=value;},flush(){const pending=[...jobs.values()];jobs.clear();pending.forEach(fn=>fn());}};
+}
+test('resizing an overview reframes all current cities and batches observer notifications',()=>{
+  const s=viewportSetup();s.view.fit();s.calls.length=0;s.setPoints([[25,102],[44,126]]);
+  s.view.resize();s.view.resize();assert.equal(s.jobs.size,1);s.flush();
+  assert.deepEqual(s.calls.map(c=>c[0]),['resize','fit']);assert.deepEqual(s.calls[1][1],[[25,102],[44,126]]);
+});
+test('city focus or manual exploration survives expansion, rotation and shrinking',()=>{
+  const s=viewportSetup();s.view.fit();s.view.focus([31,118]);assert.equal(s.calls.at(-1)[2],9);
+  s.calls.length=0;s.view.resize();s.flush();assert.deepEqual(s.calls.map(c=>c[0]),['resize']);
+  s.view.fit();s.events.dragstart();s.calls.length=0;s.view.resize();s.flush();assert.deepEqual(s.calls.map(c=>c[0]),['resize']);
+});
+test('leaving the map cancels a queued resize and detaches movement listeners',()=>{
+  const s=viewportSetup();s.view.resize();s.view.dispose();s.flush();s.view.resize();assert.equal(s.calls.length,0);assert.equal(s.jobs.size,0);assert.deepEqual(Object.keys(s.events),[]);
 });
