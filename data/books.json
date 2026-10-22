@@ -1,0 +1,86 @@
+[
+  {
+    "id": "ai-agents-in-depth",
+    "title": "深入理解 AI Agent：设计原理与工程实践",
+    "authors": "李博杰",
+    "edition": "阅读依据：本地 PDF v1.3，2026-07-30；在线版本持续更新",
+    "description": "从 Agent 的模型、上下文与工具出发，理解 Harness、记忆、评估和协作。适合先读前两章建立工程全貌，再按问题补充后续章节。",
+    "prerequisites": "Python 基础、JSON 与函数调用；第一篇练习无需 API 或 GPU。",
+    "directionIds": [
+      "rd-003",
+      "rd-011",
+      "rd-014",
+      "rd-015",
+      "rd-016",
+      "rd-031",
+      "rd-071",
+      "rd-041"
+    ],
+    "sourceUrl": "https://github.com/bojieli/ai-agent-book",
+    "readingUrl": "https://bojieli.github.io/ai-agent-book/",
+    "chapters": [
+      {
+        "number": 1,
+        "title": "AI Agent 入门",
+        "pages": "书内页码 7—27；PDF 第 15—35 页",
+        "postSlug": "ai-agents-ch01-loop-and-harness",
+        "directionIds": [
+          "rd-011",
+          "rd-014",
+          "rd-015",
+          "rd-031"
+        ],
+        "goal": "区分模型决策与工具执行，跑通一个带明确停止条件的离线循环。"
+      },
+      {
+        "number": 2,
+        "title": "上下文工程",
+        "pages": "书内页码 28—71；PDF 第 36—79 页",
+        "postSlug": "ai-agents-ch02-context-engineering",
+        "directionIds": [
+          "rd-003",
+          "rd-016",
+          "rd-031",
+          "rd-041"
+        ],
+        "goal": "解释消息协议、稳定前缀、按需加载、状态摘要与保留来源的压缩。"
+      }
+    ]
+  },
+  {
+    "id": "essential-graphrag",
+    "title": "Essential GraphRAG",
+    "authors": "Tomaž Bratanič、Oskar Hane",
+    "edition": "推荐阅读；所提供 PDF 已核对封面与作者，章节导读待整理",
+    "description": "学习知识图谱与检索增强生成如何组合，重点关注实体关系、多跳问题、检索策略和答案依据。",
+    "prerequisites": "Python、基础 RAG 概念与图数据建模；可在 Agent 上下文入门之后阅读。",
+    "directionIds": [
+      "rd-061",
+      "rd-062",
+      "rd-065",
+      "rd-070"
+    ],
+    "sourceUrl": "https://www.manning.com/books/essential-graphrag",
+    "readingUrl": "https://livebook.manning.com/book/essential-graphrag/welcome",
+    "chapters": []
+  },
+  {
+    "id": "llm-from-scratch",
+    "title": "Build a Large Language Model (From Scratch)",
+    "authors": "Sebastian Raschka",
+    "edition": "推荐阅读；所提供 PDF 已核对封面与作者，章节导读待整理",
+    "description": "通过 Python 与 PyTorch 逐步理解分词、注意力、GPT 架构、预训练及微调，补足 Agent 应用背后的模型基础。",
+    "prerequisites": "Python、张量操作、基础线性代数；先完成小模型练习，再增加训练规模。",
+    "directionIds": [
+      "rd-001",
+      "rd-002",
+      "rd-003",
+      "rd-007",
+      "rd-008",
+      "rd-091"
+    ],
+    "sourceUrl": "https://www.manning.com/books/build-a-large-language-model-from-scratch",
+    "readingUrl": "https://sebastianraschka.com/llms-from-scratch/",
+    "chapters": []
+  }
+]

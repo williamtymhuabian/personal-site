@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const { profile, posts, projects, journeys = [], fields, friends, ccfCatalog } = JSON.parse(document.getElementById('site-data').textContent);
+  const { profile, posts, projects, journeys = [], fields, friends, ccfCatalog,research,books } = JSON.parse(document.getElementById('site-data').textContent);
   const main = document.getElementById('main');
   document.querySelector('.skip-link').addEventListener('click', event => { event.preventDefault(); main.focus(); main.scrollIntoView({ behavior: 'instant' }); });
   const paths = {
@@ -40,7 +40,7 @@
   const categoryIcon = category => ({ '建站手记': 'git', '技术实践': 'code', '历史阅读': 'history', '随记': 'note' }[category] || 'note');
   const categoryStyle = category => ({ '建站手记': 'git', '技术实践': 'tech', '历史阅读': 'history', '随记': 'note' }[category] || 'note');
   const categoryUrl = category => `#/posts?category=${encodeURIComponent(category)}`;
-  const navItems = [['/', 'home', '首页'], ['/labs', 'code', '计算机实验室'], ['/papers', 'note', '论文与研究'], ['/venues', 'book', '期刊与会议'], ['/notebook', 'note', 'DDL 记事本'], ['/posts', 'book', '全部手记'], ['/projects', 'code', '项目与实践'], ['/awards', 'award', '竞赛与成果'], ['/journeys', 'pin', '足迹与旅行'], ['/publish', 'rss', '发布与订阅'], ['/community', 'github', '留言与交流'], ['/favorites', 'folder', '我的收藏'], ['/archives', 'archive', '文章归档'], ['/friends', 'user', '朋友们'], ['/about', 'user', '关于我']];
+  const navItems = [['/', 'home', '首页'], ['/labs', 'code', '计算机实验室'], ['/research', 'code', '研究方向'], ['/books', 'book', '推荐书目'], ['/papers', 'note', '论文成果'], ['/venues', 'book', '期刊与会议'], ['/notebook', 'note', 'DDL 记事本'], ['/posts', 'book', '全部手记'], ['/projects', 'code', '项目与实践'], ['/awards', 'award', '竞赛与成果'], ['/journeys', 'pin', '足迹与旅行'], ['/publish', 'rss', '发布与订阅'], ['/community', 'github', '留言与交流'], ['/favorites', 'folder', '我的收藏'], ['/archives', 'archive', '文章归档'], ['/friends', 'user', '朋友们'], ['/about', 'user', '关于我']];
   document.getElementById('main-nav').innerHTML = navItems.map(([route, symbol, label]) => `<a class="nav-link" href="#${route}" data-route="${route}">${icon(symbol)}<span>${label}</span></a>`).join('');
   document.getElementById('sidebar-socials').innerHTML = profile.socials.filter(s => safeUrl(s.url)).map(s => `<a class="social-icon" href="${esc(safeUrl(s.url))}" target="_blank" rel="noopener noreferrer" aria-label="打开 ${esc(s.name)} 主页">${icon(s.symbol)}</a>`).join('');
   document.getElementById('search-symbol').innerHTML = icon('search');
@@ -141,7 +141,7 @@
     const post = posts.find(p => p.slug === slug);
     if (!post) return notFound();
     document.title = `${post.title} — ${profile.name}`;
-    return `<a href="#/posts" class="back-link">${icon('back')} 回到全部手记</a><article><header class="article-header"><div class="post-kicker"><a href="${categoryUrl(post.category)}">${esc(post.category)}</a></div><h1>${esc(post.title)}</h1><div class="post-meta"><span>${esc(profile.name)}</span><time datetime="${post.date}">${date(post.date)}</time><span>${post.readTime} 分钟阅读</span></div></header><div class="article-layout"><div><div class="article-body">${post.html}</div><div class="tag-cloud" style="margin-top:25px">${post.tags.map(t => `<a class="tag" href="#/posts?tag=${encodeURIComponent(t)}"># ${esc(t)}</a>`).join('')}</div>${window.Portfolio.actions('post:' + post.slug)}<footer class="article-end"><a href="#/publish?post=${post.slug}">整理为各平台发布稿 ↗</a><a href="#/posts">继续翻阅 →</a></footer></div><aside class="article-aside" aria-label="文章目录"><h2>文章目录 / CONTENTS</h2>${post.headings.map(h => `<button class="toc-button" data-anchor="${esc(h.id)}">${esc(h.text)}</button>`).join('')}</aside></div></article>`;
+    return `<a href="#/posts" class="back-link">${icon('back')} 回到全部手记</a><article><header class="article-header"><div class="post-kicker"><a href="${categoryUrl(post.category)}">${esc(post.category)}</a></div><h1>${esc(post.title)}</h1><div class="post-meta"><span>${esc(profile.name)}</span><time datetime="${post.date}">${date(post.date)}</time><span>${post.readTime} 分钟阅读</span></div></header><div class="article-layout"><div><div class="article-body">${post.html}</div>${window.ResearchHub.articleMarkup(post)}<div class="tag-cloud" style="margin-top:25px">${post.tags.map(t => `<a class="tag" href="#/posts?tag=${encodeURIComponent(t)}"># ${esc(t)}</a>`).join('')}</div>${window.Portfolio.actions('post:' + post.slug)}<footer class="article-end"><a href="#/publish?post=${post.slug}">整理为各平台发布稿 ↗</a><a href="#/posts">继续翻阅 →</a></footer></div><aside class="article-aside" aria-label="文章目录"><h2>文章目录 / CONTENTS</h2>${post.headings.map(h => `<button class="toc-button" data-anchor="${esc(h.id)}">${esc(h.text)}</button>`).join('')}</aside></div></article>`;
   }
   function notFound() { return `<section class="route-not-found"><p class="eyebrow">A PAGE YET TO BE WRITTEN</p><h1>404</h1><p>这一页还没有写下。先回到手记首页吧。</p><a class="primary-link" href="#/">返回首页 ${icon('arrow')}</a></section>`; }
   function render() {
@@ -156,6 +156,7 @@
     window.FieldLabs.unmount();
     window.ResearchDesk.unmount();
     window.DeadlineDesk.unmount();
+    window.ResearchHub.unmount();
     document.title = profile.siteTitle;
     let html;
     if (route === '/') html = renderHome();
@@ -168,6 +169,8 @@
     else if (route === '/lab') html = renderLab();
     else if (route === '/labs') html = renderComputerLabs(query);
     else if (route === '/venues') html = window.ResearchDesk.markup(query);
+    else if (route === '/research') html = window.ResearchHub.markup(query);
+    else if (route === '/books') html = window.ResearchHub.booksMarkup(query);
     else if (route === '/notebook') html = window.DeadlineDesk.pageMarkup();
     else if (route === '/friends') html = window.ResearchDesk.friendsMarkup();
     else if (route === '/papers') html = window.Portfolio.paperMarkup(query);
@@ -183,7 +186,8 @@
     window.Journeys.mount(main, query);
     window.FieldLabs.mount(main);
     window.ResearchDesk.mount(main);
-    window.DeadlineDesk.mount(main);
+    window.DeadlineDesk.mount(main,query);
+    window.ResearchHub.mount(main);
     bindPageControls(query);
     const activeRoute = route.startsWith('/post/') ? '/posts' : route === '/lab' ? '/labs' : route;
     document.getElementById('page-label').textContent = navItems.find(n => n[0] === activeRoute)?.[2] || '页面未找到';
@@ -208,6 +212,8 @@
   function updateSearch() {
     const keyword = searchInput.value.trim().toLocaleLowerCase();
     const index = [
+      ...research.directions.map(d=>({title:d.title,info:'研究方向 · '+d.id,text:d.keywords+' '+d.question,href:'#/research?direction='+d.id})),
+      ...books.map(b=>({title:b.title,info:'推荐书目',text:b.authors+' '+b.description,href:'#/books?book='+b.id})),
       ...fields.map(field => ({title:field.title,info:'计算机方向 · 交互实验',text:field.topics.join(' '),href:'#/labs?field='+field.id})),
       ...ccfCatalog.venues.map(venue => ({title:venue.abbr?venue.abbr+' · '+venue.name:venue.name,info:'CCF '+venue.rank+' · '+(venue.type==='journal'?'期刊':'会议'),text:venue.publisher,href:'#/venues?q='+encodeURIComponent(venue.name)})),
       ...friends.map(friend=>({title:friend.nickname,info:'朋友们',text:friend.bio,href:'#/friends'})),

@@ -10,6 +10,7 @@ import { validateExplore } from './explore-validation.mjs';
 import TopicModel from './assets/topic-model.js';
 import AwardModel from './assets/award-model.js';
 import {validateDeadlines} from './deadline-validation.mjs';
+import {validateResearch} from './research-validation.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -19,8 +20,9 @@ function inline(text) {
   let result = escapeHtml(text).replace(/`([^`]+)`/g, (_, code) => token(`<code>${code}</code>`));
   result = result.replace(/\[([^\]]+)\]\(([^\s)]+)\)/g, (_, label, href) => {
     const decoded = href.replaceAll('&amp;', '&');
-    if (!/^https?:\/\//i.test(decoded)) return label;
-    return token(`<a href="${escapeHtml(decoded)}" target="_blank" rel="noopener noreferrer">${label}</a>`);
+    const internal=/^#\/[a-z0-9/-]+(?:\?[a-zA-Z0-9%=&_.-]+)?$/.test(decoded);
+    if (!/^https?:\/\//i.test(decoded)&&!internal) return label;
+    return token(`<a href="${escapeHtml(decoded)}"${internal?'':' target="_blank" rel="noopener noreferrer"'}>${label}</a>`);
   }).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   return result.replace(/\u0000(\d+)\u0000/g, (_, i) => saved[Number(i)]);
 }
@@ -82,6 +84,8 @@ async function build() {
   const friends = JSON.parse(await readFile(path.join(root, 'data', 'friends.json'), 'utf8'));
   const ccfCatalog = JSON.parse(await readFile(path.join(root, 'data', 'ccf-catalog.json'), 'utf8'));
   const venueDeadlines=JSON.parse(await readFile(path.join(root,'data','venue-deadlines.json'),'utf8'));
+  const research=JSON.parse(await readFile(path.join(root,'data','research-directions.json'),'utf8'));
+  const books=JSON.parse(await readFile(path.join(root,'data','books.json'),'utf8'));
   validateDeadlines(venueDeadlines,ccfCatalog);
   validateExplore({ fields, friends, ccfCatalog });
   validatePublicData({ profile, awards, projects });
@@ -101,17 +105,18 @@ async function build() {
     const slug = filename.slice(0, -3);
     if (!/^[a-z0-9-]+$/.test(slug)) throw new Error(`文章文件名请用小写英文、数字和短横线：${filename}`);
     const rendered = markdown(match[2]);
-    posts.push({ slug, ...meta, tags: (meta.tags || '').split(',').map(t => t.trim()).filter(Boolean), pinned: meta.pinned === 'true', readTime: Math.max(1, Math.ceil(match[2].length / 500)), searchText: match[2].replace(/[#*`~>]/g, ''), markdown: match[2], ...rendered });
+    posts.push({ slug, ...meta, research:(meta.research||'').split(',').map(t=>t.trim()).filter(Boolean),book:meta.book||'',chapter:meta.chapter||'',tags: (meta.tags || '').split(',').map(t => t.trim()).filter(Boolean), pinned: meta.pinned === 'true', readTime: Math.max(1, Math.ceil(match[2].length / 500)), searchText: match[2].replace(/[#*`~>]/g, ''), markdown: match[2], ...rendered });
   }
   if (!posts.length) throw new Error('请至少保留一篇文章。');
+  validateResearch({research,books,posts,fields});
   posts.sort((a, b) => Number(b.pinned) - Number(a.pinned) || b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
   const template = await readFile(path.join(root, 'src', 'template.html'), 'utf8');
-  const communityEntries=TopicModel.entries({profile,posts,projects,papers,fields,journeys,ccfCatalog});
+  const communityEntries=TopicModel.entries({profile,posts,projects,papers,fields,journeys,ccfCatalog,research,books});
   if(new Set(communityEntries.map(e=>e.key)).size!==communityEntries.length)throw new Error('交流话题标识重复。');
   const communityHashes=Object.fromEntries(communityEntries.map(e=>[e.key,createHash('sha1').update(TopicModel.term(e.key)).digest('hex')]));
-  const serialized = JSON.stringify({ profile: { ...profile, awards }, posts, projects, papers, publicCertificates, community, journeys, fields, friends, ccfCatalog, venueDeadlines, communityHashes }).replaceAll('<', '\\u003c').replaceAll('\u2028', '\\u2028').replaceAll('\u2029', '\\u2029');
+  const serialized = JSON.stringify({ profile: { ...profile, awards }, posts, projects, papers, publicCertificates, community, journeys, fields, friends, ccfCatalog, venueDeadlines,research,books, communityHashes }).replaceAll('<', '\\u003c').replaceAll('\u2028', '\\u2028').replaceAll('\u2029', '\\u2029');
   const assetHash = createHash('sha256');
-  for (const file of ['vendor/leaflet/leaflet.js', 'vendor/leaflet/leaflet.css', 'app.js', 'visitors.js', 'lab.js', 'background.js', 'computer-labs.js', 'portfolio.js', 'honors.js', 'honors.css', 'style.css', 'computer-labs.css', 'portfolio.css', 'journey-basemap.js', 'journey-map.js', 'journeys.js', 'journeys.css', 'field-labs.js', 'research-desk.js', 'explore.css', 'topic-model.js', 'community.js', 'community.css', 'award-model.js', 'deadline-model.js', 'deadline-desk.js', 'deadline-desk.css']) assetHash.update(await readFile(path.join(root, 'assets', file)));
+  for (const file of ['vendor/leaflet/leaflet.js', 'vendor/leaflet/leaflet.css', 'app.js', 'visitors.js', 'lab.js', 'background.js', 'computer-labs.js', 'portfolio.js', 'honors.js', 'honors.css', 'style.css', 'computer-labs.css', 'portfolio.css', 'journey-basemap.js', 'journey-map.js', 'journeys.js', 'journeys.css', 'field-labs.js', 'research-desk.js', 'explore.css', 'topic-model.js', 'community.js', 'community.css', 'award-model.js', 'deadline-model.js', 'deadline-desk.js', 'deadline-desk.css', 'research-model.js', 'research-hub.js', 'research-hub.css']) assetHash.update(await readFile(path.join(root, 'assets', file)));
   const replacements = { TITLE: escapeHtml(profile.siteTitle), DESCRIPTION: escapeHtml(profile.description), NAME: escapeHtml(profile.name), ROLE: profile.role.split(' · ').map(escapeHtml).join('<br>'), MOTTO: escapeHtml(profile.motto), SITE_DATA: serialized, ASSET_VERSION: assetHash.digest('hex').slice(0, 10) };
   const html = template.replace(/\{\{(TITLE|DESCRIPTION|NAME|ROLE|MOTTO|SITE_DATA|ASSET_VERSION)\}\}/g, (_, key) => replacements[key]);
   await writeFile(path.join(root, 'index.html'), html, 'utf8');
@@ -126,7 +131,7 @@ await build();
 if (process.argv.includes('--serve')) {
   const port = Number(process.env.PORT || 4173);
   const allowed = new Map([['/', ['index.html', 'text/html; charset=utf-8']], ['/index.html', ['index.html', 'text/html; charset=utf-8']], ['/feed.xml', ['feed.xml', 'application/rss+xml; charset=utf-8']], ['/assets/app.js', ['assets/app.js', 'text/javascript; charset=utf-8']], ['/assets/lab.js', ['assets/lab.js', 'text/javascript; charset=utf-8']], ['/assets/background.js', ['assets/background.js', 'text/javascript; charset=utf-8']], ['/assets/style.css', ['assets/style.css', 'text/css; charset=utf-8']], ['/assets/favicon.svg', ['assets/favicon.svg', 'image/svg+xml']]]);
-  for (const file of ['vendor/leaflet/leaflet.js','vendor/leaflet/leaflet.css','visitors.js','computer-labs.js','portfolio.js','honors.js','computer-labs.css','portfolio.css','honors.css','journey-basemap.js','journey-map.js','journeys.js','journeys.css','field-labs.js','research-desk.js','explore.css', 'topic-model.js', 'community.js', 'community.css', 'award-model.js', 'deadline-model.js', 'deadline-desk.js', 'deadline-desk.css']) allowed.set('/assets/' + file, ['assets/' + file, file.endsWith('.css') ? 'text/css; charset=utf-8' : 'text/javascript; charset=utf-8']);
+  for (const file of ['vendor/leaflet/leaflet.js','vendor/leaflet/leaflet.css','visitors.js','computer-labs.js','portfolio.js','honors.js','computer-labs.css','portfolio.css','honors.css','journey-basemap.js','journey-map.js','journeys.js','journeys.css','field-labs.js','research-desk.js','explore.css', 'topic-model.js', 'community.js', 'community.css', 'award-model.js', 'deadline-model.js', 'deadline-desk.js', 'deadline-desk.css', 'research-model.js', 'research-hub.js', 'research-hub.css']) allowed.set('/assets/' + file, ['assets/' + file, file.endsWith('.css') ? 'text/css; charset=utf-8' : 'text/javascript; charset=utf-8']);
   allowed.set('/assets/avatar.jpg', ['assets/avatar.jpg', 'image/jpeg']);
   const projectMedia = path.join(root, 'assets', 'projects');
   for (const file of await readdir(projectMedia)) {

@@ -23,6 +23,26 @@ node build.mjs --serve
 
 ## 写新文章
 
+### 研究方向与共读
+
+`#/research` 是独立的100项研究方向导航，使用 `rd-001` 至 `rd-100` 的固定引用标识，不改变原有 CCF 十领域目录。每个方向可跳转到相关期刊会议及 DDL，也可复制 Markdown 引用。`#/books` 整理推荐书目，已加入三本书和《深入理解 AI Agent》v1.3 前两章的原创共读导读。
+
+`#/research?view=personal` 按本人确认保存的学习记录条数排序；一条记录可关联1—5个方向，不会因文章上线而自动增加学习记录。数据保存在当前浏览器 `william-learning-v1`，支持编辑、删除撤销、JSON 导入导出与同浏览器标签页同步。备份包含个人笔记，请自行保管，不要提交 Git。
+
+`#/research?view=public` 从本站现有 giscus / GitHub Discussions 读取每个方向主帖的 `THUMBS_UP` 数量。访客通过对应方向的讨论入口登录 GitHub 后自行点赞；评论中的赞和其他表情不计票。点击“刷新全部100项”后读取，未读取、失败或限流时不会填充虚构票数，部分读取会标注排名不完整。此榜只代表本站参与者兴趣，不代表学术热度。没有任何客户端密钥或代投票逻辑。
+
+文章可通过以下信息关联研究方向和书目；方向编号请从方向页复制，书目和章节在 `data/books.json` 维护：
+
+```text
+research: rd-003, rd-016
+book: ai-agents-in-depth
+chapter: 2
+```
+
+正文支持 `#/research?direction=rd-003`、`#/books?book=ai-agents-in-depth` 等站内 Markdown 链接。文章下方会显示关联方向、章节索引和“读完后记录学习收获”，原有发布助手可继续生成 CSDN 等平台草稿。代码练习在 `examples/agent-reading/`，同时完整展示在文章中，均是无需 API 的原创教学程序，不是原书实验复现或模型性能测量。
+
+新增校验：`node --test research.test.mjs`；完整构建仍使用 `node build.mjs`。构建会校验文章、书目、章节、方向及 CCF 分类之间的引用，原始 PDF 保留在站点之外。
+
 在 `content` 中创建一个 UTF-8 Markdown 文件，例如 `my-first-experiment.md`。文件名用小写英文、数字和短横线，不能与已有文件重名。格式如下：
 
 ```markdown

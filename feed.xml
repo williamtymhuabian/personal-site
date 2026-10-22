@@ -1,5 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Williamtym · 探索手记</title><link>https://williamtymhuabian.github.io/personal-site/</link><description>Williamtym，苏州大学计算机科学与技术硕士研究生。记录技术实践、算法思考、竞赛经历与历史阅读。</description><language>zh-cn</language><atom:link href="https://williamtymhuabian.github.io/personal-site/feed.xml" rel="self" type="application/rss+xml"/><item><title>从生成循环到推理服务：三组AI Infra对照实验</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-infra-first-inference</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-infra-first-inference</guid><pubDate>Sun, 18 Oct 2026 16:00:00 GMT</pubDate><description>写好逐token生成、KV Cache对照、Nano-vLLM批请求测量与Mini-SGLang客户端，把参数、计时和结果检查放进同一套实验工程。</description><content:encoded>&lt;p&gt;看推理引擎源码时，我想先弄清三个问题：缓存省掉了什么计算，多条请求怎样影响吞吐，以及请求变成服务以后，用户实际等了多久。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Williamtym · 探索手记</title><link>https://williamtymhuabian.github.io/personal-site/</link><description>Williamtym，苏州大学计算机科学与技术硕士研究生。记录技术实践、算法思考、竞赛经历与历史阅读。</description><language>zh-cn</language><atom:link href="https://williamtymhuabian.github.io/personal-site/feed.xml" rel="self" type="application/rss+xml"/><item><title>AI Agent 共读①：从工具循环到可靠执行，读懂 Agent 与 Harness</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch01-loop-and-harness</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch01-loop-and-harness</guid><pubDate>Wed, 21 Oct 2026 16:00:00 GMT</pubDate><description>对照《深入理解 AI Agent》第一章，用一个无需 API 的原创小程序理解决策、工具、结果反馈与停止条件，再把这些概念映射到真实系统。</description><content:encoded>&lt;p&gt;一个聊天模型能写出操作步骤，一个 Agent 系统还需要真的执行步骤、看到结果，并知道什么时候该停止。理解这层差别，比先记住一串框架名称更有用。&lt;/p&gt;
+&lt;p&gt;这篇是《深入理解 AI Agent：设计原理与工程实践》的第一篇共读笔记。阅读依据是李博杰所著 PDF v1.3（2026-07-30），第1章“AI Agent 入门”，书内第7—27页，对应 PDF 第15—35页。本文以自己的语言重新组织知识，并补充原创练习；不是原书转载，也不替代原书。&lt;/p&gt;
+&lt;p&gt;读完后，试着回答三个问题：模型做了什么，外围程序做了什么，系统凭什么判断任务已经完成？&lt;/p&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;先把一个任务拆开来看&lt;/h2&gt;
+&lt;p&gt;假设要做一个“学习资料助手”：收到“解释工具循环”后，先查找已有笔记，再给出有依据的解释。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;模型或决策模块负责选择下一步：先查询，还是已经有足够信息可以回答。&lt;/li&gt;
+&lt;li&gt;上下文提供这一步能看到的材料：用户问题、查询结果、之前的操作及当前约束。&lt;/li&gt;
+&lt;li&gt;工具负责可执行能力：在资料中查询，而不是凭空声称已经查过。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;原书用“LLM + 上下文 + 工具”建立现代 Agent 的概念框架。这里的加号表达的是组件之间的配合，不是一个严格的数学等式，也不表示只要把三个模块摆在一起就能获得可靠自主性。&lt;/p&gt;
+&lt;p&gt;可以用两个问题检查系统边界：它能看到什么，它实际能够做什么？缺少当前文档，模型就可能不知道资料里写了什么；没有查询工具，它也无法靠一句“我去查一下”访问资料。模型已经知道如何查询，和系统确实给了它查询能力，是不同层次的问题。&lt;/p&gt;
+&lt;p&gt;扩大能力时仍要按任务选择。资料助手先有只读查询就够了；支付、删除和发送信息等操作需要另外设计权限与验证，不能从“有一个通用执行工具”推导出“所有操作都已获准”。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;工具调用为什么是一个循环&lt;/h2&gt;
+&lt;p&gt;一次工具调用可以按四个阶段观察：选择工具及参数，运行工具，追加结构化结果，再决定是否继续。&lt;/p&gt;
+&lt;p&gt;例如，决策模块输出“查询主题：工具循环”，外围程序检查这个工具是否存在、参数是否合法，然后执行查询。返回“找到了这段解释”后，决策模块才有新的证据可以用于回答。&lt;/p&gt;
+&lt;p&gt;工具声明不是工具实现。模型生成一个名字，不会让函数自动运行；函数执行失败，也不能因为模型说“成功了”就当作成功。程序应当把真实结果或错误反馈给后续决策。&lt;/p&gt;
+&lt;p&gt;这里讨论的是可观察的动作与反馈。理解循环并不要求展示模型内部的思维链；真正需要留下的是调用了什么、输入是什么、结果是什么，以及完成条件有没有被满足。&lt;/p&gt;
+&lt;p&gt;如果任务总是同样的固定步骤，直接写工作流通常更容易测试。如果每一步都必须根据新证据调整，再考虑动态决策。工作流和 Agent 也可以组合：外层固定重要流程，局部允许探索。&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;动手：用离线程序看清反馈的作用&lt;/h2&gt;
+&lt;p&gt;下面的小实验不接任何模型服务，不需要 API Key 或 GPU。它用脚本决策器代替 LLM，目的只是把“执行”和“回传结果”的区别做成可观察行为。它不是模型推理能力实验，也不复现原书的模型消融结果。&lt;/p&gt;
+&lt;p&gt;把下面代码保存为 &lt;code&gt;agent_loop.py&lt;/code&gt;，使用 Python 3.10 或以上运行 &lt;code&gt;python agent_loop.py&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;&amp;quot;&amp;quot;&amp;quot;Original offline teaching demo. The scripted policy is NOT an LLM.&amp;quot;&amp;quot;&amp;quot;
+import json
+
+TOPICS = {
+    &amp;quot;工具循环&amp;quot;: &amp;quot;决策、执行工具、回传结果，再依据结果决定下一步。&amp;quot;,
+    &amp;quot;上下文工程&amp;quot;: &amp;quot;为当前任务组织规则、证据、历史和状态。&amp;quot;,
+}
+
+
+def lookup_topic(topic):
+    if not isinstance(topic, str) or len(topic) &amp;gt; 40:
+        raise ValueError(&amp;quot;主题需要是40字以内的字符串&amp;quot;)
+    return {&amp;quot;topic&amp;quot;: topic, &amp;quot;found&amp;quot;: topic in TOPICS,
+            &amp;quot;text&amp;quot;: TOPICS.get(topic, &amp;quot;未找到，不能据此编造解释。&amp;quot;)}
+
+
+TOOLS = {&amp;quot;lookup_topic&amp;quot;: lookup_topic}
+
+
+def scripted_policy(messages):
+    # A deterministic stand-in makes the feedback mechanism observable offline.
+    if messages[-1][&amp;quot;role&amp;quot;] == &amp;quot;tool&amp;quot;:
+        result = json.loads(messages[-1][&amp;quot;content&amp;quot;])
+        return {&amp;quot;kind&amp;quot;: &amp;quot;final&amp;quot;, &amp;quot;text&amp;quot;: result[&amp;quot;text&amp;quot;]}
+    return {&amp;quot;kind&amp;quot;: &amp;quot;tool&amp;quot;, &amp;quot;name&amp;quot;: &amp;quot;lookup_topic&amp;quot;,
+            &amp;quot;arguments&amp;quot;: {&amp;quot;topic&amp;quot;: &amp;quot;工具循环&amp;quot;}, &amp;quot;call_id&amp;quot;: &amp;quot;lookup-1&amp;quot;}
+
+
+def run_agent(feedback=True, max_turns=3):
+    messages = [{&amp;quot;role&amp;quot;: &amp;quot;user&amp;quot;, &amp;quot;content&amp;quot;: &amp;quot;解释工具循环&amp;quot;}]
+    trace = []
+    for turn in range(1, max_turns + 1):
+        action = scripted_policy(messages)
+        trace.append({&amp;quot;turn&amp;quot;: turn, &amp;quot;kind&amp;quot;: action[&amp;quot;kind&amp;quot;]})
+        if action[&amp;quot;kind&amp;quot;] == &amp;quot;final&amp;quot;:
+            return {&amp;quot;status&amp;quot;: &amp;quot;done&amp;quot;, &amp;quot;answer&amp;quot;: action[&amp;quot;text&amp;quot;], &amp;quot;trace&amp;quot;: trace}
+        tool = TOOLS.get(action[&amp;quot;name&amp;quot;])
+        if tool is None:
+            return {&amp;quot;status&amp;quot;: &amp;quot;blocked&amp;quot;, &amp;quot;trace&amp;quot;: trace}
+        messages.append({&amp;quot;role&amp;quot;: &amp;quot;assistant&amp;quot;, &amp;quot;tool_call&amp;quot;: action})
+        result = tool(**action[&amp;quot;arguments&amp;quot;])
+        if feedback:
+            messages.append({&amp;quot;role&amp;quot;: &amp;quot;tool&amp;quot;, &amp;quot;call_id&amp;quot;: action[&amp;quot;call_id&amp;quot;],
+                             &amp;quot;content&amp;quot;: json.dumps(result, ensure_ascii=False)})
+    return {&amp;quot;status&amp;quot;: &amp;quot;max_turns&amp;quot;, &amp;quot;trace&amp;quot;: trace}
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    for label, enabled in [(&amp;quot;有反馈&amp;quot;, True), (&amp;quot;不回传结果&amp;quot;, False)]:
+        print(label, json.dumps(run_agent(enabled), ensure_ascii=False))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;正常模式下，第一轮调用查询，第二轮读到结果并结束；不回传工具结果时，脚本策略会重复查询，到第三轮被轮次上限停止。第二种情况不是模型“变笨”的证据：这是我们明确写进脚本策略的行为，用来演示缺少反馈时循环会怎样失去推进依据。&lt;/p&gt;
+&lt;p&gt;本次代码检查的结果是：有反馈返回 &lt;code&gt;done&lt;/code&gt;，轨迹为 &lt;code&gt;tool → final&lt;/code&gt;；关闭反馈返回 &lt;code&gt;max_turns&lt;/code&gt;，轨迹为三次 &lt;code&gt;tool&lt;/code&gt;。这是离线教学程序的执行结果，不能换算成真实 Agent 的成功率或成本收益。&lt;/p&gt;
+&lt;p&gt;建议做两个改动：把查询主题改成不存在的名字，观察“未找到”和编造答案有什么差别；再把 &lt;code&gt;max_turns&lt;/code&gt; 改成1，观察预算不足如何改变结果。改变程序之后重新运行，记录自己的输出。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;Harness：围绕能力建立可验证的执行环境&lt;/h2&gt;
+&lt;p&gt;第一章的另一条主线是 Harness。可以把它理解为模型外围负责组织信息、限制动作、检查结果和处理失败的工程部分。&lt;/p&gt;
+&lt;p&gt;在这个小例子里，工具注册表限制了可以调用的能力；参数检查拒绝不符合约定的输入；轮次上限让循环能终止；执行轨迹帮助检查程序确实做了什么。这些是 Harness 的最小影子，还远不是完整的生产实现。&lt;/p&gt;
+&lt;p&gt;真实系统还需要超时、异常处理、资源预算、持久状态、权限边界和验证逻辑。对于有副作用的工具，还要考虑重复执行：同一个动作因为重试运行两次，会不会产生两次扣款或重复发送？这类问题需要幂等设计或外部事务保证，不能只靠提示词提醒。&lt;/p&gt;
+&lt;p&gt;验证也应该落在任务本身。资料助手回答完一句话，并不代表所有要求都满足；如果任务要求“给出来源”，就应检查来源确实存在且支持相应解释。如果不具备必要信息，明确说明缺口，往往比反复调用同一个工具更合理。&lt;/p&gt;
+&lt;h2 id=&quot;section-5&quot;&gt;三种“学习”不要混在一起&lt;/h2&gt;
+&lt;p&gt;在对话里补充示例，可以改变当前任务中的输出，这属于上下文适应。把经验写成以后会被读取的文档或规则，改变的是外部资料。通过训练修改模型权重，则是参数更新。&lt;/p&gt;
+&lt;p&gt;它们都可能让后续表现发生变化，但持续时间、成本和验证方式不同。一次对话中的纠正，不等于模型已经永久学会；保存了文件，也不等于下一次一定会检索并正确使用它。&lt;/p&gt;
+&lt;p&gt;对自己的学习也可以采用类似区分：看过概念、写过笔记、独立跑过练习，留下的证据不同。方向榜只记录自己确认过的学习条目，不把“页面里有两篇文章”自动等同于“我已经掌握两章”。&lt;/p&gt;
+&lt;h2 id=&quot;section-6&quot;&gt;把这次阅读变成下一步问题&lt;/h2&gt;
+&lt;p&gt;如果更关心行动如何选择，可以继续看&lt;a href=&quot;#/research?direction=rd-011&quot;&gt;智能体规划与长程任务执行&lt;/a&gt;；如果更关心工具接口，可以进入&lt;a href=&quot;#/research?direction=rd-014&quot;&gt;工具使用与自主研究智能体&lt;/a&gt;；如果想研究什么时候才算完成，可以查看&lt;a href=&quot;#/research?direction=rd-015&quot;&gt;智能体评测与可靠性&lt;/a&gt;；如果关心不可信内容怎样影响执行，可以进入&lt;a href=&quot;#/research?direction=rd-031&quot;&gt;提示注入与智能体安全&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;一次可操作的学习记录可以写成：“我能区分模型生成调用请求与程序执行工具；离线程序有反馈时两轮结束，关掉反馈后触发轮次上限；接下来想验证模型在收到错误结果时能否换一种策略。”其中前半段是已经观察到的行为，最后一句是待验证假设。&lt;/p&gt;
+&lt;p&gt;下一篇：&lt;a href=&quot;#/post/ai-agents-ch02-context-engineering&quot;&gt;AI Agent 共读②：把上下文变成可管理的信息系统&lt;/a&gt;。也可以回到&lt;a href=&quot;#/books?book=ai-agents-in-depth&quot;&gt;推荐书目与章节索引&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&quot;section-7&quot;&gt;阅读出处与延伸&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;李博杰，《深入理解 AI Agent：设计原理与工程实践》，本地阅读版本 v1.3，第一章，书内第7—27页。本文概念导读依据该版本；在线版本可能已更新。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bojieli/ai-agent-book&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;作者原始项目与配套实验&lt;/a&gt;。需要了解原书实验条件和实现时，以对应版本为准。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://bojieli.github.io/ai-agent-book/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;作者提供的在线阅读入口&lt;/a&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文代码是独立编写的教学示例，未复制原书代码。欢迎一起运行、指出问题，也欢迎在留言中提供具体输入、实际输出和自己的解释。&lt;/p&gt;</content:encoded></item><item><title>AI Agent 共读②：把上下文变成可管理的信息系统</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch02-context-engineering</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch02-context-engineering</guid><pubDate>Wed, 21 Oct 2026 16:00:00 GMT</pubDate><description>对照第二章，理解消息与工具结果、稳定前缀、Skills、状态摘要和压缩的关系，用离线练习检查信息是否完整保留，而不把字符数当成真实缓存指标。</description><content:encoded>&lt;p&gt;当一个 Agent 忘记了任务要求，最先要问的可以是：“做出这一步决定时，它实际上看到了什么？”模型可能具备完成任务的基础能力，却没有拿到约束、证据或最新状态。&lt;/p&gt;
+&lt;p&gt;这篇接着&lt;a href=&quot;#/post/ai-agents-ch01-loop-and-harness&quot;&gt;第一章的工具循环练习&lt;/a&gt;，阅读李博杰《深入理解 AI Agent：设计原理与工程实践》PDF v1.3（2026-07-30）的第2章“上下文工程”：书内第28—71页，对应 PDF 第36—79页。本文是原创导读与练习，不搬运原书正文、图表或代码。&lt;/p&gt;
+&lt;p&gt;这一章涉及的内容很多。初读时可以抓住一个问题：如何在每个决策点，把足够且可信的信息放到模型面前，同时控制冗余和开销？&lt;/p&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;上下文比一句提示词更大&lt;/h2&gt;
+&lt;p&gt;提示词通常让人想到“如何提问”。上下文工程还要处理：哪些规则始终适用，哪些文档与当前任务有关，哪些工具可用，之前做过什么，目前还有哪些条件没有满足。&lt;/p&gt;
+&lt;p&gt;用学习助手举例：用户要解释一个概念，系统需要知道阅读版本、对应章节、已有笔记以及是否要求附出处。把整本书都塞进去，并不自动保证它能准确定位证据；只给一句书名，也可能不足以解释一个特定版本里的细节。&lt;/p&gt;
+&lt;p&gt;先建立一个简单的信息清单：任务目标，不能违反的约束，当前证据及来源，已完成事项，尚未解决的问题。信息缺口明确后，才好决定应该查询、请求补充，还是已经可以回答。&lt;/p&gt;
+&lt;p&gt;不要把“上下文决定表现”理解成模型能力不重要。信息是否充分、模型能否利用这些信息、工具是否可靠、任务是否本来就难，都可能影响结果，需要分别验证。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;消息结构不是随便贴几段文字&lt;/h2&gt;
+&lt;p&gt;上一章的循环中，工具结果需要回到下一轮决策。实际接入模型时，应遵守所用接口的消息协议：模型发出的工具调用，与程序返回的工具结果，需要通过调用标识正确对应；多个调用的结果也不能串到一起。&lt;/p&gt;
+&lt;p&gt;程序内部可以这样理解一段轨迹：用户给任务，模型请求工具，程序执行工具并提供结果，模型再继续。这个顺序是概念说明，不能直接当成任意厂商 API 的完整请求格式。&lt;/p&gt;
+&lt;p&gt;原书以一种 API 结构讲解消息角色。不同接口也可能提供服务端会话或状态管理，所以不要把“这次客户端没有显式发送全部历史”简单等同于“模型永久记住了历史”。先区分三件事：模型权重、服务端保存的会话、当前这次推理真正使用的输入。&lt;/p&gt;
+&lt;p&gt;对于模型提供的内部思考块，应遵守该模型的接口要求；不要自行编造、抽取或假设它总能以普通文本回传。本文的离线示例只处理可观察的任务状态和工具证据。&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;稳定规则、动态状态和外部证据分开组织&lt;/h2&gt;
+&lt;p&gt;相对稳定的部分可以包括输出格式、任务边界和固定工具说明；动态部分包括当前步骤、新查询结果和实际观察到的时间。这样做首先帮助我们检查信息是否一致，也可能有利于服务端复用稳定前缀。&lt;/p&gt;
+&lt;p&gt;这里有两个容易混淆的“缓存”。生成过程中，KV Cache 保存注意力相关的键值状态，避免重复计算已有前缀的部分工作；跨请求的前缀缓存则可能复用已经处理过的共同前缀。两者有联系，但不是同一个产品层面的承诺。&lt;/p&gt;
+&lt;p&gt;在标准因果模型的前缀复用中，修改某个位置会影响该位置及其后续部分的复用；修改位置之前仍可能有可用前缀。实际缓存还受模型、分词、聊天模板、路由、保存时长和服务配置影响。文本看起来相同，不代表一定命中缓存；字符级共同前缀也不能直接换算成 token 或费用。&lt;/p&gt;
+&lt;p&gt;因此，可以先稳定规则和序列化方式，再把变化的状态放到明确位置。不要为追求缓存而冻结过期事实，也不要把旧状态永久当作当前事实使用。正确性与信息时效必须一起检查。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;Skills、状态摘要和压缩分别解决什么&lt;/h2&gt;
+&lt;p&gt;Skills 可以理解为按任务加载的操作知识。先提供少量描述，确定需要某项能力后，再读取详细流程和必要参考，能够减少每次都注入大量无关规则的情况。是否加载得准确，要单独评测；加载了文档，也不表示系统自动获得了执行权限。&lt;/p&gt;
+&lt;p&gt;状态摘要记录的是任务进展。例如：“已核对书名和版本；前两章导读已起草；示例代码待运行；不能把原书数字写成本次实测。”这样的状态比“任务快完成了”更容易接续，也更容易核验。状态应由执行结果更新，不能因为模型自称成功就直接写成已完成。&lt;/p&gt;
+&lt;p&gt;压缩则处理已经积累的信息。工具输出可能有重复段落、页脚和无关内容，全部保留会增加查找负担。压缩时需要关注当前任务保留什么：结论、成立条件、时间、来源，以及尚未确定的部分。&lt;/p&gt;
+&lt;p&gt;例如，“某设置在特定实验中改善结果”，不能压成“这个设置总是更好”。如果把条件和版本删掉，句子虽然变短，意思却已经变了。保留一个链接也不等于完全无损：原文可能变化、失效或需要权限，因此重要证据还需要记录稳定定位。&lt;/p&gt;
+&lt;h2 id=&quot;section-5&quot;&gt;动手：检查前缀与有来源的信息打包&lt;/h2&gt;
+&lt;p&gt;下面代码只用 Python 标准库，包含两个小练习。第一个观察字符串在追加和前部修改之后的共同前缀；第二个从明确标记的资料中选取相关项、去重，并保留约束、来源和待解决问题。&lt;/p&gt;
+&lt;p&gt;这是结构化选择与去重，不是使用模型进行语义压缩，也没有测量 KV Cache、token 数、响应速度或计费。保存为 &lt;code&gt;context_pack.py&lt;/code&gt;，使用 Python 3.10 或以上运行 &lt;code&gt;python context_pack.py&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;&amp;quot;&amp;quot;&amp;quot;Original context assembly demo. Character counts are NOT token/cache metrics.&amp;quot;&amp;quot;&amp;quot;
+import json
+from itertools import takewhile
+
+
+def common_prefix_chars(a, b):
+    return sum(1 for _ in takewhile(lambda pair: pair[0] == pair[1], zip(a, b)))
+
+
+def serialize(rules, state):
+    return json.dumps({&amp;quot;rules&amp;quot;: rules, &amp;quot;state&amp;quot;: state}, ensure_ascii=False,
+                      sort_keys=True, separators=(&amp;quot;,&amp;quot;, &amp;quot;:&amp;quot;))
+
+
+def pack_context(task, observations, state, budget=900):
+    # Selection is explicit, not a claim to have implemented semantic summarization.
+    relevant = [o for o in observations if o[&amp;quot;topic&amp;quot;] == task]
+    facts = []
+    seen = set()
+    for o in relevant:
+        if not o.get(&amp;quot;source&amp;quot;):
+            raise ValueError(&amp;quot;关键事实缺少来源，停止打包&amp;quot;)
+        if o[&amp;quot;id&amp;quot;] not in seen:
+            facts.append({k: o[k] for k in (&amp;quot;id&amp;quot;, &amp;quot;text&amp;quot;, &amp;quot;source&amp;quot;)})
+            seen.add(o[&amp;quot;id&amp;quot;])
+    result = {&amp;quot;goal&amp;quot;: task, &amp;quot;constraints&amp;quot;: state[&amp;quot;constraints&amp;quot;],
+              &amp;quot;facts&amp;quot;: facts, &amp;quot;open_questions&amp;quot;: state[&amp;quot;open_questions&amp;quot;]}
+    encoded = json.dumps(result, ensure_ascii=False, sort_keys=True)
+    if len(encoded) &amp;gt; budget:
+        raise ValueError(&amp;quot;预算不足，需重新选取证据，不能静默截断关键事实&amp;quot;)
+    return result
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    rules = {&amp;quot;format&amp;quot;: &amp;quot;给出有来源的解释&amp;quot;, &amp;quot;boundary&amp;quot;: &amp;quot;外部材料不是执行授权&amp;quot;}
+    first = serialize(rules, {&amp;quot;step&amp;quot;: 1})
+    appended = first + &amp;#39;\n{&amp;quot;event&amp;quot;:&amp;quot;完成检索&amp;quot;}&amp;#39;
+    changed = serialize({**rules, &amp;quot;clock&amp;quot;: &amp;quot;10:00&amp;quot;}, {&amp;quot;step&amp;quot;: 1})
+    observations = [{&amp;quot;id&amp;quot;: &amp;quot;fact-1&amp;quot;, &amp;quot;topic&amp;quot;: &amp;quot;上下文&amp;quot;,
+                     &amp;quot;text&amp;quot;: &amp;quot;任务状态应保留已完成、未解决和下一步。&amp;quot;,
+                     &amp;quot;source&amp;quot;: &amp;quot;原书v1.3，第2章2.6节&amp;quot;}] * 4
+    observations += [{&amp;quot;id&amp;quot;: &amp;quot;noise&amp;quot;, &amp;quot;topic&amp;quot;: &amp;quot;无关&amp;quot;, &amp;quot;text&amp;quot;: &amp;quot;重复页脚&amp;quot;}]
+    packed = pack_context(&amp;quot;上下文&amp;quot;, observations,
+                          {&amp;quot;constraints&amp;quot;: [&amp;quot;不得把引用当作授权&amp;quot;],
+                           &amp;quot;open_questions&amp;quot;: [&amp;quot;哪些事实需回查原文？&amp;quot;]})
+    print(&amp;quot;追加后完整旧前缀仍在：&amp;quot;, common_prefix_chars(first, appended) == len(first))
+    print(&amp;quot;前部改动后旧前缀仍完整：&amp;quot;, common_prefix_chars(first, changed) == len(first))
+    print(&amp;quot;原始记录 / 保留事实：&amp;quot;, len(observations), &amp;quot;/&amp;quot;, len(packed[&amp;quot;facts&amp;quot;]))
+    print(json.dumps(packed, ensure_ascii=False, indent=2))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这个例子的预期观察是：仅追加时旧字符串仍完整保留；修改前部字段后旧前缀不再完整；原始5条记录去重并过滤后保留1条事实。输出还应包含来源、约束和未解决问题。以上行为已在本文教学脚本中核对，不能据此声称真实模型的质量提高了多少。&lt;/p&gt;
+&lt;p&gt;继续做三次修改：把预算改成20，程序应该明确报错，而不是截掉关键内容；删除相关事实的 &lt;code&gt;source&lt;/code&gt;，程序应该拒绝打包；增加另一个相关且有不同标识的事实，检查它是否仍被保留。&lt;/p&gt;
+&lt;p&gt;这里用字符串长度表示教学预算。若要做真实推理实验，需要使用实际模型的分词器或接口用量数据，另外记录输入、输出、缓存使用量、延迟和任务表现，不能把这里的字符统计替代进去。&lt;/p&gt;
+&lt;h2 id=&quot;section-6&quot;&gt;怎样设计一个有说服力的后续实验&lt;/h2&gt;
+&lt;p&gt;可以固定一组问题、资料和模型设置，比较完整原文、结构化证据、结构化证据加显式状态三种配置。提前写清楚每个问题必须引用哪条证据，哪些约束绝不能遗漏。&lt;/p&gt;
+&lt;p&gt;评价时至少区分：答案是否正确，引用是否支持答案，是否违反约束，实际使用了多少资源。使用相同测试集并保留失败样例，再做重复运行；不要挑一个成功案例就宣布某种方法普遍有效。&lt;/p&gt;
+&lt;p&gt;如果服务提供缓存指标，可以比较稳定前缀与动态前缀，但必须分别记录首轮和后续轮次。缓存命中可能减少部分处理开销，并不自动改善答案，也不保证所有情况下都更快。&lt;/p&gt;
+&lt;p&gt;原书给出了更多实验与工程经验。它们的数字有自己的环境与条件；这篇没有把那些数字搬成我们的测量值，也没有完成真实模型的对照实验。读者可以把上面的实验设计作为下一步练习。&lt;/p&gt;
+&lt;h2 id=&quot;section-7&quot;&gt;为什么它能连接多个研究方向&lt;/h2&gt;
+&lt;p&gt;消息、按需加载和信息取舍直接关联&lt;a href=&quot;#/research?direction=rd-003&quot;&gt;上下文工程与长上下文&lt;/a&gt;；跨任务保存和检索经验关联&lt;a href=&quot;#/research?direction=rd-016&quot;&gt;智能体长期记忆与自我改进&lt;/a&gt;；外部资料的信任边界关联&lt;a href=&quot;#/research?direction=rd-031&quot;&gt;提示注入与智能体安全&lt;/a&gt;；缓存与计算开销则连接到&lt;a href=&quot;#/research?direction=rd-041&quot;&gt;大模型推理服务系统&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;这也解释了为什么一篇学习笔记可以引用多个方向。关联只是说明知识之间的联系，不表示已经完成了这些方向的研究。读完后，可以记录一个你能解释的概念、一个亲手验证的现象和一个仍待回答的问题。&lt;/p&gt;
+&lt;p&gt;回到&lt;a href=&quot;#/books?book=ai-agents-in-depth&quot;&gt;本书的章节索引&lt;/a&gt;，或查看&lt;a href=&quot;#/research?view=personal&quot;&gt;我的学习榜&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&quot;section-8&quot;&gt;阅读出处与继续共读&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;李博杰，《深入理解 AI Agent：设计原理与工程实践》，本地阅读版本 v1.3，第二章，书内第28—71页。&lt;/li&gt;
+&lt;li&gt;重点对应原书2.2节的消息结构、2.3节的缓存、2.5节的 Skills、2.6节的状态和2.7节的压缩。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bojieli/ai-agent-book&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;作者原始项目、版本与配套实验&lt;/a&gt;。实际 API、模型和工程配置请以相应官方文档与所用版本为准。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://bojieli.github.io/ai-agent-book/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;作者在线阅读入口&lt;/a&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文代码是独立编写的离线练习。欢迎带着自己的运行结果讨论：你保留了哪些信息，又是在什么条件下发现它们不够用？&lt;/p&gt;</content:encoded></item><item><title>从生成循环到推理服务：三组AI Infra对照实验</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-infra-first-inference</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-infra-first-inference</guid><pubDate>Sun, 18 Oct 2026 16:00:00 GMT</pubDate><description>写好逐token生成、KV Cache对照、Nano-vLLM批请求测量与Mini-SGLang客户端，把参数、计时和结果检查放进同一套实验工程。</description><content:encoded>&lt;p&gt;看推理引擎源码时，我想先弄清三个问题：缓存省掉了什么计算，多条请求怎样影响吞吐，以及请求变成服务以后，用户实际等了多久。&lt;/p&gt;
 &lt;p&gt;围绕这些问题，我整理了一套可以上传到Linux GPU服务器运行的代码。生成循环、参数矩阵、流式请求和结果导出已经写好，GPU测量还没有开始。这篇先记录实现与实验方法，测量结果等服务器跑完后补上。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://github.com/williamtymhuabian/personal-site/tree/main/examples/ai-infra&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;实验代码与运行说明&lt;/a&gt;、&lt;a href=&quot;https://github.com/williamtymhuabian/personal-site/blob/main/examples/ai-infra/EXPERIMENTS.md&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;完整实验设计&lt;/a&gt;都放在仓库里。工程不包含权重、服务器配置和原始日志。&lt;/p&gt;
 &lt;p&gt;配套&lt;a href=&quot;https://github.com/williamtymhuabian/personal-site/blob/main/examples/ai-infra/notes/00-%E4%BB%8E%E8%BF%99%E9%87%8C%E5%BC%80%E5%A7%8B.md&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;笔记入口&lt;/a&gt;把学习指导书、进度表、实验报告和排错模板串在一起。先按安装说明准备环境，再照实验设计运行，填写后的记录留在服务器的结果目录。&lt;/p&gt;

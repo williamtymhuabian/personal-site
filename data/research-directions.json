@@ -1,0 +1,1322 @@
+{
+  "checkedAt": "2026-10-22",
+  "methodology": "根据2026年公开会议议程、论文及工作坊归纳的100项研究导航。编号为稳定引用索引，不代表全球学术热度排名；公开票数仅反映本站参与者的兴趣，个人榜仅统计自己确认的学习记录。",
+  "groups": [
+    {
+      "id": "models",
+      "title": "大模型与机器学习基础",
+      "sources": [
+        {
+          "name": "ICLR 2026 Workshops",
+          "url": "https://iclr.cc/virtual/2026/events/workshop"
+        },
+        {
+          "name": "ISCA 2026 Program",
+          "url": "https://www.iscaconf.org/isca2026_dev/program/"
+        }
+      ]
+    },
+    {
+      "id": "agents",
+      "title": "智能体与具身智能",
+      "sources": [
+        {
+          "name": "ICLR 2026 Workshops",
+          "url": "https://iclr.cc/virtual/2026/events/workshop"
+        },
+        {
+          "name": "CoRL 2026 Accepted Workshops",
+          "url": "https://www.corl.org/program/workshops"
+        },
+        {
+          "name": "CVPR 2026 Workshops",
+          "url": "https://cvpr.thecvf.com/Conferences/2026/Workshops"
+        }
+      ]
+    },
+    {
+      "id": "multimodal",
+      "title": "多模态、计算机视觉与图形学",
+      "sources": [
+        {
+          "name": "CVPR 2026 Workshops",
+          "url": "https://cvpr.thecvf.com/Conferences/2026/Workshops"
+        },
+        {
+          "name": "ICLR 2026 Multimodal Research Themes",
+          "url": "https://iclr.cc/virtual/2026/events/workshop"
+        }
+      ]
+    },
+    {
+      "id": "trust",
+      "title": "网络安全、隐私与可信计算",
+      "sources": [
+        {
+          "name": "USENIX Security 2026 Technical Sessions",
+          "url": "https://www.usenix.org/conference/usenixsecurity26/technical-sessions"
+        },
+        {
+          "name": "NIST Post-Quantum Cryptography",
+          "url": "https://www.nist.gov/cybersecurity-and-privacy/what-post-quantum-cryptography"
+        },
+        {
+          "name": "ICLR 2026 Trustworthy AI Themes",
+          "url": "https://iclr.cc/virtual/2026/events/workshop"
+        }
+      ]
+    },
+    {
+      "id": "systems",
+      "title": "操作系统、分布式系统与云计算",
+      "sources": [
+        {
+          "name": "OSDI 2026 Technical Sessions",
+          "url": "https://www.usenix.org/conference/osdi26/technical-sessions"
+        },
+        {
+          "name": "NSDI 2026 Technical Sessions",
+          "url": "https://www.usenix.org/conference/nsdi26/technical-sessions"
+        },
+        {
+          "name": "SIGCOMM 2026 Technical Program",
+          "url": "https://conferences.sigcomm.org/sigcomm/2026/program/papers/"
+        }
+      ]
+    },
+    {
+      "id": "architecture",
+      "title": "计算机体系结构、编译与网络",
+      "sources": [
+        {
+          "name": "ISCA 2026 Conference Program",
+          "url": "https://www.iscaconf.org/isca2026_dev/program/"
+        },
+        {
+          "name": "SIGCOMM 2026 Technical Program",
+          "url": "https://conferences.sigcomm.org/sigcomm/2026/program/papers/"
+        },
+        {
+          "name": "NSDI 2026 Technical Sessions",
+          "url": "https://www.usenix.org/conference/nsdi26/technical-sessions"
+        }
+      ]
+    },
+    {
+      "id": "data",
+      "title": "数据库、信息检索与知识系统",
+      "sources": [
+        {
+          "name": "SIGMOD 2026 Accepted Papers",
+          "url": "https://2026.sigmod.org/sigmod_papers.shtml"
+        },
+        {
+          "name": "SIGIR 2026 Official Conference Track",
+          "url": "https://openreview.net/group?id=ACM.org%2FSIGIR%2F2026%2FConference"
+        },
+        {
+          "name": "GRIT 2026 Generative IR Workshop",
+          "url": "https://grit-genir.github.io/workshop-sigir-ap-2026/"
+        }
+      ]
+    },
+    {
+      "id": "software",
+      "title": "软件工程、程序语言与形式化方法",
+      "sources": [
+        {
+          "name": "ICSE 2026 Research Track",
+          "url": "https://conf.researchr.org/track/icse-2026/icse-2026-research-track"
+        },
+        {
+          "name": "USENIX Security 2026 Technical Sessions",
+          "url": "https://www.usenix.org/conference/usenixsecurity26/technical-sessions"
+        }
+      ]
+    },
+    {
+      "id": "science",
+      "title": "人机交互与科学交叉计算",
+      "sources": [
+        {
+          "name": "CHI 2026 Accepted Workshops",
+          "url": "https://chi2026.acm.org/workshops/accepted/"
+        },
+        {
+          "name": "ICLR 2026 AI for Science Themes",
+          "url": "https://iclr.cc/virtual/2026/events/workshop"
+        },
+        {
+          "name": "ICML 2026 Official Research Downloads",
+          "url": "https://icml.cc/Downloads/2026"
+        },
+        {
+          "name": "CVPR 2026 Science and Healthcare Themes",
+          "url": "https://cvpr.thecvf.com/Conferences/2026/Workshops"
+        }
+      ]
+    },
+    {
+      "id": "theory",
+      "title": "算法理论、学习理论与量子计算",
+      "sources": [
+        {
+          "name": "STOC 2026 Accepted Papers",
+          "url": "https://acm-stoc.org/stoc2026/accepted-papers.html"
+        },
+        {
+          "name": "ICLR 2026 Theoretical and Trustworthy ML Themes",
+          "url": "https://iclr.cc/virtual/2026/events/workshop"
+        },
+        {
+          "name": "ICML 2026 Official Research Downloads",
+          "url": "https://icml.cc/Downloads/2026"
+        },
+        {
+          "name": "Fault-Tolerant Quantum Interfaces (2026)",
+          "url": "https://journals.aps.org/prresearch/abstract/10.1103/ds45-fm9n"
+        }
+      ]
+    }
+  ],
+  "directions": [
+    {
+      "id": "rd-001",
+      "number": 1,
+      "groupId": "models",
+      "title": "推理模型与推理时计算",
+      "keywords": "Reasoning Models / Test-Time Scaling",
+      "question": "如何分配思考、搜索和验证预算，让复杂任务更准确且成本可控？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-002",
+      "number": 2,
+      "groupId": "models",
+      "title": "强化学习后训练与偏好对齐",
+      "keywords": "RLVR / Preference Optimization",
+      "question": "如何设计可验证奖励、过程反馈和偏好学习，减少奖励投机？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-003",
+      "number": 3,
+      "groupId": "models",
+      "title": "上下文工程与长上下文",
+      "keywords": "Context Engineering / Long Context",
+      "question": "如何让模型真正利用长文档，并降低注意力和记忆的开销？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-004",
+      "number": 4,
+      "groupId": "models",
+      "title": "混合专家与稀疏模型",
+      "keywords": "Mixture of Experts / Sparse Models",
+      "question": "如何改进专家路由、负载均衡和专家分工，提高计算效率？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-005",
+      "number": 5,
+      "groupId": "models",
+      "title": "扩散语言模型与非自回归生成",
+      "keywords": "Diffusion Language Models",
+      "question": "如何通过并行去噪生成文本，在速度、质量和可控性之间取得平衡？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-006",
+      "number": 6,
+      "groupId": "models",
+      "title": "合成数据与数据质量工程",
+      "keywords": "Synthetic Data / Data-Centric AI",
+      "question": "如何筛选和生成有效训练数据，并避免污染、偏差及模型退化？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-007",
+      "number": 7,
+      "groupId": "models",
+      "title": "参数高效微调与模型编辑",
+      "keywords": "PEFT / Model Editing",
+      "question": "如何用少量参数更新实现领域适配或知识修正，同时减少副作用？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-008",
+      "number": 8,
+      "groupId": "models",
+      "title": "模型量化、蒸馏与压缩",
+      "keywords": "Quantization / Distillation / Compression",
+      "question": "如何在低比特、小参数条件下保留推理能力与可靠性？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-009",
+      "number": 9,
+      "groupId": "models",
+      "title": "持续学习与测试时适应",
+      "keywords": "Continual Learning / Test-Time Adaptation",
+      "question": "模型部署后如何适应新数据，同时避免遗忘和错误累积？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-010",
+      "number": 10,
+      "groupId": "models",
+      "title": "大模型机制可解释性",
+      "keywords": "Mechanistic Interpretability",
+      "question": "模型内部如何表示知识和推理过程，能否定位并干预具体机制？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-011",
+      "number": 11,
+      "groupId": "agents",
+      "title": "智能体规划与长程任务执行",
+      "keywords": "Agent Planning / Long-Horizon Tasks",
+      "question": "如何把复杂目标拆成步骤，并在执行失败后恢复和重新规划？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-012",
+      "number": 12,
+      "groupId": "agents",
+      "title": "多智能体协作与通信",
+      "keywords": "Multi-Agent Systems",
+      "question": "多个智能体如何分工、协调和共享信息，避免无效讨论与误差放大？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-013",
+      "number": 13,
+      "groupId": "agents",
+      "title": "计算机与手机操作智能体",
+      "keywords": "GUI Agents / Computer Use",
+      "question": "如何稳定理解界面、执行操作，并应对页面变化和跨应用任务？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-014",
+      "number": 14,
+      "groupId": "agents",
+      "title": "工具使用与自主研究智能体",
+      "keywords": "Tool Use / Research Agents",
+      "question": "如何可靠调用检索、代码和实验工具，并生成可追溯的研究结论？",
+      "fieldIds": [
+        "ai",
+        "software"
+      ]
+    },
+    {
+      "id": "rd-015",
+      "number": 15,
+      "groupId": "agents",
+      "title": "智能体评测与可靠性",
+      "keywords": "Agent Evaluation / Reliability",
+      "question": "如何衡量真实任务完成率、错误恢复能力、成本和可复现性？",
+      "fieldIds": [
+        "ai",
+        "software"
+      ]
+    },
+    {
+      "id": "rd-016",
+      "number": 16,
+      "groupId": "agents",
+      "title": "智能体长期记忆与自我改进",
+      "keywords": "Agent Memory / Self-Improvement",
+      "question": "哪些经历值得存储、检索和更新，怎样验证持续改进确实有效？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-017",
+      "number": 17,
+      "groupId": "agents",
+      "title": "视觉—语言—动作模型",
+      "keywords": "Vision-Language-Action Models / VLA",
+      "question": "如何把视觉和语言理解转化为可迁移的机器人动作策略？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-018",
+      "number": 18,
+      "groupId": "agents",
+      "title": "灵巧操作与全身控制",
+      "keywords": "Dexterous Manipulation / Whole-Body Control",
+      "question": "机器人如何协调手指、双臂和身体，完成接触丰富的真实操作？",
+      "fieldIds": [
+        "ai",
+        "interdisciplinary"
+      ]
+    },
+    {
+      "id": "rd-019",
+      "number": 19,
+      "groupId": "agents",
+      "title": "仿真到现实迁移",
+      "keywords": "Sim-to-Real Transfer",
+      "question": "如何利用仿真和少量真实反馈，缩小动力学、视觉及任务分布差距？",
+      "fieldIds": [
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-020",
+      "number": 20,
+      "groupId": "agents",
+      "title": "机器人世界模型与预测规划",
+      "keywords": "Robotic World Models / Model-Based Planning",
+      "question": "如何学习物理环境的变化，支持机器人和自动驾驶的预测与决策？",
+      "fieldIds": [
+        "ai",
+        "interdisciplinary"
+      ]
+    },
+    {
+      "id": "rd-021",
+      "number": 21,
+      "groupId": "multimodal",
+      "title": "视觉语言理解与多模态推理",
+      "keywords": "Vision-Language Models / Multimodal Reasoning",
+      "question": "如何让模型依据图像证据进行多步推理，减少跨模态幻觉？",
+      "fieldIds": [
+        "ai",
+        "graphics"
+      ]
+    },
+    {
+      "id": "rd-022",
+      "number": 22,
+      "groupId": "multimodal",
+      "title": "统一多模态与实时语音交互",
+      "keywords": "Omni Models / Real-Time Speech Interaction",
+      "question": "如何统一文本、语音和视觉，实现低延迟、可打断的自然交互？",
+      "fieldIds": [
+        "ai",
+        "hci"
+      ]
+    },
+    {
+      "id": "rd-023",
+      "number": 23,
+      "groupId": "multimodal",
+      "title": "可控图像生成与编辑",
+      "keywords": "Controllable Image Generation / Editing",
+      "question": "如何精确控制构图、身份、文字及局部编辑，并保持其他内容一致？",
+      "fieldIds": [
+        "ai",
+        "graphics"
+      ]
+    },
+    {
+      "id": "rd-024",
+      "number": 24,
+      "groupId": "multimodal",
+      "title": "视频生成与长时一致性",
+      "keywords": "Video Generation / Temporal Consistency",
+      "question": "如何保持长视频中的角色、运动、物理过程和镜头叙事一致？",
+      "fieldIds": [
+        "ai",
+        "graphics"
+      ]
+    },
+    {
+      "id": "rd-025",
+      "number": 25,
+      "groupId": "multimodal",
+      "title": "三维与四维内容生成",
+      "keywords": "3D / 4D Generative Models",
+      "question": "如何从文本、图像或视频生成可编辑、可运动的三维内容？",
+      "fieldIds": [
+        "ai",
+        "graphics"
+      ]
+    },
+    {
+      "id": "rd-026",
+      "number": 26,
+      "groupId": "multimodal",
+      "title": "空间智能与三维场景理解",
+      "keywords": "Spatial Intelligence / 3D Scene Understanding",
+      "question": "如何理解空间关系、物体可供性和几何约束，支持空间推理？",
+      "fieldIds": [
+        "ai",
+        "graphics"
+      ]
+    },
+    {
+      "id": "rd-027",
+      "number": 27,
+      "groupId": "multimodal",
+      "title": "开放世界感知与开放词汇识别",
+      "keywords": "Open-World Perception / Open-Vocabulary Recognition",
+      "question": "如何识别训练中未标注的新物体，并在开放环境中持续扩展类别？",
+      "fieldIds": [
+        "ai",
+        "graphics"
+      ]
+    },
+    {
+      "id": "rd-028",
+      "number": 28,
+      "groupId": "multimodal",
+      "title": "神经渲染与高斯泼溅",
+      "keywords": "Neural Rendering / Gaussian Splatting",
+      "question": "如何实现更快、更真实、可编辑的场景重建与实时渲染？",
+      "fieldIds": [
+        "graphics"
+      ]
+    },
+    {
+      "id": "rd-029",
+      "number": 29,
+      "groupId": "multimodal",
+      "title": "长视频理解与事件推理",
+      "keywords": "Long-Video Understanding / Event Reasoning",
+      "question": "如何跨越长时间跨度理解事件、动作、因果关系和细节证据？",
+      "fieldIds": [
+        "ai",
+        "graphics"
+      ]
+    },
+    {
+      "id": "rd-030",
+      "number": 30,
+      "groupId": "multimodal",
+      "title": "文档智能与多模态解析",
+      "keywords": "Document Intelligence / Multimodal Parsing",
+      "question": "如何准确理解复杂版面、表格、图表和公式，并保留结构与出处？",
+      "fieldIds": [
+        "ai",
+        "data"
+      ]
+    },
+    {
+      "id": "rd-031",
+      "number": 31,
+      "groupId": "trust",
+      "title": "提示注入与智能体安全",
+      "keywords": "Prompt Injection / Agent Security",
+      "question": "如何防止外部网页、文档和工具输出越过信任边界并操纵智能体？",
+      "fieldIds": [
+        "security"
+      ]
+    },
+    {
+      "id": "rd-032",
+      "number": 32,
+      "groupId": "trust",
+      "title": "数据投毒、后门与模型供应链安全",
+      "keywords": "Data Poisoning / Backdoors / Model Supply Chain",
+      "question": "如何发现训练数据、模型权重和加载组件中隐藏的恶意行为？",
+      "fieldIds": [
+        "security"
+      ]
+    },
+    {
+      "id": "rd-033",
+      "number": 33,
+      "groupId": "trust",
+      "title": "模型隐私泄露与差分隐私",
+      "keywords": "Membership Inference / Differential Privacy",
+      "question": "如何评估并限制模型泄露训练成员、敏感属性及原始样本的风险？",
+      "fieldIds": [
+        "security"
+      ]
+    },
+    {
+      "id": "rd-034",
+      "number": 34,
+      "groupId": "trust",
+      "title": "机密计算与可信AI执行",
+      "keywords": "Confidential Computing / Trusted Execution",
+      "question": "如何在不可信云环境中保护模型和数据，并验证执行环境可信？",
+      "fieldIds": [
+        "security"
+      ]
+    },
+    {
+      "id": "rd-035",
+      "number": 35,
+      "groupId": "trust",
+      "title": "软件供应链与开源生态安全",
+      "keywords": "Software Supply Chain Security",
+      "question": "如何发现恶意依赖、构建污染及组件风险，并验证软件来源？",
+      "fieldIds": [
+        "security"
+      ]
+    },
+    {
+      "id": "rd-036",
+      "number": 36,
+      "groupId": "trust",
+      "title": "内存安全与系统漏洞防护",
+      "keywords": "Memory Safety / Systems Security",
+      "question": "如何减少越界、释放后使用等漏洞，并保护语言及组件之间的边界？",
+      "fieldIds": [
+        "security"
+      ]
+    },
+    {
+      "id": "rd-037",
+      "number": 37,
+      "groupId": "trust",
+      "title": "硬件侧信道与微架构安全",
+      "keywords": "Side Channels / Microarchitectural Security",
+      "question": "如何发现并缓解缓存、推测执行及加速器带来的信息泄漏？",
+      "fieldIds": [
+        "security"
+      ]
+    },
+    {
+      "id": "rd-038",
+      "number": 38,
+      "groupId": "trust",
+      "title": "后量子密码与迁移",
+      "keywords": "Post-Quantum Cryptography / Crypto Agility",
+      "question": "如何实现高效抗量子密码，并完成协议、软件和设备的兼容迁移？",
+      "fieldIds": [
+        "security"
+      ]
+    },
+    {
+      "id": "rd-039",
+      "number": 39,
+      "groupId": "trust",
+      "title": "隐私计算与可验证计算",
+      "keywords": "MPC / FHE / Zero-Knowledge Proofs",
+      "question": "如何在隐藏输入的同时完成协同计算，或证明计算结果正确？",
+      "fieldIds": [
+        "security"
+      ]
+    },
+    {
+      "id": "rd-040",
+      "number": 40,
+      "groupId": "trust",
+      "title": "生成内容溯源、水印与深伪检测",
+      "keywords": "Content Provenance / Watermarking / Deepfake Detection",
+      "question": "如何验证生成内容的来源，并抵抗篡改、移除水印和跨域伪造？",
+      "fieldIds": [
+        "security",
+        "graphics"
+      ]
+    },
+    {
+      "id": "rd-041",
+      "number": 41,
+      "groupId": "systems",
+      "title": "大模型推理服务系统",
+      "keywords": "LLM Serving / Disaggregated Inference",
+      "question": "如何优化批处理、KV缓存和预填充—解码分离，提高吞吐并降低延迟？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-042",
+      "number": 42,
+      "groupId": "systems",
+      "title": "大规模分布式训练系统",
+      "keywords": "Distributed Training Systems",
+      "question": "如何协同数据、张量、流水线及专家并行，降低通信和故障恢复成本？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-043",
+      "number": 43,
+      "groupId": "systems",
+      "title": "异构GPU集群调度",
+      "keywords": "Heterogeneous GPU Cluster Scheduling",
+      "question": "如何按任务需求和设备差异分配资源，兼顾利用率、公平性与完成时间？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-044",
+      "number": 44,
+      "groupId": "systems",
+      "title": "无服务器计算与智能体运行时",
+      "keywords": "Serverless Computing / Agent Runtimes",
+      "question": "如何支持突发、长流程和有状态任务，减少冷启动与资源浪费？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-045",
+      "number": 45,
+      "groupId": "systems",
+      "title": "内存池化与资源解耦系统",
+      "keywords": "Memory Pooling / CXL / Disaggregation",
+      "question": "如何跨服务器共享内存资源，管理一致性、数据位置和访问延迟？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-046",
+      "number": 46,
+      "groupId": "systems",
+      "title": "新型存储与计算存储融合",
+      "keywords": "Computational Storage / Modern Storage Systems",
+      "question": "如何利用SSD和近数据计算，减少数据搬移并提高存储系统效率？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-047",
+      "number": 47,
+      "groupId": "systems",
+      "title": "分布式一致性与容错",
+      "keywords": "Distributed Consistency / Fault Tolerance",
+      "question": "如何在故障、跨地域和复杂工作负载下保证正确性与可用性？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-048",
+      "number": 48,
+      "groupId": "systems",
+      "title": "轻量隔离与可扩展操作系统",
+      "keywords": "Lightweight Isolation / eBPF / OS Extensibility",
+      "question": "如何安全扩展内核与隔离运行环境，同时控制系统调用和虚拟化开销？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-049",
+      "number": 49,
+      "groupId": "systems",
+      "title": "端边云协同计算",
+      "keywords": "Edge–Cloud Collaborative Computing",
+      "question": "如何在设备、边缘和云之间分配计算，适应时延、网络和隐私约束？",
+      "fieldIds": [
+        "systems",
+        "network"
+      ]
+    },
+    {
+      "id": "rd-050",
+      "number": 50,
+      "groupId": "systems",
+      "title": "节能与碳感知计算",
+      "keywords": "Energy-Efficient / Carbon-Aware Computing",
+      "question": "如何把能耗和碳强度纳入系统调度，并量化性能与资源成本？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-051",
+      "number": 51,
+      "groupId": "architecture",
+      "title": "AI加速器与异构计算架构",
+      "keywords": "AI Accelerators / Heterogeneous Architecture",
+      "question": "如何针对训练、推理和稀疏计算设计更高效的GPU、NPU及专用架构？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-052",
+      "number": 52,
+      "groupId": "architecture",
+      "title": "低精度计算与软硬件协同",
+      "keywords": "Low-Precision Computing / Hardware–Software Co-Design",
+      "question": "如何让低比特数值格式、计算单元与模型算法共同优化？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-053",
+      "number": 53,
+      "groupId": "architecture",
+      "title": "存内计算与近存计算",
+      "keywords": "Processing-in-Memory / Near-Memory Computing",
+      "question": "如何缓解内存墙，并处理精度、带宽、可编程性和一致性问题？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-054",
+      "number": 54,
+      "groupId": "architecture",
+      "title": "Chiplet与三维集成体系结构",
+      "keywords": "Chiplet / 3D-Integrated Architecture",
+      "question": "如何优化小芯片之间的连接、封装、热管理和任务放置？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-055",
+      "number": 55,
+      "groupId": "architecture",
+      "title": "RISC-V与领域专用指令扩展",
+      "keywords": "RISC-V / Domain-Specific ISA Extensions",
+      "question": "如何协同设计开放指令集、扩展指令和软件栈，适配专用工作负载？",
+      "fieldIds": [
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-056",
+      "number": 56,
+      "groupId": "architecture",
+      "title": "AI编译器与自动内核优化",
+      "keywords": "ML Compilers / Kernel Autotuning",
+      "question": "如何自动生成、融合和调优高性能计算内核，并适配多种硬件？",
+      "fieldIds": [
+        "software",
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-057",
+      "number": 57,
+      "groupId": "architecture",
+      "title": "AI数据中心互连与拥塞控制",
+      "keywords": "AI Datacenter Networking / RDMA",
+      "question": "如何优化集合通信、拥塞控制和拓扑，减少训练与推理通信瓶颈？",
+      "fieldIds": [
+        "network",
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-058",
+      "number": 58,
+      "groupId": "architecture",
+      "title": "光互连与光电混合网络",
+      "keywords": "Optical Interconnects / Photonic Networks",
+      "question": "如何通过光交换、光互连和可编程控制提升带宽及能效？",
+      "fieldIds": [
+        "network",
+        "systems"
+      ]
+    },
+    {
+      "id": "rd-059",
+      "number": 59,
+      "groupId": "architecture",
+      "title": "可编程网络与智能网络运维",
+      "keywords": "Programmable Networks / AI for Networking",
+      "question": "如何用可编程数据面和学习方法实现流量控制、诊断与可靠运维？",
+      "fieldIds": [
+        "network"
+      ]
+    },
+    {
+      "id": "rd-060",
+      "number": 60,
+      "groupId": "architecture",
+      "title": "低轨卫星与天地融合网络",
+      "keywords": "LEO Satellite / Integrated Terrestrial–Non-Terrestrial Networks",
+      "question": "如何在高速移动拓扑下进行路由、资源调度和低延迟连接？",
+      "fieldIds": [
+        "network"
+      ]
+    },
+    {
+      "id": "rd-061",
+      "number": 61,
+      "groupId": "data",
+      "title": "检索增强生成",
+      "keywords": "Retrieval-Augmented Generation / RAG",
+      "question": "如何提高证据检索、引用忠实度和多跳问答质量，并降低检索成本？",
+      "fieldIds": [
+        "data"
+      ]
+    },
+    {
+      "id": "rd-062",
+      "number": 62,
+      "groupId": "data",
+      "title": "向量数据库与混合检索",
+      "keywords": "Vector Databases / Hybrid Search",
+      "question": "如何兼顾向量近邻、关键词、结构化过滤和动态更新的效率？",
+      "fieldIds": [
+        "data"
+      ]
+    },
+    {
+      "id": "rd-063",
+      "number": 63,
+      "groupId": "data",
+      "title": "生成式检索与重排序",
+      "keywords": "Generative Retrieval / LLM Reranking",
+      "question": "如何用生成模型定位或排序信息，并保证相关性与规模扩展能力？",
+      "fieldIds": [
+        "data"
+      ]
+    },
+    {
+      "id": "rd-064",
+      "number": 64,
+      "groupId": "data",
+      "title": "生成式推荐与推荐基础模型",
+      "keywords": "Generative Recommendation / Recommendation Foundation Models",
+      "question": "如何利用生成和统一预训练建模用户兴趣、序列行为及多模态内容？",
+      "fieldIds": [
+        "data"
+      ]
+    },
+    {
+      "id": "rd-065",
+      "number": 65,
+      "groupId": "data",
+      "title": "自然语言查数与数据智能体",
+      "keywords": "Text-to-SQL / Data Agents",
+      "question": "如何把业务问题可靠转成查询、分析流程和有证据的数据结论？",
+      "fieldIds": [
+        "data",
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-066",
+      "number": 66,
+      "groupId": "data",
+      "title": "学习型查询优化与自治数据库",
+      "keywords": "Learned Query Optimization / Autonomous DBMS",
+      "question": "如何用学习方法改进基数估计、查询计划和数据库调参？",
+      "fieldIds": [
+        "data"
+      ]
+    },
+    {
+      "id": "rd-067",
+      "number": 67,
+      "groupId": "data",
+      "title": "非结构化与多模态数据管理",
+      "keywords": "Unstructured / Multimodal Data Management",
+      "question": "如何统一查询文本、图像、视频和表格，并控制模型算子的成本？",
+      "fieldIds": [
+        "data"
+      ]
+    },
+    {
+      "id": "rd-068",
+      "number": 68,
+      "groupId": "data",
+      "title": "流式处理与实时分析",
+      "keywords": "Stream Processing / Real-Time Analytics",
+      "question": "如何处理持续更新的数据，在低延迟下维持一致结果和状态？",
+      "fieldIds": [
+        "data"
+      ]
+    },
+    {
+      "id": "rd-069",
+      "number": 69,
+      "groupId": "data",
+      "title": "湖仓数据治理与数据血缘",
+      "keywords": "Lakehouse / Data Quality / Data Lineage",
+      "question": "如何在开放数据存储中管理质量、版本、模式演化与来源？",
+      "fieldIds": [
+        "data"
+      ]
+    },
+    {
+      "id": "rd-070",
+      "number": 70,
+      "groupId": "data",
+      "title": "知识图谱与图增强推理",
+      "keywords": "Knowledge Graphs / GraphRAG",
+      "question": "如何结合实体关系、图检索和生成模型完成可追溯的复杂推理？",
+      "fieldIds": [
+        "data",
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-071",
+      "number": 71,
+      "groupId": "software",
+      "title": "仓库级代码生成与编程智能体",
+      "keywords": "Repository-Level Coding Agents",
+      "question": "如何理解大型仓库、修改多文件代码，并通过真实项目验证？",
+      "fieldIds": [
+        "software"
+      ]
+    },
+    {
+      "id": "rd-072",
+      "number": 72,
+      "groupId": "software",
+      "title": "自动程序修复",
+      "keywords": "Automated Program Repair",
+      "question": "如何定位缺陷并产生满足语义要求、能够泛化的修复补丁？",
+      "fieldIds": [
+        "software"
+      ]
+    },
+    {
+      "id": "rd-073",
+      "number": 73,
+      "groupId": "software",
+      "title": "自动测试生成与智能模糊测试",
+      "keywords": "Test Generation / Intelligent Fuzzing",
+      "question": "如何生成能揭示真实缺陷的输入和断言，提高复杂路径覆盖？",
+      "fieldIds": [
+        "software"
+      ]
+    },
+    {
+      "id": "rd-074",
+      "number": 74,
+      "groupId": "software",
+      "title": "AI辅助形式化验证与定理证明",
+      "keywords": "AI-Assisted Verification / Theorem Proving",
+      "question": "如何把自然语言和代码转成可检查的规格、证明及验证过程？",
+      "fieldIds": [
+        "software",
+        "theory"
+      ]
+    },
+    {
+      "id": "rd-075",
+      "number": 75,
+      "groupId": "software",
+      "title": "程序合成与神经符号编程",
+      "keywords": "Program Synthesis / Neurosymbolic Programming",
+      "question": "如何把示例、约束和语言描述转化为满足要求的程序？",
+      "fieldIds": [
+        "software"
+      ]
+    },
+    {
+      "id": "rd-076",
+      "number": 76,
+      "groupId": "software",
+      "title": "AI软件的测试与质量保障",
+      "keywords": "Software Engineering for AI / AI Testing",
+      "question": "如何系统测试模型、提示词、数据及智能体工作流中的错误？",
+      "fieldIds": [
+        "software"
+      ]
+    },
+    {
+      "id": "rd-077",
+      "number": 77,
+      "groupId": "software",
+      "title": "代码理解、重构与遗留系统迁移",
+      "keywords": "Code Understanding / Refactoring / Migration",
+      "question": "如何在保持行为一致的前提下解释、重构和迁移复杂代码？",
+      "fieldIds": [
+        "software"
+      ]
+    },
+    {
+      "id": "rd-078",
+      "number": 78,
+      "groupId": "software",
+      "title": "类型系统与安全程序语言",
+      "keywords": "Type Systems / Safe Programming Languages",
+      "question": "如何用所有权、效果系统及类型约束减少程序错误并支持并发？",
+      "fieldIds": [
+        "software"
+      ]
+    },
+    {
+      "id": "rd-079",
+      "number": 79,
+      "groupId": "software",
+      "title": "智能调试与可观测性",
+      "keywords": "Intelligent Debugging / Observability / AIOps",
+      "question": "如何结合日志、指标和追踪定位故障，减少错误归因？",
+      "fieldIds": [
+        "software"
+      ]
+    },
+    {
+      "id": "rd-080",
+      "number": 80,
+      "groupId": "software",
+      "title": "AI时代的开发者行为与生产力",
+      "keywords": "Empirical SE / Developer Productivity",
+      "question": "AI辅助开发如何影响代码质量、审查、学习和团队协作？",
+      "fieldIds": [
+        "software"
+      ]
+    },
+    {
+      "id": "rd-081",
+      "number": 81,
+      "groupId": "science",
+      "title": "人—智能体协作与可控交互",
+      "keywords": "Human–Agent Interaction / Human Oversight",
+      "question": "如何设计授权、解释、接管与纠错机制，帮助人有效监督智能体？",
+      "fieldIds": [
+        "hci",
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-082",
+      "number": 82,
+      "groupId": "science",
+      "title": "XR与空间交互",
+      "keywords": "Extended Reality / Spatial Interaction",
+      "question": "如何结合空间计算、手势、眼动和触觉，实现自然且舒适的交互？",
+      "fieldIds": [
+        "hci",
+        "graphics"
+      ]
+    },
+    {
+      "id": "rd-083",
+      "number": 83,
+      "groupId": "science",
+      "title": "无障碍计算与辅助技术",
+      "keywords": "Accessible Computing / Assistive AI",
+      "question": "如何与残障用户共同设计视觉、语音和行动辅助系统并评估实际效果？",
+      "fieldIds": [
+        "hci"
+      ]
+    },
+    {
+      "id": "rd-084",
+      "number": 84,
+      "groupId": "science",
+      "title": "智能教育与个性化学习",
+      "keywords": "AI Tutoring / Personalized Learning",
+      "question": "如何根据学习状态提供反馈，评估长期学习效果并减少错误教学？",
+      "fieldIds": [
+        "hci",
+        "interdisciplinary"
+      ]
+    },
+    {
+      "id": "rd-085",
+      "number": 85,
+      "groupId": "science",
+      "title": "计算社会科学与智能体社会模拟",
+      "keywords": "Computational Social Science / Agent-Based Simulation",
+      "question": "如何研究信息传播、群体行为与制度，同时检验模拟的外部有效性？",
+      "fieldIds": [
+        "interdisciplinary"
+      ]
+    },
+    {
+      "id": "rd-086",
+      "number": 86,
+      "groupId": "science",
+      "title": "生物基础模型与蛋白质设计",
+      "keywords": "Biological Foundation Models / Protein Design",
+      "question": "如何表示生物序列和结构，并通过实验反馈改进功能预测与分子设计？",
+      "fieldIds": [
+        "interdisciplinary",
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-087",
+      "number": 87,
+      "groupId": "science",
+      "title": "科学机器学习与神经算子",
+      "keywords": "Scientific Machine Learning / Neural Operators",
+      "question": "如何高效求解或近似物理方程，并保持物理一致性和跨条件泛化？",
+      "fieldIds": [
+        "interdisciplinary",
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-088",
+      "number": 88,
+      "groupId": "science",
+      "title": "AI材料与分子发现",
+      "keywords": "AI for Materials / Molecular Discovery",
+      "question": "如何结合生成模型、模拟和实验，搜索满足目标性质的材料及分子？",
+      "fieldIds": [
+        "interdisciplinary",
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-089",
+      "number": 89,
+      "groupId": "science",
+      "title": "医学多模态基础模型",
+      "keywords": "Medical Multimodal Foundation Models",
+      "question": "如何融合影像、文本和结构化数据，并验证跨机构泛化及可靠性？",
+      "fieldIds": [
+        "interdisciplinary",
+        "ai"
+      ]
+    },
+    {
+      "id": "rd-090",
+      "number": 90,
+      "groupId": "science",
+      "title": "时间序列基础模型",
+      "keywords": "Time-Series Foundation Models",
+      "question": "如何让统一预训练模型迁移到不同频率、变量和领域的预测任务？",
+      "fieldIds": [
+        "ai",
+        "data"
+      ]
+    },
+    {
+      "id": "rd-091",
+      "number": 91,
+      "groupId": "theory",
+      "title": "大模型泛化理论与扩展规律",
+      "keywords": "Generalization Theory / Scaling Laws",
+      "question": "如何解释模型能力随数据、参数和计算增长的变化及其边界？",
+      "fieldIds": [
+        "ai",
+        "theory"
+      ]
+    },
+    {
+      "id": "rd-092",
+      "number": 92,
+      "groupId": "theory",
+      "title": "因果表示学习与因果推断",
+      "keywords": "Causal Representation Learning / Causal Inference",
+      "question": "如何区分相关与因果，学习可迁移、支持干预的表示和推断方法？",
+      "fieldIds": [
+        "ai",
+        "theory"
+      ]
+    },
+    {
+      "id": "rd-093",
+      "number": 93,
+      "groupId": "theory",
+      "title": "不确定性量化与保形预测",
+      "keywords": "Uncertainty Quantification / Conformal Prediction",
+      "question": "如何给预测提供可信区间或拒答机制，并处理分布变化？",
+      "fieldIds": [
+        "ai",
+        "theory"
+      ]
+    },
+    {
+      "id": "rd-094",
+      "number": 94,
+      "groupId": "theory",
+      "title": "图学习与几何深度学习",
+      "keywords": "Graph Learning / Geometric Deep Learning",
+      "question": "如何利用图和几何对称性建模关系结构，并提高泛化与计算效率？",
+      "fieldIds": [
+        "ai",
+        "theory"
+      ]
+    },
+    {
+      "id": "rd-095",
+      "number": 95,
+      "groupId": "theory",
+      "title": "联邦学习与去中心化学习",
+      "keywords": "Federated / Decentralized Learning",
+      "question": "如何在数据不集中、设备异构及不可信参与者条件下协同训练？",
+      "fieldIds": [
+        "ai",
+        "network"
+      ]
+    },
+    {
+      "id": "rd-096",
+      "number": 96,
+      "groupId": "theory",
+      "title": "在线算法与学习增强算法",
+      "keywords": "Online / Learning-Augmented Algorithms",
+      "question": "如何利用预测改善调度、缓存等算法，同时保留预测错误时的保证？",
+      "fieldIds": [
+        "theory"
+      ]
+    },
+    {
+      "id": "rd-097",
+      "number": 97,
+      "groupId": "theory",
+      "title": "动态图算法与流式算法",
+      "keywords": "Dynamic Graph / Streaming Algorithms",
+      "question": "如何在数据不断变化且内存受限的情况下维护近似或精确计算结果？",
+      "fieldIds": [
+        "theory",
+        "data"
+      ]
+    },
+    {
+      "id": "rd-098",
+      "number": 98,
+      "groupId": "theory",
+      "title": "算法博弈论与机制设计",
+      "keywords": "Algorithmic Game Theory / Mechanism Design",
+      "question": "如何在参与者有策略行为时设计高效、公平、激励相容的机制？",
+      "fieldIds": [
+        "theory",
+        "interdisciplinary"
+      ]
+    },
+    {
+      "id": "rd-099",
+      "number": 99,
+      "groupId": "theory",
+      "title": "量子算法与量子复杂性",
+      "keywords": "Quantum Algorithms / Quantum Complexity",
+      "question": "哪些问题能获得可证明的量子优势，资源需求与经典下界是什么？",
+      "fieldIds": [
+        "theory",
+        "interdisciplinary"
+      ]
+    },
+    {
+      "id": "rd-100",
+      "number": 100,
+      "groupId": "theory",
+      "title": "量子纠错与容错编译",
+      "keywords": "Quantum Error Correction / Fault-Tolerant Compilation",
+      "question": "如何降低逻辑错误及容错执行的资源开销，适配实际量子硬件？",
+      "fieldIds": [
+        "systems",
+        "interdisciplinary"
+      ]
+    }
+  ]
+}

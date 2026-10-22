@@ -1,9 +1,11 @@
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.TopicModel=factory();})(globalThis,()=>{
   'use strict';
   const fieldKeys={theory:'sorting',ai:'neural',network:'network'};
-  function entries({posts=[],projects=[],papers=[],fields=[],journeys=[],ccfCatalog={venues:[]}}){
+  function entries({posts=[],projects=[],papers=[],fields=[],journeys=[],ccfCatalog={venues:[]},research={directions:[]},books=[]}){
     return [
       {key:'general',title:'网站公共留言板',info:'网站交流',href:'#/community'},
+      ...research.directions.map(d=>({key:'research:'+d.id,title:d.title,info:'研究方向 · '+d.keywords,href:'#/research?direction='+d.id})),
+      ...books.map(b=>({key:'book:'+b.id,title:b.title,info:'推荐书目 · '+b.authors,href:'#/books?book='+b.id})),
       ...posts.map(p=>({key:'post:'+p.slug,title:p.title,info:'手记 · '+p.category,href:'#/post/'+p.slug})),
       ...projects.map(p=>({key:'project:'+p.id,title:p.title,info:'项目 · '+p.year,href:'#/projects'})),
       ...papers.map(p=>({key:'paper:'+p.id,title:p.title,info:'论文 · '+p.year+' · '+p.venue,href:'#/papers?paper='+p.id})),
