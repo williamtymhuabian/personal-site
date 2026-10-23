@@ -13,6 +13,15 @@ export function validateResearch({research,books,posts,fields}){
   for(const b of books){
     if(!/^[a-z0-9-]+$/.test(b.id)||!b.title||!b.authors||!b.description||!b.prerequisites||!b.directionIds.length||b.directionIds.some(id=>!ids.has(id)))fail('书目内容无效。');
     for(const url of [b.sourceUrl,b.readingUrl])if(new URL(url).protocol!=='https:')fail('书目链接无效。');
+    if(b.format!==undefined&&b.format!=='online-handbook')fail('书目资源类型无效。');
+    if(b.roadmapUrl!==undefined&&new URL(b.roadmapUrl).protocol!=='https:')fail('学习路线链接无效。');
+    if(b.practicePlatforms!==undefined){
+      if(!Array.isArray(b.practicePlatforms)||new Set(b.practicePlatforms.map(p=>p.name)).size!==b.practicePlatforms.length)fail('练习平台列表无效。');
+      for(const p of b.practicePlatforms){
+        if(!p.name||!p.description)fail('练习平台介绍缺失。');
+        for(const url of [p.officialUrl,p.practiceUrl,p.contestsUrl])if(new URL(url).protocol!=='https:')fail('练习平台链接无效。');
+      }
+    }
     if(!Array.isArray(b.chapters)||new Set(b.chapters.map(c=>c.number)).size!==b.chapters.length||new Set(b.chapters.map(c=>c.postSlug)).size!==b.chapters.length)fail('章节索引重复或格式无效。');
     if(b.totalChapters!==undefined&&(!Number.isInteger(b.totalChapters)||b.totalChapters<1||b.chapters.length>b.totalChapters))fail('全书章节数量无效。');
     for(const [index,c] of b.chapters.entries()){const p=posts.find(p=>p.slug===c.postSlug);if(c.number!==index+1||!p||p.book!==b.id||Number(p.chapter)!==c.number||!c.pages||!c.title||!c.goal||!c.directionIds.length||c.directionIds.some(id=>!ids.has(id)||!p.research.includes(id)||!b.directionIds.includes(id)))fail('章节或文章关联错误。');}

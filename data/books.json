@@ -204,5 +204,42 @@
     "sourceUrl": "https://www.manning.com/books/build-a-large-language-model-from-scratch",
     "readingUrl": "https://sebastianraschka.com/llms-from-scratch/",
     "chapters": []
+  },
+  {
+    "id": "oi-wiki",
+    "title": "OI Wiki：算法竞赛与计算机基础知识",
+    "authors": "OI Wiki 社区贡献者",
+    "format": "online-handbook",
+    "edition": "免费在线手册 · 持续更新",
+    "description": "适合边查边练的中文算法学习手册，涵盖语言基础、搜索、动态规划、字符串、数学、数据结构、图论和计算几何。建议先读学习路线，再按专题阅读、实现算法并完成练习；图与数据结构知识也可作为后续图算法研究的基础。",
+    "prerequisites": "掌握一门编程语言的基本语法；可从 C++ 基础、复杂度分析与基础数据结构开始，每学一个专题就配合题目练习。",
+    "directionIds": ["rd-096", "rd-097"],
+    "sourceUrl": "https://github.com/OI-wiki/OI-wiki",
+    "readingUrl": "https://oi-wiki.org/",
+    "roadmapUrl": "https://oi-wiki.org/contest/roadmap/",
+    "practicePlatforms": [
+      {
+        "name": "Codeforces",
+        "description": "用题库的难度与算法标签选择练习，结合比赛和赛后补题训练解题能力。",
+        "officialUrl": "https://codeforces.com/",
+        "practiceUrl": "https://codeforces.com/problemset",
+        "contestsUrl": "https://codeforces.com/contests"
+      },
+      {
+        "name": "AtCoder",
+        "description": "先用练习赛熟悉提交与评测流程，再从 AtCoder Beginner Contest 的基础题逐步提高。",
+        "officialUrl": "https://atcoder.jp/",
+        "practiceUrl": "https://atcoder.jp/contests/practice",
+        "contestsUrl": "https://atcoder.jp/contests/"
+      },
+      {
+        "name": "洛谷",
+        "description": "中文题库可按难度与算法标签筛选，适合配合 OI Wiki 做专题练习与参加比赛。",
+        "officialUrl": "https://www.luogu.com.cn/",
+        "practiceUrl": "https://www.luogu.com.cn/problem/list",
+        "contestsUrl": "https://www.luogu.com.cn/contest/list"
+      }
+    ],
+    "chapters": []
   }
 ]
