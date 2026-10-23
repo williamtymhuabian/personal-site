@@ -1,5 +1,574 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Williamtym · 探索手记</title><link>https://williamtymhuabian.github.io/personal-site/</link><description>Williamtym，苏州大学计算机科学与技术硕士研究生。记录技术实践、算法思考、竞赛经历与历史阅读。</description><language>zh-cn</language><atom:link href="https://williamtymhuabian.github.io/personal-site/feed.xml" rel="self" type="application/rss+xml"/><item><title>AI Agent 共读①：从工具循环到可靠执行，读懂 Agent 与 Harness</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch01-loop-and-harness</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch01-loop-and-harness</guid><pubDate>Wed, 21 Oct 2026 16:00:00 GMT</pubDate><description>对照《深入理解 AI Agent》第一章，用一个无需 API 的原创小程序理解决策、工具、结果反馈与停止条件，再把这些概念映射到真实系统。</description><content:encoded>&lt;p&gt;一个聊天模型能写出操作步骤，一个 Agent 系统还需要真的执行步骤、看到结果，并知道什么时候该停止。理解这层差别，比先记住一串框架名称更有用。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Williamtym · 探索手记</title><link>https://williamtymhuabian.github.io/personal-site/</link><description>Williamtym，苏州大学计算机科学与技术硕士研究生。记录技术实践、算法思考、竞赛经历与历史阅读。</description><language>zh-cn</language><atom:link href="https://williamtymhuabian.github.io/personal-site/feed.xml" rel="self" type="application/rss+xml"/><item><title>AI Agent 共读③：记忆与 RAG，怎样让资料在需要时真正派上用场</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch03-memory-and-rag</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch03-memory-and-rag</guid><pubDate>Thu, 22 Oct 2026 16:00:00 GMT</pubDate><description>对照第三章，区分用户记忆与共享知识库，理解分块、检索、重排序和结构化索引，并用离线练习检查过期信息、访问范围与来源。</description><content:encoded>&lt;p&gt;学习助手今天知道你只想学20分钟，下次却又安排了一小时。它可能保存过这条偏好，但没有检索到；也可能找到了旧记录，没识别出哪条仍然有效。“存过”距离“用对”还有一整段工程链路。&lt;/p&gt;
+&lt;p&gt;这一篇阅读李博杰《深入理解 AI Agent：设计原理与工程实践》PDF v1.3（2026-07-30）的第3章“用户记忆和知识库”，书内第72—102页，对应 PDF 第80—110页。本文重新组织概念，并配有独立编写的教学练习。&lt;/p&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;先区分两种需要记住的东西&lt;/h2&gt;
+&lt;p&gt;用户记忆记录与某位用户有关的信息，例如阅读偏好、已确认的计划和长期目标。知识库保存任务可用的资料，例如教材、项目说明和操作规范。两者都要回答“什么时候取回哪条信息”，但访问范围、更新来源和保留期限可能不同。&lt;/p&gt;
+&lt;p&gt;“共享知识库”也不意味着对所有人公开。团队资料可能只在某个项目内共享；个人记忆则需要按用户隔离。检索排序再准确，也不能弥补把别人的私有记录放进候选集的错误。&lt;/p&gt;
+&lt;p&gt;可以把一条记忆写成：内容、适用对象、来源、确认状态、有效时间。比如“本月希望每次学习20分钟”就比“喜欢短内容”更明确：前者带有时间和场景，后者可能被错误推广到所有任务。&lt;/p&gt;
+&lt;p&gt;记忆还需要修改和删除。用户纠正偏好后，只把新记录追加进去，会让旧规则继续参与检索。删除时也要考虑派生摘要、索引和缓存，不能只移走原始对话却留下从中提取的敏感事实。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;RAG 的关键在于把证据送到正确的位置&lt;/h2&gt;
+&lt;p&gt;RAG 将外部检索结果提供给生成过程。一个基本链路可以按文档解析、分块、建立检索表示、找候选、重排序、组装证据和生成回答来理解。&lt;/p&gt;
+&lt;p&gt;分块决定检索的单位。块太小，可能只剩“按新规则执行”，却丢了前文的新规则；块太大，相关证据又会被大量无关内容包围。好的切分需要保留标题、所属章节、表格上下文及可定位来源。&lt;/p&gt;
+&lt;p&gt;关键词检索适合精确术语、编号和名称，语义检索有助于处理不同表述。混合检索可以汇集两类候选，再通过重排序缩小证据集。向量相似度提供的是相关性线索，不是事实正确性的证明，更不是最终答案的置信概率。&lt;/p&gt;
+&lt;p&gt;评价时也应拆开看：正确材料有没有进入候选集，排序后有没有被保留，模型有没有忠实使用材料。如果材料根本没找到，改回答提示词通常修不好上游问题；如果已经找到但引用错误，就要检查生成与证据对应关系。&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;什么时候需要图和更深的索引&lt;/h2&gt;
+&lt;p&gt;第三章进一步讨论层次摘要、实体关系网络和文件系统组织。它们可以帮助表示“细节属于哪个主题”和“多个实体怎样关联”，尤其适合需要跨材料整合的问题。&lt;/p&gt;
+&lt;p&gt;例如，“哪几篇笔记讨论了同一套评估方法”可以通过关系索引缩小范围。但图中的边同样需要来源与时间：模型抽取了一个关系，不代表关系一定成立。结构化索引提供了额外的组织能力，也带来抽取、更新和核对成本。&lt;/p&gt;
+&lt;p&gt;智能体化检索则允许系统根据已有结果继续查询、改写问题或补充证据。判断是否采用这种模式，要比较检索质量的收益和额外调用成本；一次检索已经足够的任务，没有必要强行变成长循环。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;动手：先过滤能用的信息，再谈相似度&lt;/h2&gt;
+&lt;p&gt;下面用四条虚构记录演示最小链路：按用户、有效期和确认状态过滤，再做显式关键词集合匹配。没有调用模型、向量数据库或真实个人资料。&lt;/p&gt;
+&lt;p&gt;保存为 &lt;code&gt;memory_retrieval.py&lt;/code&gt;，使用 Python 3.10 或以上运行 &lt;code&gt;python memory_retrieval.py&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;&amp;quot;&amp;quot;&amp;quot;Chapter 3: fictional records, lexical search, no LLM or vector database.&amp;quot;&amp;quot;&amp;quot;
+from datetime import date
+
+
+def visible_records(records, user, today):
+    return [r for r in records
+            if r[&amp;quot;owner&amp;quot;] in (user, &amp;quot;public&amp;quot;)
+            and r[&amp;quot;valid_until&amp;quot;] &amp;gt;= today
+            and r[&amp;quot;verified&amp;quot;]]
+
+
+def retrieve(records, query_terms, limit=2):
+    ranked = sorted(records,
+                    key=lambda r: (-len(set(r[&amp;quot;terms&amp;quot;]) &amp;amp; set(query_terms)),
+                                   r[&amp;quot;id&amp;quot;]))
+    return [r for r in ranked if set(r[&amp;quot;terms&amp;quot;]) &amp;amp; set(query_terms)][:limit]
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    records = [
+        {&amp;quot;id&amp;quot;: &amp;quot;old&amp;quot;, &amp;quot;owner&amp;quot;: &amp;quot;reader-a&amp;quot;, &amp;quot;terms&amp;quot;: [&amp;quot;学习&amp;quot;, &amp;quot;时间&amp;quot;],
+         &amp;quot;text&amp;quot;: &amp;quot;旧计划：每次60分钟&amp;quot;, &amp;quot;valid_until&amp;quot;: date(2026, 10, 1),
+         &amp;quot;verified&amp;quot;: True, &amp;quot;source&amp;quot;: &amp;quot;练习用旧计划&amp;quot;},
+        {&amp;quot;id&amp;quot;: &amp;quot;current&amp;quot;, &amp;quot;owner&amp;quot;: &amp;quot;reader-a&amp;quot;, &amp;quot;terms&amp;quot;: [&amp;quot;学习&amp;quot;, &amp;quot;时间&amp;quot;],
+         &amp;quot;text&amp;quot;: &amp;quot;当前计划：每次20分钟&amp;quot;, &amp;quot;valid_until&amp;quot;: date(2026, 12, 31),
+         &amp;quot;verified&amp;quot;: True, &amp;quot;source&amp;quot;: &amp;quot;练习用读者确认记录&amp;quot;},
+        {&amp;quot;id&amp;quot;: &amp;quot;private-b&amp;quot;, &amp;quot;owner&amp;quot;: &amp;quot;reader-b&amp;quot;, &amp;quot;terms&amp;quot;: [&amp;quot;学习&amp;quot;, &amp;quot;时间&amp;quot;],
+         &amp;quot;text&amp;quot;: &amp;quot;另一位读者的私有计划&amp;quot;, &amp;quot;valid_until&amp;quot;: date(2026, 12, 31),
+         &amp;quot;verified&amp;quot;: True, &amp;quot;source&amp;quot;: &amp;quot;练习用他人私有记录&amp;quot;},
+        {&amp;quot;id&amp;quot;: &amp;quot;untrusted&amp;quot;, &amp;quot;owner&amp;quot;: &amp;quot;public&amp;quot;, &amp;quot;terms&amp;quot;: [&amp;quot;学习&amp;quot;, &amp;quot;时间&amp;quot;],
+         &amp;quot;text&amp;quot;: &amp;quot;未经核实的修改建议&amp;quot;, &amp;quot;valid_until&amp;quot;: date(2026, 12, 31),
+         &amp;quot;verified&amp;quot;: False, &amp;quot;source&amp;quot;: &amp;quot;练习用外部材料&amp;quot;},
+    ]
+    visible = visible_records(records, &amp;quot;reader-a&amp;quot;, date(2026, 10, 23))
+    hits = retrieve(visible, [&amp;quot;学习&amp;quot;, &amp;quot;时间&amp;quot;])
+    assert [r[&amp;quot;id&amp;quot;] for r in hits] == [&amp;quot;current&amp;quot;]
+    for item in hits:
+        print(item[&amp;quot;text&amp;quot;] + &amp;quot;；来源：&amp;quot; + item[&amp;quot;source&amp;quot;])
+    print(&amp;quot;无匹配时返回：&amp;quot;, retrieve(visible, [&amp;quot;图像&amp;quot;]))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;输出只应保留当前读者有效的20分钟计划，同时带上来源；无关查询返回空列表。旧记录、他人私有记录和未经核实的修改建议不会进入最终候选。&lt;/p&gt;
+&lt;p&gt;这个程序只演示过滤顺序和信息定位，并没有实现完整的记忆系统或 RAG。尤其要注意：示例的 &lt;code&gt;verified&lt;/code&gt; 是可信程序设置的固定字段，不能让外部文档自己声称“我已核实”，就获得同等信任。&lt;/p&gt;
+&lt;p&gt;接着可以做三个改动：调整查询词，观察精确匹配的局限；增加两条同时有效但相互矛盾的计划，设计冲突提示；删除当前计划，检查系统是否应该回答“没有可用记录”。不要让检索缺口被模型用猜测填满。&lt;/p&gt;
+&lt;h2 id=&quot;section-5&quot;&gt;把检索结果变成可追溯的学习记录&lt;/h2&gt;
+&lt;p&gt;一次好的学习记录可以同时写下：希望记住的知识、适用条件、资料位置，以及以后什么情况下需要更新。比如“记忆检索前先检查访问范围和有效期”，比“今天看了 RAG”更容易转化成实际设计。&lt;/p&gt;
+&lt;p&gt;本章关联&lt;a href=&quot;#/research?direction=rd-016&quot;&gt;智能体长期记忆与自我改进&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-061&quot;&gt;检索增强生成&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-062&quot;&gt;向量数据库与混合检索&lt;/a&gt;及&lt;a href=&quot;#/research?direction=rd-070&quot;&gt;知识图谱与图增强推理&lt;/a&gt;。想继续研究图检索，也可以从&lt;a href=&quot;#/books?book=essential-graphrag&quot;&gt;Essential GraphRAG 书目&lt;/a&gt;进入。&lt;/p&gt;
+&lt;p&gt;留下一个问题：当资料版本变了，你的系统如何找到并撤回依赖旧资料的结论？它会影响的不只是索引，还有以后使用这些结论的每一次回答。&lt;/p&gt;
+&lt;h2 id=&quot;section-6&quot;&gt;阅读出处&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;李博杰，《深入理解 AI Agent：设计原理与工程实践》，v1.3，第3章，书内第72—102页；重点对应3.1节的记忆、3.2节的检索和3.3节的知识组织。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bojieli/ai-agent-book&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;作者原始项目与配套实验&lt;/a&gt;。在线材料可能更新，复现实验时应核对版本与条件。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#/books?book=ai-agents-in-depth&quot;&gt;回到本书章节索引&lt;/a&gt;。本文代码为原创离线教学示例，运行结果不代表真实模型的检索表现。&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title>AI Agent 共读④：把工具做成清楚、可控、能恢复的接口</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch04-tools-and-events</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch04-tools-and-events</guid><pubDate>Thu, 22 Oct 2026 16:00:00 GMT</pubDate><description>对照第四章，理解工具契约、权限、参数保真、MCP、按需发现和异步事件，用一个内存工具练习验证、拒绝与重复请求处理。</description><content:encoded>&lt;p&gt;给 Agent 一个叫“处理资料”的函数，它究竟会读文件、改文件，还是把文件发出去？如果名称、参数和返回值没有说清楚，工具越强，误解的后果可能越大。&lt;/p&gt;
+&lt;p&gt;本篇对应李博杰《深入理解 AI Agent：设计原理与工程实践》PDF v1.3 第4章“工具”，书内第103—130页，对应 PDF 第111—138页。主线有两条：怎样让 Agent 找到合适的工具，以及怎样在真实的等待、失败和中断中使用工具。&lt;/p&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;工具首先是一份可检查的契约&lt;/h2&gt;
+&lt;p&gt;可以从模型和运行时两个视角看同一个工具。模型需要知道何时使用、输入什么、会产生什么结果；运行时则需要验证调用是否合法、权限是否足够，以及真实执行是否成功。&lt;/p&gt;
+&lt;p&gt;一份清楚的契约应说明用途、适用边界、参数类型、必要条件和结果结构。例如，“追加一条学习笔记”比“处理资料”更容易界定；返回 &lt;code&gt;stored&lt;/code&gt; 与记录标识，也比只返回一句“好了”更便于验证。&lt;/p&gt;
+&lt;p&gt;参数保真同样重要。用户指定的文本、路径、标识不能被接口悄悄改写成另一个对象。需要规范化时，应明确规范化规则；原文无法唯一匹配时，应报告冲突，而不是替用户猜一个目标。&lt;/p&gt;
+&lt;p&gt;工具描述帮助模型正确选择，程序校验负责兜住无效调用。把一条规则写进描述，并不能代替执行前的检查。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;五类工具放进同一条任务链&lt;/h2&gt;
+&lt;p&gt;感知工具获取信息，执行工具改变状态，协作工具协调其他执行者。事件触发让外部变化启动任务，用户沟通则把进展、结果或需要补充的条件传递给用户。&lt;/p&gt;
+&lt;p&gt;对学习助手而言，可以分别对应查笔记、保存笔记、请专门模块检查引用、接收课程更新事件和发送学习结果。它们不必都放进一个万能函数中：只读查询和有副作用的保存，应有不同的契约和权限。&lt;/p&gt;
+&lt;p&gt;工具粒度需要结合任务选择。过细会让一次简单操作产生很多调用；过粗又可能遮住关键边界。一个有用的判断是：这个操作能否被独立理解、验证、重试或撤销？&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;MCP 和 Skills 解决了哪一部分&lt;/h2&gt;
+&lt;p&gt;MCP 为工具和其他能力的互操作提供约定，能够减少每个系统各写一套接入方式的负担。协议兼容并不意味着工具可信，也不意味着用户已经授予了所有操作权限。&lt;/p&gt;
+&lt;p&gt;当能力数量很多时，一次注入全部定义会增加上下文和选择负担。分层目录、检索预筛及 Skills 的按需查阅，都可以用于控制暴露范围。发现工具、理解工具和获准执行工具，仍然是三个不同步骤。&lt;/p&gt;
+&lt;p&gt;如果一个工具说明里夹着“忽略用户约束”，应把它看成待处理的外部输入，而不是运行时权限的来源。权限应由独立的应用状态决定。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;动手：一个不会真的写文件的笔记工具&lt;/h2&gt;
+&lt;p&gt;下面的工具只修改进程内列表。它校验固定契约，检查应用传入的授权，并用请求标识避免相同内容在重试时重复追加。保存为 &lt;code&gt;tool_contract.py&lt;/code&gt;，运行 &lt;code&gt;python tool_contract.py&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;&amp;quot;&amp;quot;&amp;quot;Chapter 4: a simulated append tool; no files or network are changed.&amp;quot;&amp;quot;&amp;quot;
+import json
+
+
+def execute(request, granted, receipts, notes):
+    if set(request) != {&amp;quot;id&amp;quot;, &amp;quot;tool&amp;quot;, &amp;quot;arguments&amp;quot;}:
+        raise ValueError(&amp;quot;请求字段不完整或含未知字段&amp;quot;)
+    if request[&amp;quot;tool&amp;quot;] != &amp;quot;append_note&amp;quot; or &amp;quot;notes:append&amp;quot; not in granted:
+        raise PermissionError(&amp;quot;工具或权限不允许&amp;quot;)
+    args = request[&amp;quot;arguments&amp;quot;]
+    if set(args) != {&amp;quot;text&amp;quot;} or not isinstance(args[&amp;quot;text&amp;quot;], str):
+        raise ValueError(&amp;quot;工具参数必须是单个text字符串&amp;quot;)
+    if not args[&amp;quot;text&amp;quot;].strip() or len(args[&amp;quot;text&amp;quot;]) &amp;gt; 100:
+        raise ValueError(&amp;quot;正文需为1—100字&amp;quot;)
+    if not isinstance(request[&amp;quot;id&amp;quot;], str) or not request[&amp;quot;id&amp;quot;]:
+        raise ValueError(&amp;quot;需要有效请求标识&amp;quot;)
+    fingerprint = json.dumps(args, ensure_ascii=False, sort_keys=True)
+    if request[&amp;quot;id&amp;quot;] in receipts:
+        previous, result = receipts[request[&amp;quot;id&amp;quot;]]
+        if previous != fingerprint:
+            raise ValueError(&amp;quot;同一请求标识不能对应不同正文&amp;quot;)
+        return result
+    notes.append(args[&amp;quot;text&amp;quot;])
+    result = {&amp;quot;status&amp;quot;: &amp;quot;stored&amp;quot;, &amp;quot;count&amp;quot;: len(notes)}
+    receipts[request[&amp;quot;id&amp;quot;]] = (fingerprint, result)
+    return result
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    request = {&amp;quot;id&amp;quot;: &amp;quot;demo-1&amp;quot;, &amp;quot;tool&amp;quot;: &amp;quot;append_note&amp;quot;,
+               &amp;quot;arguments&amp;quot;: {&amp;quot;text&amp;quot;: &amp;quot;工具执行前先校验契约。&amp;quot;}}
+    notes, receipts = [], {}
+    for _ in range(2):
+        print(execute(request, {&amp;quot;notes:append&amp;quot;}, receipts, notes))
+    assert len(notes) == 1
+    try:
+        execute(request, set(), receipts, notes)
+    except PermissionError as error:
+        print(&amp;quot;拒绝：&amp;quot;, error)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;两次相同请求都返回记录数1；移除授权后，请求被拒绝。这是内存中的单进程演示，不具备数据库事务、持久化去重或跨进程并发保证。&lt;/p&gt;
+&lt;p&gt;把同一请求标识对应的正文改掉，程序应拒绝；增加未知参数，也应拒绝。这样的失败比“似乎执行了另一个操作”更容易解释和恢复。&lt;/p&gt;
+&lt;p&gt;真实系统还要处理一种重要情况：客户端超时，但服务端可能已经执行成功。此时直接重试可能造成重复副作用，需要使用服务端支持的幂等键、查询执行状态，或明确的补偿机制。&lt;/p&gt;
+&lt;h2 id=&quot;section-5&quot;&gt;异步任务需要状态，不能只剩一个等待框&lt;/h2&gt;
+&lt;p&gt;第四章还讨论事件驱动架构。耗时操作开始后，系统需要知道它处于待执行、运行、完成、失败还是取消状态；用户在期间改变目标时，也应有确定的处理方式。&lt;/p&gt;
+&lt;p&gt;常见策略包括取消旧任务、把新请求排队，以及在资源允许时并行处理。选择取决于任务语义：检索旧问题的结果可以丢弃，已经发出的外部写入则不能靠取消本地等待自动撤回。&lt;/p&gt;
+&lt;p&gt;事件需要标识、来源和去重规则。任务结束前到达的新事件不一定是“开始一个新任务”的授权，也可能只是当前任务的新证据。把这些状态显式记录下来，才方便定位为什么发生了重复执行或结果串线。&lt;/p&gt;
+&lt;h2 id=&quot;section-6&quot;&gt;这次学习可以留下什么&lt;/h2&gt;
+&lt;p&gt;尝试给自己的一个工具写出三份材料：给模型看的描述、给程序检查的参数契约、给使用者看的失败说明。然后用同一个请求连续调用两次，检查系统能否解释每次发生了什么。&lt;/p&gt;
+&lt;p&gt;本章连接&lt;a href=&quot;#/research?direction=rd-014&quot;&gt;工具使用与自主研究智能体&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-031&quot;&gt;提示注入与智能体安全&lt;/a&gt;及&lt;a href=&quot;#/research?direction=rd-011&quot;&gt;智能体规划与长程任务执行&lt;/a&gt;。一个值得研究的问题是：在不额外扩大权限的前提下，工具发现能否减少选择错误和调用开销？&lt;/p&gt;
+&lt;h2 id=&quot;section-7&quot;&gt;阅读出处&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;李博杰，《深入理解 AI Agent：设计原理与工程实践》，v1.3，第4章，书内第103—130页；对应工具设计、MCP、异步事件和主动发现等章节。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bojieli/ai-agent-book&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;作者原始项目与实验&lt;/a&gt;；具体协议和产品实现会演进，本文不把书中的实现描述当作当前接口规范。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#/books?book=ai-agents-in-depth&quot;&gt;本书章节索引&lt;/a&gt;。示例代码由本文独立编写，不会访问文件、网络或外部账户。&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title>AI Agent 共读⑤：代码生成之后，怎样知道修改真的解决了问题</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch05-coding-and-verification</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch05-coding-and-verification</guid><pubDate>Thu, 22 Oct 2026 16:00:00 GMT</pubDate><description>对照第五章，理解 Coding Agent 的搜索、编辑、运行和恢复流程，用边界用例区分看似可用的补丁与满足要求的修改。</description><content:encoded>&lt;p&gt;“代码能运行”和“代码满足需求”之间，隔着一个最容易被省略的步骤：验证。一个补丁可能修好了展示用例，却破坏边界输入；也可能因为改错文件而根本没有作用。&lt;/p&gt;
+&lt;p&gt;本篇对应李博杰《深入理解 AI Agent：设计原理与工程实践》PDF v1.3 第5章“Coding Agent 与代码生成”，书内第131—161页，对应 PDF 第139—169页。我们把重点放在可检查的开发流程，以及代码怎样成为精确表达和验证想法的工具。&lt;/p&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;Coding Agent 的工作对象是整个修改过程&lt;/h2&gt;
+&lt;p&gt;一个实际代码任务通常需要定位相关文件、理解接口与约束、提出修改、检查差异、运行验证，再根据失败结果继续调整。生成函数只是其中的一步。&lt;/p&gt;
+&lt;p&gt;原书讨论文件系统与通用执行能力在开放任务中的价值：中间数据可以留下来，代码可以组合原先没有的处理流程，结果也能被重新检查。但这种架构是一种工程选择，不是所有任务都必须具备任意代码执行能力。&lt;/p&gt;
+&lt;p&gt;对于一个小而固定的业务操作，受限工具可能更合适；对于需要清洗数据、分析仓库和组织复杂产物的任务，代码与工作区更有组合性。能力范围应与可用的隔离、权限和验证手段一起设计。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;搜索、编辑与验证各有边界&lt;/h2&gt;
+&lt;p&gt;搜索提供定位线索，不是读完整个项目的替代品。找到函数名后，还需要查看调用方、测试和数据约定，确认它实际参与哪条执行路径。&lt;/p&gt;
+&lt;p&gt;编辑应有清楚的目标和前置条件。例如，替换文本时要求旧片段唯一匹配，应用补丁时核对基线版本。找不到原片段，可能说明文件已变化；不应自动在另一个相似位置做修改。&lt;/p&gt;
+&lt;p&gt;验证则从需求建立可执行判断。正常情况、边界输入、无效输入以及相关旧行为，都可能需要覆盖。测试通过说明候选修改满足了这些检查，不能证明没有测试到的所有情况也正确，更不能把一次运行当成形式化证明。&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;动手：一个只修了表面的候选补丁&lt;/h2&gt;
+&lt;p&gt;需求是把数值限制在指定区间，并在下界大于上界时拒绝输入。只看“负数应该变成0”这个用例，始终返回下界的函数也能通过；加入中间值、超上界和无效区间，差异就显现出来。&lt;/p&gt;
+&lt;p&gt;保存为 &lt;code&gt;patch_verification.py&lt;/code&gt;，运行 &lt;code&gt;python patch_verification.py&lt;/code&gt;。两个候选实现都是手写的，不会调用模型，也不会执行外部生成的代码。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;&amp;quot;&amp;quot;&amp;quot;Chapter 5: two hand-written candidate fixes, no generated code execution.&amp;quot;&amp;quot;&amp;quot;
+def wrong_clamp(x, lower, upper):
+    return lower
+
+
+def correct_clamp(x, lower, upper):
+    if lower &amp;gt; upper:
+        raise ValueError(&amp;quot;下界不能大于上界&amp;quot;)
+    return max(lower, min(x, upper))
+
+
+def verify(candidate):
+    cases = [(-2, 0, 10, 0), (5, 0, 10, 5),
+             (12, 0, 10, 10), (3, 3, 3, 3)]
+    failures = []
+    for x, lower, upper, expected in cases:
+        actual = candidate(x, lower, upper)
+        if actual != expected:
+            failures.append({&amp;quot;input&amp;quot;: (x, lower, upper),
+                             &amp;quot;expected&amp;quot;: expected, &amp;quot;actual&amp;quot;: actual})
+    try:
+        candidate(5, 10, 0)
+        failures.append({&amp;quot;input&amp;quot;: (5, 10, 0), &amp;quot;expected&amp;quot;: &amp;quot;ValueError&amp;quot;})
+    except ValueError:
+        pass
+    return failures
+
+
+def replace_exact(source, old, new):
+    if not old or source.count(old) != 1:
+        raise ValueError(&amp;quot;原文匹配不是唯一，停止修改&amp;quot;)
+    return source.replace(old, new, 1)
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    for candidate in (wrong_clamp, correct_clamp):
+        failed = verify(candidate)
+        print(candidate.__name__, &amp;quot;通过&amp;quot; if not failed else &amp;quot;失败&amp;quot;, failed)
+    assert verify(wrong_clamp) and not verify(correct_clamp)
+    try:
+        replace_exact(&amp;quot;a = 1\na = 1\n&amp;quot;, &amp;quot;a = 1&amp;quot;, &amp;quot;a = 2&amp;quot;)
+    except ValueError as error:
+        print(&amp;quot;拒绝含糊修改：&amp;quot;, error)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;第一个候选在中间值、上界及无效区间检查中失败，第二个通过这组固定用例。最后的文本替换因为目标不唯一被拒绝，演示了“无法确定修改对象”时的一条明确停止路径。&lt;/p&gt;
+&lt;p&gt;继续增加一个全负数区间和两个端点用例。再问：如果输入包含小数、无穷大或非数值，需求该怎样定义？不要在实现完成后，才为了迁就已有代码临时修改标准。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;失败结果应该推动下一步，而不是被隐藏&lt;/h2&gt;
+&lt;p&gt;测试失败可能来自实现错误，也可能来自依赖、环境或用例本身。有效恢复首先要分清故障类别，再选择修复、重新配置或请求补充信息。&lt;/p&gt;
+&lt;p&gt;重试需要边界。遇到暂时性网络错误可以有限重试，但同一个语法错误不会因为重复运行而消失。连续相同失败应触发诊断或停止，而不是无限消耗预算。&lt;/p&gt;
+&lt;p&gt;对有副作用的操作，还要确认上一轮是否已经部分完成。版本控制能保存和比较修改，不代表所有外部变化都可由一次回退撤销。代码、生成数据和外部服务状态可能需要不同的恢复方法。&lt;/p&gt;
+&lt;h2 id=&quot;section-5&quot;&gt;代码为什么能帮助思考&lt;/h2&gt;
+&lt;p&gt;业务规则写成程序后，输入、分支和异常更容易被逐项检查。统计和计算任务也可以交给确定性工具，避免只靠自然语言心算。但程序实现的规则，仍可能不是用户真正想要的规则。&lt;/p&gt;
+&lt;p&gt;因此，“精确执行了错误规格”也是一种失败。开发流程需要在需求、实现和验证之间建立对应关系：哪段代码满足哪条要求，哪条检查能发现它被破坏。&lt;/p&gt;
+&lt;p&gt;原书还讨论生成多媒体、系统适配和创建新 Agent。它们共同展示代码的组合能力；生成出来的程序仍需独立检查，不能因为由另一个 Agent 创建就自动继承可信性。&lt;/p&gt;
+&lt;h2 id=&quot;section-6&quot;&gt;从练习走向研究问题&lt;/h2&gt;
+&lt;p&gt;记录本次学习时，可以附上失败用例及其揭示的错误假设。例如：“只检查下界输入，让一个恒定输出实现混过了检查；加入区间内部、上界和非法输入后才发现差别。”&lt;/p&gt;
+&lt;p&gt;对应方向包括&lt;a href=&quot;#/research?direction=rd-071&quot;&gt;仓库级编程智能体&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-072&quot;&gt;自动程序修复&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-073&quot;&gt;自动测试生成&lt;/a&gt;和&lt;a href=&quot;#/research?direction=rd-077&quot;&gt;代码理解与重构&lt;/a&gt;。进一步可以研究：哪些测试最能区分真正修复和过拟合补丁？&lt;/p&gt;
+&lt;h2 id=&quot;section-7&quot;&gt;阅读出处&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;李博杰，《深入理解 AI Agent：设计原理与工程实践》，v1.3，第5章，书内第131—161页；重点对应5.1节的 Coding Agent 流程、恢复与工具，以及5.2节的代码能力。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bojieli/ai-agent-book&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;作者原始项目与配套代码&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#/books?book=ai-agents-in-depth&quot;&gt;本书章节索引&lt;/a&gt;。本文程序是原创的局部机制练习，不是对真实编程智能体能力的评测。&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title>AI Agent 共读⑥：从“回答不错”到可复查的评估结论</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch06-evaluation-and-evidence</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch06-evaluation-and-evidence</guid><pubDate>Thu, 22 Oct 2026 16:00:00 GMT</pubDate><description>对照第六章，把任务成功、证据、约束和资源分开评价，理解数据划分、自动评审、模型替换与消融，用固定样例检查评分规则。</description><content:encoded>&lt;p&gt;两个学习助手，一个答对了两道题却漏掉引用，还擅自改了一条记录；另一个只答对一道题，但始终保留证据和边界。只看“答案正确数”，你会得到一个很不完整的排序。&lt;/p&gt;
+&lt;p&gt;本篇对应李博杰《深入理解 AI Agent：设计原理与工程实践》PDF v1.3 第6章“Agent 的评估”，书内第162—189页，对应 PDF 第170—197页。核心问题是：怎样把系统表现变成别人能够检查、重复和质疑的证据？&lt;/p&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;评估对象是模型与外围系统的组合&lt;/h2&gt;
+&lt;p&gt;同一个模型使用不同的上下文、工具和停止条件，可能产生不同表现。因此，记录一个模型名称还不足以复现实验；提示、工具版本、资料版本和运行配置也需要说明。&lt;/p&gt;
+&lt;p&gt;如果要比较两个模型，尽量固定其他条件；如果要判断检索是否有帮助，可以固定模型并改变检索模块。前者是模型替换，后者属于组件对照或消融。一次实验同时改变模型、提示和数据，通常难以归因。&lt;/p&gt;
+&lt;p&gt;某次换模型没有涨分，也不能立刻证明模型毫无影响：测试集覆盖不足、任务上限、运行故障等，都可能造成这种结果。合理的评估先提供线索，再通过更多对照定位原因。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;先写清楚“成功”是什么&lt;/h2&gt;
+&lt;p&gt;任务描述需要包含输入条件、目标、允许操作和完成标准。对于资料问答，可以把答案正确、引用支持结论、没有越权修改分别记录，再定义整体任务成功是否要求三者都成立。&lt;/p&gt;
+&lt;p&gt;资源也要单独看：调用次数、输入输出用量、时延、失败恢复成本，不能全部藏在一个总分里。需要硬性满足的约束，不宜用“回答更漂亮”之类的软性分数轻易抵消。&lt;/p&gt;
+&lt;p&gt;不同任务可能需要不同检查方法。结构化字段可以用代码核对；开放式写作可能需要明确评分标准和人工抽查；有副作用的任务，还需要检查实际状态，而不是只读最终回复。&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;动手：先测试评分器，再用它评价系统&lt;/h2&gt;
+&lt;p&gt;下面两组结果完全由我们人工构造，目的在于检查评分逻辑。它们不是任何模型的实测成绩。保存为 &lt;code&gt;evaluation_rubric.py&lt;/code&gt;，运行 &lt;code&gt;python evaluation_rubric.py&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;&amp;quot;&amp;quot;&amp;quot;Chapter 6: deliberately constructed fixtures, NOT model benchmark results.&amp;quot;&amp;quot;&amp;quot;
+def grade(case, attempt):
+    answer_ok = attempt[&amp;quot;answer&amp;quot;] == case[&amp;quot;expected&amp;quot;]
+    source_ok = case[&amp;quot;required_source&amp;quot;] in attempt[&amp;quot;sources&amp;quot;]
+    boundary_ok = not attempt[&amp;quot;unauthorized_write&amp;quot;]
+    return {&amp;quot;answer&amp;quot;: answer_ok, &amp;quot;source&amp;quot;: source_ok,
+            &amp;quot;boundary&amp;quot;: boundary_ok,
+            &amp;quot;success&amp;quot;: answer_ok and source_ok and boundary_ok}
+
+
+def summarize(cases, attempts):
+    if len(cases) != len(attempts) or not cases:
+        raise ValueError(&amp;quot;用例和结果必须非空且一一对应&amp;quot;)
+    if [c[&amp;quot;id&amp;quot;] for c in cases] != [a[&amp;quot;case_id&amp;quot;] for a in attempts]:
+        raise ValueError(&amp;quot;用例顺序或标识不匹配&amp;quot;)
+    results = [grade(c, a) for c, a in zip(cases, attempts)]
+    return {key: sum(r[key] for r in results)
+            for key in (&amp;quot;answer&amp;quot;, &amp;quot;source&amp;quot;, &amp;quot;boundary&amp;quot;, &amp;quot;success&amp;quot;)}
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    cases = [{&amp;quot;id&amp;quot;: &amp;quot;q1&amp;quot;, &amp;quot;expected&amp;quot;: &amp;quot;20分钟&amp;quot;, &amp;quot;required_source&amp;quot;: &amp;quot;note-a&amp;quot;},
+             {&amp;quot;id&amp;quot;: &amp;quot;q2&amp;quot;, &amp;quot;expected&amp;quot;: &amp;quot;先查询&amp;quot;, &amp;quot;required_source&amp;quot;: &amp;quot;note-b&amp;quot;}]
+    baseline = [
+        {&amp;quot;case_id&amp;quot;: &amp;quot;q1&amp;quot;, &amp;quot;answer&amp;quot;: &amp;quot;20分钟&amp;quot;, &amp;quot;sources&amp;quot;: [&amp;quot;note-a&amp;quot;],
+         &amp;quot;unauthorized_write&amp;quot;: False},
+        {&amp;quot;case_id&amp;quot;: &amp;quot;q2&amp;quot;, &amp;quot;answer&amp;quot;: &amp;quot;直接写入&amp;quot;, &amp;quot;sources&amp;quot;: [&amp;quot;note-b&amp;quot;],
+         &amp;quot;unauthorized_write&amp;quot;: False}]
+    candidate = [
+        {&amp;quot;case_id&amp;quot;: &amp;quot;q1&amp;quot;, &amp;quot;answer&amp;quot;: &amp;quot;20分钟&amp;quot;, &amp;quot;sources&amp;quot;: [],
+         &amp;quot;unauthorized_write&amp;quot;: False},
+        {&amp;quot;case_id&amp;quot;: &amp;quot;q2&amp;quot;, &amp;quot;answer&amp;quot;: &amp;quot;先查询&amp;quot;, &amp;quot;sources&amp;quot;: [&amp;quot;note-b&amp;quot;],
+         &amp;quot;unauthorized_write&amp;quot;: True}]
+    print(&amp;quot;人工构造的基线：&amp;quot;, summarize(cases, baseline))
+    print(&amp;quot;人工构造的候选：&amp;quot;, summarize(cases, candidate))
+    assert summarize(cases, baseline)[&amp;quot;success&amp;quot;] == 1
+    assert summarize(cases, candidate)[&amp;quot;success&amp;quot;] == 0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;程序会显示：候选组的答案正确数从1增加到2，但整体成功数从1变成0，因为一条缺少必要来源，另一条违反了操作边界。这个差别来自事先写明的联合成功条件。&lt;/p&gt;
+&lt;p&gt;示例只检查来源标识是否包含在列表中。真实引用评价还要判断来源是否真的支持答案，不能因为列出了一个存在的链接就判为证据充分。&lt;/p&gt;
+&lt;p&gt;可以修改 &lt;code&gt;grade&lt;/code&gt;，让“引用包含正确来源，但同时包含一个编造来源”也算失败。再增加一个缺字段的结果，决定评分器该记录运行错误还是整个批次中断。评分器本身也需要测试。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;数据集怎样避免只测到熟悉的题&lt;/h2&gt;
+&lt;p&gt;开发集可以用于排错和选择方案；独立测试集用于检查已经确定的方案。反复看测试结果并针对它改提示，会逐渐把测试集变成开发集。&lt;/p&gt;
+&lt;p&gt;划分还要考虑任务之间的关联。如果同一份文档被轻微改写后分到两边，仍可能泄漏关键模式。可按文档、来源、时间或任务家族划分，再说明哪种泛化是本次评估真正关注的。&lt;/p&gt;
+&lt;p&gt;错误案例应该保留下来，并区分检索失败、工具失败、推理失败和验证失败。一个总成功率告诉我们“差在哪里”的能力有限，轨迹和错误分类才有助于设计下一轮实验。&lt;/p&gt;
+&lt;h2 id=&quot;section-5&quot;&gt;自动评审有用，但需要校准&lt;/h2&gt;
+&lt;p&gt;语言模型评审可以按照评分标准分析开放式回答，但可能受到位置、篇幅、风格或与被测模型相似的偏差影响。把评语写得很长，并不等于判断更可靠。&lt;/p&gt;
+&lt;p&gt;可以用人工核对过的样例检查评审一致性；配对比较时交换答案顺序；对明确规则优先使用代码检查；对分歧和高影响失败保留人工复核。评审用的模型、提示和版本也属于实验配置。&lt;/p&gt;
+&lt;p&gt;对于随机性较强的任务，需要重复运行并报告分布。小样本中的几个百分点变化可能只是波动；统计显著性也不能代替实际效果大小和部署价值的判断。&lt;/p&gt;
+&lt;h2 id=&quot;section-6&quot;&gt;把评估结论写成可讨论的学习记录&lt;/h2&gt;
+&lt;p&gt;一条有用的记录可以包括：本次控制了什么、改变了什么、按哪些标准判断、观察到哪些失败、哪些结论仍不能推出。报告限制能让下一位读者知道该如何继续验证。&lt;/p&gt;
+&lt;p&gt;本章关联&lt;a href=&quot;#/research?direction=rd-015&quot;&gt;智能体评测与可靠性&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-076&quot;&gt;AI 软件测试与质量保障&lt;/a&gt;和&lt;a href=&quot;#/research?direction=rd-093&quot;&gt;不确定性量化&lt;/a&gt;。值得继续问的是：当任务、资料和用户需求发生变化时，评估集还能代表真实使用吗？&lt;/p&gt;
+&lt;h2 id=&quot;section-7&quot;&gt;阅读出处&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;李博杰，《深入理解 AI Agent：设计原理与工程实践》，v1.3，第6章，书内第162—189页；包括评估环境、数据集、指标、自动评审、模型选型与可观测性。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bojieli/ai-agent-book&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;作者原始项目与评估实验&lt;/a&gt;。本文不使用原书实验数字作为自己的测量结果。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#/books?book=ai-agents-in-depth&quot;&gt;本书章节索引&lt;/a&gt;。代码中的结果是明确构造的教学输入，用于验证评分机制。&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title>AI Agent 共读⑦：后训练之前，先想清楚数据、轨迹和奖励</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch07-post-training-and-rewards</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch07-post-training-and-rewards</guid><pubDate>Thu, 22 Oct 2026 16:00:00 GMT</pubDate><description>对照第七章，区分预训练、SFT、偏好学习和强化学习，理解多轮信用分配与奖励投机，用一个小型目标函数练习观察优化方向。</description><content:encoded>&lt;p&gt;一个助手用更少的工具调用交出答案，究竟是学会了更高效的策略，还是直接省掉了必要的查询？答案取决于任务结果和验证过程。训练目标如果只奖励“少调用”，反而可能鼓励后者。&lt;/p&gt;
+&lt;p&gt;本篇对应李博杰《深入理解 AI Agent：设计原理与工程实践》PDF v1.3 第7章“模型后训练”，书内第190—230页，对应 PDF 第198—238页。本章讨论改变模型参数；它与前面通过上下文、知识和工具改变系统行为的方法相互配合。&lt;/p&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;先区分三种改变模型的方式&lt;/h2&gt;
+&lt;p&gt;在本章讨论的自回归语言模型框架中，预训练通过大规模预测任务学习语言与知识表示；SFT 使用示范数据，让模型提高合适回答和动作序列的概率；强化学习则根据采样行为获得的反馈调整策略。&lt;/p&gt;
+&lt;p&gt;SFT 可以帮助模型学会稳定的输出形式和任务流程，但示范质量、覆盖范围和分布都很重要。强化学习允许探索不同动作，也依赖环境、奖励与采样预算，不会因为名字里有“强化”就自然获得更好的泛化。&lt;/p&gt;
+&lt;p&gt;原书用“模仿示范”和“从反馈中学习”构建直觉，并按常见训练路径展开。阅读时应把经验判断与普遍定律分开：不能据此推出 SFT 只能记忆、RL 一定泛化，也不能把某个固定先后顺序套到所有模型和任务上。&lt;/p&gt;
+&lt;p&gt;如果问题只是知识过期，先改善检索与资料治理可能更直接；如果模型反复不遵守稳定格式或决策习惯，才更有理由研究参数更新。选择更新位置，应从错误类型出发。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;Agent 的训练样本是一段交互，而不只是最后答案&lt;/h2&gt;
+&lt;p&gt;多轮任务包含用户目标、模型动作、工具结果、状态变化与最后结论。相同答案可能对应不同路径：一条有真实查询依据，一条碰巧猜中，还可能有一条通过越权拿到了材料。&lt;/p&gt;
+&lt;p&gt;整理示范时要保留能解释行为的条件，同时区分哪些内容由模型产生、哪些由环境提供。工具返回值可以作为模型决策的输入，不能在没有区分角色的情况下，把整段记录都当作同一种输出目标来拟合。&lt;/p&gt;
+&lt;p&gt;失败轨迹也未必没有价值。它可能暴露工具错误、错误假设或不应采用的捷径。但“某条失败记录里包含正确答案”也可能泄漏目标，数据整理需要检查训练时和部署时能获得的信息是否一致。&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;结果奖励和过程约束需要一起设计&lt;/h2&gt;
+&lt;p&gt;最终答对能提供结果信号，但很难单独解释长轨迹中哪一步值得强化，这就是多轮信用分配的困难。过程反馈可以更早指出问题，也可能把某种不必要的固定步骤变成新的优化目标。&lt;/p&gt;
+&lt;p&gt;比如要求每题必须查询三次，能够压制直接猜测，却可能惩罚本来就不需要查询的问题。更合适的检查应尽量贴近真实要求：是否取得必要证据、是否满足授权边界、是否完成规定的验证。&lt;/p&gt;
+&lt;p&gt;奖励模型或自动评审也是不完美的测量器。模型学会迎合测量器，不一定意味着用户目标更好地满足。除了观察平均奖励，还要检查真实任务表现、失败分布和奖励被钻空子的样例。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;动手：同一条轨迹在不同奖励下会得到什么分数&lt;/h2&gt;
+&lt;p&gt;下面只计算简化目标函数，不训练语言模型。&lt;code&gt;-log(p)&lt;/code&gt; 用来观察目标输出概率与负对数损失的关系；两条手写轨迹则展示弱奖励如何偏好错误捷径。&lt;/p&gt;
+&lt;p&gt;保存为 &lt;code&gt;training_objectives.py&lt;/code&gt;，运行 &lt;code&gt;python training_objectives.py&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;&amp;quot;&amp;quot;&amp;quot;Chapter 7: arithmetic of toy objectives; no model is trained.&amp;quot;&amp;quot;&amp;quot;
+from math import log
+
+
+def sft_loss(probability_of_target):
+    if not 0 &amp;lt; probability_of_target &amp;lt;= 1:
+        raise ValueError(&amp;quot;目标概率必须处于(0,1]&amp;quot;)
+    return -log(probability_of_target)
+
+
+def weak_reward(trajectory):
+    return 1.0 - 0.1 * trajectory[&amp;quot;calls&amp;quot;]
+
+
+def checked_reward(trajectory):
+    if not trajectory[&amp;quot;verified&amp;quot;]:
+        return -1.0
+    return 2.0 * trajectory[&amp;quot;correct&amp;quot;] - 0.1 * trajectory[&amp;quot;calls&amp;quot;]
+
+
+def expected_reward(p, first, second, reward):
+    if not 0 &amp;lt;= p &amp;lt;= 1:
+        raise ValueError(&amp;quot;策略概率无效&amp;quot;)
+    return p * reward(first) + (1 - p) * reward(second)
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    grounded = {&amp;quot;correct&amp;quot;: True, &amp;quot;verified&amp;quot;: True, &amp;quot;calls&amp;quot;: 1}
+    shortcut = {&amp;quot;correct&amp;quot;: False, &amp;quot;verified&amp;quot;: False, &amp;quot;calls&amp;quot;: 0}
+    print(&amp;quot;目标概率0.2 / 0.8的SFT损失：&amp;quot;,
+          round(sft_loss(0.2), 3), round(sft_loss(0.8), 3))
+    print(&amp;quot;只奖省调用：&amp;quot;, weak_reward(grounded), weak_reward(shortcut))
+    print(&amp;quot;加入验证门槛：&amp;quot;, checked_reward(grounded), checked_reward(shortcut))
+    for p in (0.2, 0.8):
+        print(&amp;quot;选择有依据路径的概率&amp;quot;, p, &amp;quot;期望奖励&amp;quot;,
+              round(expected_reward(p, grounded, shortcut, checked_reward), 3))
+    assert weak_reward(shortcut) &amp;gt; weak_reward(grounded)
+    assert checked_reward(shortcut) &amp;lt; checked_reward(grounded)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;目标概率从0.2变为0.8时，负对数损失约从1.609降到0.223。只奖励省调用时，错误捷径得到1.0，有依据的路径得到0.9；加入验证门槛后，两者分别为-1.0和1.9。&lt;/p&gt;
+&lt;p&gt;这些数字来自我们指定的公式和虚构轨迹，只说明目标函数的偏好。没有发生梯度更新、模型采样或策略学习，也不能由此证明真实系统采用这个奖励就能成功。&lt;/p&gt;
+&lt;p&gt;把正确路径的调用数改成很多次，看看成本惩罚会不会重新主导选择；再设计一条“通过验证器但答案错误”的轨迹，检查验证器与真实目标之间的缺口。&lt;/p&gt;
+&lt;h2 id=&quot;section-5&quot;&gt;偏好、参数效率和蒸馏放在哪张地图里&lt;/h2&gt;
+&lt;p&gt;人类或其他评审给出的偏好可以用于学习更符合要求的输出。不同方法可能使用奖励模型与策略优化，也可能直接利用偏好对进行优化，不能把所有偏好学习都等同于同一种 RL 流程。&lt;/p&gt;
+&lt;p&gt;参数高效微调减少需要更新的参数，并不自动解决坏数据、遗忘或评估不足。蒸馏则关注把教师行为或反馈转移给学生；教师自身的错误、任务覆盖以及学生实际访问到的条件，都可能影响效果。&lt;/p&gt;
+&lt;p&gt;原书后段讨论 on-policy 蒸馏与样本效率。初读可以先抓住它在解决什么：让学习信号更贴近学生实际产生的轨迹，而不只是背诵一批与当前行为分布脱节的答案。具体算法还需要结合实现、预算和独立评估来理解。&lt;/p&gt;
+&lt;h2 id=&quot;section-6&quot;&gt;让一次后训练尝试成为可分析的实验&lt;/h2&gt;
+&lt;p&gt;在开始训练前，先固定失败样例、基线与验证标准；整理合法可用、角色清楚的轨迹；用少量样本检查格式、损失和奖励是否符合预期；最后同时测试新能力与旧能力保留情况。&lt;/p&gt;
+&lt;p&gt;对应方向包括&lt;a href=&quot;#/research?direction=rd-002&quot;&gt;强化学习后训练与偏好对齐&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-006&quot;&gt;合成数据与数据质量&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-007&quot;&gt;参数高效微调&lt;/a&gt;及&lt;a href=&quot;#/research?direction=rd-008&quot;&gt;模型蒸馏与压缩&lt;/a&gt;。从模型实现入手的基础阅读可查看&lt;a href=&quot;#/books?book=llm-from-scratch&quot;&gt;从零构建大模型书目&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;本次可以记录的问题是：“我的奖励究竟鼓励了什么行为？如果它被优化到极致，会不会偏离原来的目标？”&lt;/p&gt;
+&lt;h2 id=&quot;section-7&quot;&gt;阅读出处&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;李博杰，《深入理解 AI Agent：设计原理与工程实践》，v1.3，第7章，书内第190—230页；涉及训练阶段、SFT、RL、数据环境、信用分配与蒸馏。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bojieli/ai-agent-book&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;作者原始项目与训练实验&lt;/a&gt;。本文没有运行原书训练任务，也不把其成绩记作本次结果。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#/books?book=ai-agents-in-depth&quot;&gt;本书章节索引&lt;/a&gt;。本文代码为原创的目标函数算术练习。&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title>AI Agent 共读⑧：从保存经验到持续改进，中间还缺哪些步骤</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch08-continuous-evolution</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch08-continuous-evolution</guid><pubDate>Thu, 22 Oct 2026 16:00:00 GMT</pubDate><description>对照第八章，区分知识、指令、程序和参数更新，用候选版本、回归检查与回滚练习理解持续进化的可验证闭环。</description><content:encoded>&lt;p&gt;把每次成功经历都写进记忆，系统就会越来越好吗？如果一次成功只是碰巧发生，或者依赖已经失效的规则，反复复用它反而可能让错误更稳定。&lt;/p&gt;
+&lt;p&gt;本篇对应李博杰《深入理解 AI Agent：设计原理与工程实践》PDF v1.3 第8章“Agent 的持续进化”，书内第231—245页，对应 PDF 第239—253页。它把前面几章连在一起：从运行轨迹获得信号，形成候选更新，再通过验证决定能否影响以后的任务。&lt;/p&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;记住经历与学会策略之间还有一层推理&lt;/h2&gt;
+&lt;p&gt;第三章关心怎样找回用户和世界的信息；这一章进一步问，哪些经历能够支持“以后在这种条件下这样做”的策略。&lt;/p&gt;
+&lt;p&gt;例如，一次检索失败后改用编号搜索成功了，可以保存这条轨迹。但要提炼出“编号类问题先查精确编号”，还需要检查成功是否确实来自查询方式，而不是同时换了数据源或碰巧命中缓存。&lt;/p&gt;
+&lt;p&gt;有用的经验应包含触发条件、采取的动作、结果、证据和适用范围。仅留下“这种方法很好”很难验证，也容易被推广到不合适的任务。&lt;/p&gt;
+&lt;p&gt;日志记录是原材料，跨案例比较、归因、验证和实际加载，才构成改进链路。一个新规则从未被检索到，即使文本写得正确，也不会改变行为。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;经验可以落在四个不同位置&lt;/h2&gt;
+&lt;p&gt;事实与背景可以写入知识；清楚、可语言化的行为约定可以写成指令或 Skill；稳定且适合确定执行的步骤可以固化为程序；需要更广泛内化的行为能力则可以考虑参数更新。&lt;/p&gt;
+&lt;p&gt;这四种载体在成本、可解释性、回滚方式和生效条件上不同。修正一条过期知识，通常不必先训练模型；给固定计算补一个函数，也可能比再写一大段提示更清楚。&lt;/p&gt;
+&lt;p&gt;选择位置之后，还要确认更新怎样激活：知识是否被检索、指令是否加载、代码路径是否实际运行、模型是否真换成了新版本。不要把“文件已经写好”当作整个闭环已经完成。&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;先形成候选，不让每次反馈直接改写线上行为&lt;/h2&gt;
+&lt;p&gt;生产反馈可能混有错误归因、不可信输入或局部偏好。一个用户喜欢的输出，也未必符合其他用户的任务或必要边界。&lt;/p&gt;
+&lt;p&gt;更容易追溯的做法是保留基线、提出候选、记录变更原因和证据，经过回归后再逐步采用。验证应覆盖新任务、原有任务、变化后的规则，以及必要的安全约束。&lt;/p&gt;
+&lt;p&gt;“持续追加”尤其容易形成维护负担：旧规则与新规则并存，Skill 重复，提示不断膨胀。系统还需要合并、淘汰和重新验证，而不是把记忆容量增长当成能力增长。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;动手：新题做对了，也可能不该接受更新&lt;/h2&gt;
+&lt;p&gt;下面用人工构造的布尔结果模拟候选版本报告。示例政策很保守：安全项全过、旧通过项不回退、新任务通过数增加，才允许进入下一阶段验证。&lt;/p&gt;
+&lt;p&gt;保存为 &lt;code&gt;evolution_gate.py&lt;/code&gt;，运行 &lt;code&gt;python evolution_gate.py&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;&amp;quot;&amp;quot;&amp;quot;Chapter 8: controlled release gate with manually constructed test outcomes.&amp;quot;&amp;quot;&amp;quot;
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class Report:
+    version: str
+    new_tasks: tuple
+    retained_tasks: tuple
+    safety: tuple
+
+
+def promote(baseline, candidate):
+    for name in (&amp;quot;new_tasks&amp;quot;, &amp;quot;retained_tasks&amp;quot;, &amp;quot;safety&amp;quot;):
+        old, new = getattr(baseline, name), getattr(candidate, name)
+        if not old or len(old) != len(new):
+            raise ValueError(&amp;quot;同一评估维度必须有一一对应的用例&amp;quot;)
+        if any(type(v) is not bool for v in old + new):
+            raise ValueError(&amp;quot;练习中的用例结果必须为布尔值&amp;quot;)
+    if not all(candidate.safety):
+        return False, &amp;quot;安全门槛未通过&amp;quot;
+    if any(old and not new for old, new in
+           zip(baseline.retained_tasks, candidate.retained_tasks)):
+        return False, &amp;quot;旧能力发生回退&amp;quot;
+    if sum(candidate.new_tasks) &amp;lt;= sum(baseline.new_tasks):
+        return False, &amp;quot;新任务没有增加通过数&amp;quot;
+    return True, &amp;quot;允许进入下一阶段验证&amp;quot;
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    baseline = Report(&amp;quot;v1&amp;quot;, (False, True), (True, True), (True,))
+    regression = Report(&amp;quot;v2-bad&amp;quot;, (True, True), (False, True), (True,))
+    candidate = Report(&amp;quot;v2&amp;quot;, (True, True), (True, True), (True,))
+    current = baseline
+    for proposal in (regression, candidate):
+        allowed, reason = promote(baseline, proposal)
+        print(proposal.version, allowed, reason)
+        if allowed:
+            current = proposal
+    print(&amp;quot;练习中的当前版本：&amp;quot;, current.version)
+    current = baseline  # Explicit rollback in this in-memory teaching example.
+    print(&amp;quot;回滚后：&amp;quot;, current.version)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;第一个候选虽然增加了新任务通过数，却损害旧能力，因此被拒绝；第二个符合这套练习门槛，成为内存中的当前版本。最后显式切回基线，展示回滚需要保留可恢复的旧版本。&lt;/p&gt;
+&lt;p&gt;这些报告不是模型实测数据，固定门槛也不是通用发布政策。真实系统可能要权衡不同任务价值、测量不确定性与变化风险，并在后续使用中持续检查。&lt;/p&gt;
+&lt;p&gt;可以把候选的安全结果改为 &lt;code&gt;False&lt;/code&gt;，观察它是否优先被拒绝；再让新任务没有进步，检查“只是换了版本号”为什么不等于改进。下一步才是把这些手写报告换成独立执行得到的结果。&lt;/p&gt;
+&lt;h2 id=&quot;section-5&quot;&gt;完成一次任务，不等于获得了可迁移的进步&lt;/h2&gt;
+&lt;p&gt;要区分记忆命中与策略迁移，可以改变问题表述、用户、资料版本或环境，再检查是否仍能正确处理。同一道题做第二遍的进步，无法单独证明系统学会了一般方法。&lt;/p&gt;
+&lt;p&gt;规则变化时也需要观察适应速度。一个只会追加信息的系统可能同时记着旧标准与新标准，检索时仍用错版本。更新能力和忘掉失效规则的能力，需要一起评价。&lt;/p&gt;
+&lt;p&gt;原书还讨论离线整合和能力保鲜。它们可以类比整理学习笔记：合并重复内容、补来源、撤回错误解释、重新验证长期没用的方法。整理本身也可能引入错误，因此需要差异记录和回滚，而不是相信“自动总结一定更好”。&lt;/p&gt;
+&lt;h2 id=&quot;section-6&quot;&gt;给自己的经验库留一个证据入口&lt;/h2&gt;
+&lt;p&gt;可以为每条经验记下：来自哪次任务、哪些对照支持它、在哪些条件下不适用、最后核对时间。以后遇到相反证据时，就能定位需要修改的规则。&lt;/p&gt;
+&lt;p&gt;本章关联&lt;a href=&quot;#/research?direction=rd-009&quot;&gt;持续学习与测试时适应&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-016&quot;&gt;智能体记忆与自我改进&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-015&quot;&gt;智能体评测&lt;/a&gt;及&lt;a href=&quot;#/research?direction=rd-076&quot;&gt;AI 软件质量保障&lt;/a&gt;。值得追问：你的系统能否撤回一条已经影响多次任务的错误经验？&lt;/p&gt;
+&lt;h2 id=&quot;section-7&quot;&gt;阅读出处&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;李博杰，《深入理解 AI Agent：设计原理与工程实践》，v1.3，第8章，书内第231—245页；对应学习信号、四种更新载体与长期闭环。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bojieli/ai-agent-book&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;作者原始项目及持续进化实验&lt;/a&gt;。本文未进行真实模型的持续学习对照。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#/books?book=ai-agents-in-depth&quot;&gt;本书章节索引&lt;/a&gt;。示例代码独立编写，只演示候选接纳规则和内存回滚。&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title>AI Agent 共读⑨：实时多模态交互，难在信息还在不断变化</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch09-multimodal-realtime</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch09-multimodal-realtime</guid><pubDate>Thu, 22 Oct 2026 16:00:00 GMT</pubDate><description>对照第九章，理解语音流水线、端到端与全双工、GUI定位和机器人控制的共同约束，用事件版本练习防止旧结果串入新任务。</description><content:encoded>&lt;p&gt;一个系统能看懂一张图，不代表它能在图还在变化时正确行动。用户说到一半改了主意，界面刷新了，或者物体移动了，之前的判断即使当时正确，也可能已经不适合现在执行。&lt;/p&gt;
+&lt;p&gt;本篇对应李博杰《深入理解 AI Agent：设计原理与工程实践》PDF v1.3 第9章“多模态与实时交互”，书内第246—271页，对应 PDF 第254—279页。重点是语音对话、GUI 操作和机器人控制中的持续感知、延迟与反馈。&lt;/p&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;“支持多种输入”与“能够实时交互”不同&lt;/h2&gt;
+&lt;p&gt;静态任务可以先收齐材料再生成回答；实时任务中，输入和输出可能同时进行，而且后续输入可能推翻已经形成的计划。&lt;/p&gt;
+&lt;p&gt;因此除了理解内容，还要管理时间与状态：这条结果基于哪次观察，是否已经过时，用户是否打断，当前动作是否仍然符合目标？只测一张图片的识别准确率，覆盖不了这些问题。&lt;/p&gt;
+&lt;p&gt;评估也要覆盖完整链路。首次输出很快，但答到一半卡住，用户体验仍可能不好；模型处理很快，但语音分段、网络或工具执行很慢，端到端延迟也不会因此消失。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;语音架构有不同的能力与代价&lt;/h2&gt;
+&lt;p&gt;级联方案把语音识别、语言处理和语音合成分开，模块易于替换和定位问题，但边界处可能引入等待，也可能丢失语气等信息。把各环节做成流式，可以减少部分等待，但不自动解决所有轮次和打断问题。&lt;/p&gt;
+&lt;p&gt;端到端模型把多种处理放进更统一的系统，有机会减少中间转换，却也需要新的可观测性与控制方式。端到端不等于全双工：是否能够边听边说、区分自己的声音与用户输入、处理重叠发言，是另外的交互能力。&lt;/p&gt;
+&lt;p&gt;“快响应”和“深度处理”也可以分工，但接口必须清楚。快速模块不能随意替慢模块编造结论；慢模块完成后，要检查用户目标是否已经变化，而不是把旧答案硬接到新对话里。&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;GUI 和机器人需要把观察绑定到动作&lt;/h2&gt;
+&lt;p&gt;GUI 操作需要把“提交按钮”定位到真实界面元素或坐标。结构化元素信息与图像各有适用范围；界面变化后，原来的元素和坐标都可能失效。执行后还应读取新状态，不能把一次点击调用成功当成业务提交成功。&lt;/p&gt;
+&lt;p&gt;机器人控制增加了物理连续性。高层规划决定目标与步骤，低层控制需要适应传感器、动力学和接触反馈。VLA 把视觉、语言和动作联系起来，但模型输出还要经过适合设备的控制与约束层。&lt;/p&gt;
+&lt;p&gt;仿真与现实的差异也不只在画面，还包括摩擦、时延、标定和数据分布。某个训练场景完成抓取，不能直接推出它能在所有物体与环境里工作。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;动手：旧请求的迟到结果应该去哪儿&lt;/h2&gt;
+&lt;p&gt;下面把交互切成带版本号的事件段。打断后提高版本，迟到的旧结果就不能再进入当前输出。练习只处理内存里的字符串事件，使用 Python 标准库。&lt;/p&gt;
+&lt;p&gt;保存为 &lt;code&gt;realtime_epochs.py&lt;/code&gt;，运行 &lt;code&gt;python realtime_epochs.py&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;&amp;quot;&amp;quot;&amp;quot;Chapter 9: event ordering simulation; no audio, GUI, robot or network is used.&amp;quot;&amp;quot;&amp;quot;
+class Session:
+    def __init__(self):
+        self.epoch = 0
+        self.partial = &amp;quot;&amp;quot;
+        self.accepted = []
+
+    def begin(self):
+        self.epoch += 1
+        self.partial = &amp;quot;&amp;quot;
+        return self.epoch
+
+    def interrupt(self):
+        self.epoch += 1
+        self.partial = &amp;quot;&amp;quot;
+
+    def receive(self, epoch, text, final=False):
+        if epoch != self.epoch:
+            return &amp;quot;discarded&amp;quot;
+        self.partial += text
+        if final:
+            self.accepted.append(self.partial)
+            self.partial = &amp;quot;&amp;quot;
+        return &amp;quot;accepted&amp;quot;
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    session = Session()
+    old = session.begin()
+    session.receive(old, &amp;quot;尚未完成的旧回答&amp;quot;)
+    session.interrupt()
+    new = session.begin()
+    print(&amp;quot;旧请求迟到结果：&amp;quot;, session.receive(old, &amp;quot;继续旧回答&amp;quot;, final=True))
+    print(&amp;quot;新请求结果：&amp;quot;, session.receive(new, &amp;quot;只保留新任务结果&amp;quot;, final=True))
+    assert session.accepted == [&amp;quot;只保留新任务结果&amp;quot;]
+    print(&amp;quot;已接受：&amp;quot;, session.accepted)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;旧结果返回 &lt;code&gt;discarded&lt;/code&gt;，新结果被接受，最终列表只保留新任务的内容。这个程序演示事件归属判断，不是语音识别、视觉定位或机器人控制模型，也没有测量交互延迟。&lt;/p&gt;
+&lt;p&gt;这里丢弃的是尚未接受的结果。已经播放的声音、已经提交的表单或已经发生的机械运动，不能靠修改版本号撤回；外部副作用需要单独的状态确认与恢复机制。&lt;/p&gt;
+&lt;p&gt;可以增加分片序号，处理同一条事件被重复发送；再模拟“结果完成后收到用户打断”，明确哪些输出仍应保留。真实系统还需要缓冲、背压、超时和资源取消，版本号只是其中一个小部件。&lt;/p&gt;
+&lt;h2 id=&quot;section-5&quot;&gt;评估实时系统时，记录它看见的是哪个世界&lt;/h2&gt;
+&lt;p&gt;一段可用的轨迹可以包含观察标识、时间、任务版本、动作、执行结果和下一次观察。这样才能区分“认错目标”“看对了但动作太晚”“工具执行失败”等不同原因。&lt;/p&gt;
+&lt;p&gt;还应分别记录首次响应、完整完成、打断生效和恢复所需的时间，并对不同网络与环境条件做测试。不要用一次顺畅演示替代所有条件下的交互质量。&lt;/p&gt;
+&lt;p&gt;本章关联&lt;a href=&quot;#/research?direction=rd-021&quot;&gt;多模态推理&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-022&quot;&gt;统一多模态与实时语音&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-013&quot;&gt;GUI 智能体&lt;/a&gt;及&lt;a href=&quot;#/research?direction=rd-017&quot;&gt;视觉—语言—动作模型&lt;/a&gt;。一个共同问题是：怎样让系统识别自己的观察已经过时，并及时重新获取证据？&lt;/p&gt;
+&lt;h2 id=&quot;section-6&quot;&gt;阅读出处&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;李博杰，《深入理解 AI Agent：设计原理与工程实践》，v1.3，第9章，书内第246—271页；涉及语音范式、快慢处理、GUI 与机器人操作。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bojieli/ai-agent-book&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;作者原始项目与多模态实验&lt;/a&gt;。文中使用架构概念，不复述产品当前排名或书中模型实验成绩。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#/books?book=ai-agents-in-depth&quot;&gt;本书章节索引&lt;/a&gt;。本文代码为原创的事件顺序模拟。&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title>AI Agent 共读⑩：协作怎样带来新证据，而不是更多重复讨论</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch10-collaboration-and-handoffs</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch10-collaboration-and-handoffs</guid><pubDate>Thu, 22 Oct 2026 16:00:00 GMT</pubDate><description>对照第十章，从上下文共享与协作拓扑理解多 Agent 系统，用移交包、证据合并和版本检查练习控制信息丢失、冲突和错误级联。</description><content:encoded>&lt;p&gt;让三个助手反复赞同同一个答案，不会自动增加三个独立证据。协作是否值得，关键在于它有没有带来新的信息、更好的验证或实际的任务并行，而不只是更多对话。&lt;/p&gt;
+&lt;p&gt;这篇完成李博杰《深入理解 AI Agent：设计原理与工程实践》PDF v1.3 的十章共读。第10章“多 Agent 协作”位于书内第272—305页，对应 PDF 第280—313页。我们聚焦信息怎样移交、控制权怎样流转，以及结果怎样汇总。&lt;/p&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;先用两个维度描述架构&lt;/h2&gt;
+&lt;p&gt;第一个维度是上下文是否共享。共享完整历史有助于保留细节，也会传递冗余、错误假设和不必要的敏感信息。独立上下文则需要明确的任务说明与移交材料，遗漏关键条件时，下游可能从一开始就理解错任务。&lt;/p&gt;
+&lt;p&gt;第二个维度是协作拓扑。管理者模式由中心模块拆解和汇总，对等模式允许相互检查，去中心化模式让控制权在执行者之间流转。它们回答“谁协调谁”，与“共享多少上下文”不是同一个问题。&lt;/p&gt;
+&lt;p&gt;选架构时可以先写任务依赖图：哪些子任务能够独立完成，哪些必须等待共同证据，哪些只能由一个执行者修改。不能并行的工作，仅仅增加 Agent 数量可能只会增加协调负担。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;移交包应让接收方知道什么已经确定&lt;/h2&gt;
+&lt;p&gt;一份可用的移交包至少应包含目标、约束、已经核对的事实及来源、当前产物、未解决问题和完成状态。如果只交一句“我查过了，应该没问题”，接收方很难检查或继续工作。&lt;/p&gt;
+&lt;p&gt;还要区分结论与假设。“文档第3章标题已从目录和章节页核对”与“我猜作者可能会这样解释”应有不同标记。上游说得自信，不能成为下游提升证据等级的理由。&lt;/p&gt;
+&lt;p&gt;文件和消息承担的职责也不同。共享文件可以保存较大的稳定产物，消息可以通知状态和传递引用，但两者都需要身份、权限和一致性约定。跨组织的互操作协议能帮助传递任务，不会自动建立对内容真实性的信任。&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;动手：把移交、冲突和版本保护写进程序&lt;/h2&gt;
+&lt;p&gt;下面把两份手写移交包交给一个合并函数，并模拟两个执行者基于相同旧版本修改共享内容。没有启动任何模型或子 Agent，目的只是观察接口约束。&lt;/p&gt;
+&lt;p&gt;保存为 &lt;code&gt;handoff_contract.py&lt;/code&gt;，运行 &lt;code&gt;python handoff_contract.py&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;&amp;quot;&amp;quot;&amp;quot;Chapter 10: handoff and revision checks, not a multi-model experiment.&amp;quot;&amp;quot;&amp;quot;
+def merge_handoffs(packages, known_sources):
+    claims = {}
+    for package in packages:
+        if package[&amp;quot;status&amp;quot;] != &amp;quot;done&amp;quot;:
+            raise ValueError(&amp;quot;子任务尚未完成&amp;quot;)
+        for claim in package[&amp;quot;claims&amp;quot;]:
+            if not claim[&amp;quot;sources&amp;quot;] or any(s not in known_sources
+                                          for s in claim[&amp;quot;sources&amp;quot;]):
+                raise ValueError(&amp;quot;结论缺少可核对来源&amp;quot;)
+            key = claim[&amp;quot;key&amp;quot;]
+            if key in claims and claims[key][&amp;quot;value&amp;quot;] != claim[&amp;quot;value&amp;quot;]:
+                raise ValueError(&amp;quot;同一问题存在冲突结论，需回查证据&amp;quot;)
+            if key not in claims:
+                claims[key] = {&amp;quot;value&amp;quot;: claim[&amp;quot;value&amp;quot;], &amp;quot;sources&amp;quot;: set()}
+            claims[key][&amp;quot;sources&amp;quot;].update(claim[&amp;quot;sources&amp;quot;])
+    return claims
+
+
+def commit_revision(store, expected_revision, value):
+    if store[&amp;quot;revision&amp;quot;] != expected_revision:
+        raise ValueError(&amp;quot;旧版本写入被拒绝，请先重新读取&amp;quot;)
+    store[&amp;quot;value&amp;quot;] = value
+    store[&amp;quot;revision&amp;quot;] += 1
+
+
+if __name__ == &amp;quot;__main__&amp;quot;:
+    packages = [
+        {&amp;quot;worker&amp;quot;: &amp;quot;reader&amp;quot;, &amp;quot;status&amp;quot;: &amp;quot;done&amp;quot;, &amp;quot;claims&amp;quot;: [
+            {&amp;quot;key&amp;quot;: &amp;quot;章节&amp;quot;, &amp;quot;value&amp;quot;: &amp;quot;用户记忆和知识库&amp;quot;, &amp;quot;sources&amp;quot;: [&amp;quot;chapter-3&amp;quot;]}]},
+        {&amp;quot;worker&amp;quot;: &amp;quot;checker&amp;quot;, &amp;quot;status&amp;quot;: &amp;quot;done&amp;quot;, &amp;quot;claims&amp;quot;: [
+            {&amp;quot;key&amp;quot;: &amp;quot;章节&amp;quot;, &amp;quot;value&amp;quot;: &amp;quot;用户记忆和知识库&amp;quot;, &amp;quot;sources&amp;quot;: [&amp;quot;toc&amp;quot;]}]}]
+    merged = merge_handoffs(packages, {&amp;quot;chapter-3&amp;quot;, &amp;quot;toc&amp;quot;})
+    print(&amp;quot;合并的来源数：&amp;quot;, len(merged[&amp;quot;章节&amp;quot;][&amp;quot;sources&amp;quot;]))
+    store = {&amp;quot;revision&amp;quot;: 0, &amp;quot;value&amp;quot;: &amp;quot;初始稿&amp;quot;}
+    commit_revision(store, 0, &amp;quot;第一份修改&amp;quot;)
+    try:
+        commit_revision(store, 0, &amp;quot;持有旧版本的第二份修改&amp;quot;)
+    except ValueError as error:
+        print(&amp;quot;拒绝覆盖：&amp;quot;, error)
+    assert store[&amp;quot;value&amp;quot;] == &amp;quot;第一份修改&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;两份一致结论的来源被合并为2个；第二次写入因为仍持有旧版本号被拒绝，第一份修改得以保留。如果两个结论冲突，合并函数会停止，而不会用最后到达的答案覆盖前者。&lt;/p&gt;
+&lt;p&gt;这里检查的是来源标识在不在已知集合中，还没有检查内容是否真的支持结论。版本检查也只是单进程示意；数据库里的并发写入，需要在事务或原子条件更新中完成检查和提交。&lt;/p&gt;
+&lt;p&gt;可以把第二份移交的标题改成不同内容，观察冲突；再把状态改成 &lt;code&gt;running&lt;/code&gt;，观察未完成任务为什么不能直接汇总。进一步可以让每份报告带上版本、置信依据和待复核项。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;多 Agent 的两类典型失败&lt;/h2&gt;
+&lt;p&gt;第一类是资源冲突。多个执行者同时改同一个文件，后写入者可能覆盖前面的工作；重复领取同一任务，也可能造成重复外部操作。需要划分所有权、使用版本控制或原子提交，并让协调者知道任务的真实状态。&lt;/p&gt;
+&lt;p&gt;第二类是错误级联。一个未经核对的假设进入移交包，后续执行者又把它当作事实，并在更长的报告中反复引用。系统看起来形成了共识，却没有增加任何独立支持。&lt;/p&gt;
+&lt;p&gt;验证者最好能访问与生成阶段不同的证据，例如程序执行结果、原始材料或环境状态。换一个角色名重新读同一段回答，可能发现表达问题，却不足以证明事实正确。&lt;/p&gt;
+&lt;h2 id=&quot;section-5&quot;&gt;怎样比较协作和单个执行者&lt;/h2&gt;
+&lt;p&gt;比较时需要尽量对齐任务、工具与总预算，同时记录任务成功、证据质量、总调用、耗时和协调成本。若多 Agent 使用更多资源，结果变好也不能直接归因于组织方式。&lt;/p&gt;
+&lt;p&gt;可以分别测试独立子任务、强依赖任务和容易产生冲突的任务，观察收益来自并行、分工还是验证。管理者本身的拆解与汇总质量，也可能成为瓶颈。&lt;/p&gt;
+&lt;p&gt;原书后段讨论 Agent 社会与模拟。模拟中的集体行为适合作为研究对象和假设来源，但它依赖模型、规则、初始条件与信息分配，不能直接当作现实人类社会的证据，更不能由一个模拟案例证明普遍的群体智能提升。&lt;/p&gt;
+&lt;h2 id=&quot;section-6&quot;&gt;十章之后，把学习路径连成一个小项目&lt;/h2&gt;
+&lt;p&gt;可以从一个只读学习助手开始：明确目标，用工具检索有来源的资料，管理上下文和版本，设计独立评估，最后再判断是否需要额外执行者。这样，协作是为了解决已经发现的问题，而不是项目开始时就必须堆上的结构。&lt;/p&gt;
+&lt;p&gt;回看全书，前五章帮助建立能执行任务的系统，第六章让结果可测，第七和第八章讨论不同位置的改进，第九和第十章扩展交互与组织方式。每一层都需要回到同一个问题：我们拿到了什么新证据，是否足以支持当前决定？&lt;/p&gt;
+&lt;p&gt;本章对应&lt;a href=&quot;#/research?direction=rd-012&quot;&gt;多智能体协作与通信&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-011&quot;&gt;智能体规划&lt;/a&gt;、&lt;a href=&quot;#/research?direction=rd-015&quot;&gt;智能体评测&lt;/a&gt;及&lt;a href=&quot;#/research?direction=rd-081&quot;&gt;人—智能体协作&lt;/a&gt;。可以把自己的项目、失败案例和待验证假设关联到这些方向，继续积累真实的学习记录。&lt;/p&gt;
+&lt;h2 id=&quot;section-7&quot;&gt;阅读出处&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;李博杰，《深入理解 AI Agent：设计原理与工程实践》，v1.3，第10章，书内第272—305页；包括共享上下文、拓扑、移交、失败模式和 Agent 社会。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bojieli/ai-agent-book&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;作者原始项目与协作实验&lt;/a&gt;。本文没有运行多模型协作性能实验。&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#/books?book=ai-agents-in-depth&quot;&gt;全书十章索引&lt;/a&gt;。示例是独立编写的契约与版本检查程序，欢迎结合自己的实际任务继续验证。&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title>AI Agent 共读①：从工具循环到可靠执行，读懂 Agent 与 Harness</title><link>https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch01-loop-and-harness</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/ai-agents-ch01-loop-and-harness</guid><pubDate>Wed, 21 Oct 2026 16:00:00 GMT</pubDate><description>对照《深入理解 AI Agent》第一章，用一个无需 API 的原创小程序理解决策、工具、结果反馈与停止条件，再把这些概念映射到真实系统。</description><content:encoded>&lt;p&gt;一个聊天模型能写出操作步骤，一个 Agent 系统还需要真的执行步骤、看到结果，并知道什么时候该停止。理解这层差别，比先记住一串框架名称更有用。&lt;/p&gt;
 &lt;p&gt;这篇是《深入理解 AI Agent：设计原理与工程实践》的第一篇共读笔记。阅读依据是李博杰所著 PDF v1.3（2026-07-30），第1章“AI Agent 入门”，书内第7—27页，对应 PDF 第15—35页。本文以自己的语言重新组织知识，并补充原创练习；不是原书转载，也不替代原书。&lt;/p&gt;
 &lt;p&gt;读完后，试着回答三个问题：模型做了什么，外围程序做了什么，系统凭什么判断任务已经完成？&lt;/p&gt;
 &lt;h2 id=&quot;section-1&quot;&gt;先把一个任务拆开来看&lt;/h2&gt;

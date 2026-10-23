@@ -12,7 +12,7 @@ const sample=(id='learn-example',ids=['rd-011'])=>({id,directionIds:ids,date:'20
 test('100 stable research IDs connect to real CCF categories, books and chapter posts',()=>{
   assert.doesNotThrow(()=>validateResearch({research,books,fields,posts}));
   assert.equal(new Set(research.directions.map(d=>d.number)).size,100);
-  assert.equal(books[0].chapters.length,2);
+  assert.equal(books[0].chapters.length,10);
   const damaged=structuredClone(books);damaged[0].chapters[0].postSlug='missing';assert.throws(()=>validateResearch({research,books:damaged,fields,posts}));
 });
 test('personal counts use confirmed records only and handle overlap and ties',()=>{

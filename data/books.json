@@ -4,17 +4,36 @@
     "title": "深入理解 AI Agent：设计原理与工程实践",
     "authors": "李博杰",
     "edition": "阅读依据：本地 PDF v1.3，2026-07-30；在线版本持续更新",
-    "description": "从 Agent 的模型、上下文与工具出发，理解 Harness、记忆、评估和协作。适合先读前两章建立工程全貌，再按问题补充后续章节。",
+    "description": "全书10章共读导读已更新。从 Agent 基础、上下文和记忆出发，经过工具、代码、评估与后训练，继续理解持续进化、多模态交互和多 Agent 协作；每章包含原创离线练习。",
     "prerequisites": "Python 基础、JSON 与函数调用；第一篇练习无需 API 或 GPU。",
     "directionIds": [
-      "rd-003",
       "rd-011",
       "rd-014",
       "rd-015",
-      "rd-016",
       "rd-031",
+      "rd-003",
+      "rd-016",
+      "rd-041",
+      "rd-061",
+      "rd-062",
+      "rd-070",
       "rd-071",
-      "rd-041"
+      "rd-072",
+      "rd-073",
+      "rd-077",
+      "rd-076",
+      "rd-093",
+      "rd-002",
+      "rd-006",
+      "rd-007",
+      "rd-008",
+      "rd-009",
+      "rd-021",
+      "rd-022",
+      "rd-013",
+      "rd-017",
+      "rd-012",
+      "rd-081"
     ],
     "sourceUrl": "https://github.com/bojieli/ai-agent-book",
     "readingUrl": "https://bojieli.github.io/ai-agent-book/",
@@ -44,8 +63,111 @@
           "rd-041"
         ],
         "goal": "解释消息协议、稳定前缀、按需加载、状态摘要与保留来源的压缩。"
+      },
+      {
+        "number": 3,
+        "title": "用户记忆和知识库",
+        "pages": "书内页码 72—102；PDF 第 80—110 页",
+        "postSlug": "ai-agents-ch03-memory-and-rag",
+        "directionIds": [
+          "rd-016",
+          "rd-061",
+          "rd-062",
+          "rd-070"
+        ],
+        "goal": "区分个人记忆与知识库，检查访问范围、时效和有来源的检索结果。"
+      },
+      {
+        "number": 4,
+        "title": "工具",
+        "pages": "书内页码 103—130；PDF 第 111—138 页",
+        "postSlug": "ai-agents-ch04-tools-and-events",
+        "directionIds": [
+          "rd-014",
+          "rd-031",
+          "rd-011"
+        ],
+        "goal": "定义清楚的工具契约，处理权限、重复请求和异步事件。"
+      },
+      {
+        "number": 5,
+        "title": "Coding Agent 与代码生成",
+        "pages": "书内页码 131—161；PDF 第 139—169 页",
+        "postSlug": "ai-agents-ch05-coding-and-verification",
+        "directionIds": [
+          "rd-071",
+          "rd-072",
+          "rd-073",
+          "rd-077"
+        ],
+        "goal": "从定位、编辑到验证与恢复，区分表面修复和满足要求的补丁。"
+      },
+      {
+        "number": 6,
+        "title": "Agent 的评估",
+        "pages": "书内页码 162—189；PDF 第 170—197 页",
+        "postSlug": "ai-agents-ch06-evaluation-and-evidence",
+        "directionIds": [
+          "rd-015",
+          "rd-076",
+          "rd-093"
+        ],
+        "goal": "把正确性、证据和约束分开评价，检查评分器与可复查的评估证据。"
+      },
+      {
+        "number": 7,
+        "title": "模型后训练",
+        "pages": "书内页码 190—230；PDF 第 198—238 页",
+        "postSlug": "ai-agents-ch07-post-training-and-rewards",
+        "directionIds": [
+          "rd-002",
+          "rd-006",
+          "rd-007",
+          "rd-008"
+        ],
+        "goal": "理解示范学习、奖励和信用分配，识别优化目标与真实任务的偏离。"
+      },
+      {
+        "number": 8,
+        "title": "Agent 的持续进化",
+        "pages": "书内页码 231—245；PDF 第 239—253 页",
+        "postSlug": "ai-agents-ch08-continuous-evolution",
+        "directionIds": [
+          "rd-009",
+          "rd-016",
+          "rd-015",
+          "rd-076"
+        ],
+        "goal": "选择知识、指令、程序或参数更新，用候选验证和回滚管理持续改进。"
+      },
+      {
+        "number": 9,
+        "title": "多模态与实时交互",
+        "pages": "书内页码 246—271；PDF 第 254—279 页",
+        "postSlug": "ai-agents-ch09-multimodal-realtime",
+        "directionIds": [
+          "rd-021",
+          "rd-022",
+          "rd-013",
+          "rd-017"
+        ],
+        "goal": "理解语音、GUI和机器人交互的实时约束，阻止迟到结果混入新任务。"
+      },
+      {
+        "number": 10,
+        "title": "多 Agent 协作",
+        "pages": "书内页码 272—305；PDF 第 280—313 页",
+        "postSlug": "ai-agents-ch10-collaboration-and-handoffs",
+        "directionIds": [
+          "rd-012",
+          "rd-011",
+          "rd-015",
+          "rd-081"
+        ],
+        "goal": "设计有来源的移交包与版本保护，分析协作成本、冲突和错误级联。"
       }
-    ]
+    ],
+    "totalChapters": 10
   },
   {
     "id": "essential-graphrag",

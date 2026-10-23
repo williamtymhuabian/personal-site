@@ -46,5 +46,9 @@
     return {count,url:url.href};
   }
   function citation(direction,siteUrl){return `[${direction.title} · ${direction.id}](${siteUrl.replace(/\/?$/,'/')}#/research?direction=${direction.id})`;}
-  return {schema,types,validDate,checkRecord,parse,merge,ranked,personal,publicCount,citation};
+  function chapterNeighbors(book,slug){
+    const chapters=[...(book?.chapters||[])].sort((a,b)=>a.number-b.number),index=chapters.findIndex(c=>c.postSlug===slug);
+    return {previous:index>0?chapters[index-1]:null,next:index>=0?chapters[index+1]||null:null};
+  }
+  return {schema,types,validDate,checkRecord,parse,merge,ranked,personal,publicCount,citation,chapterNeighbors};
 });
