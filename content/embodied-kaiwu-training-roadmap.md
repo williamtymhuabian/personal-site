@@ -14,6 +14,12 @@ pinned: false
 
 对应来源是 [2023官网入围名单](https://kaiwu-prod-1252931805.cos.ap-shanghai.myqcloud.com/public/image/competition_score/1692064202708K6etKp10.jpg) 和 [2024官网晋级名单](https://kaiwu-prod-1252931805.cos.ap-shanghai.myqcloud.com/public/image/competition_score/17255305006nAIXu2k0ZkBHCTgVBijgTDZXKQcVtRc2423.jpg)。这确认了参赛年份和入围／晋级阶段；具体奖项仍需根据证书或明确获奖公示核对，不把晋级记录改写为一等奖、优秀奖等，也不增加本站已核对的获奖统计。
 
+## 如何补齐证书与正式奖项
+
+[官网证书查询](https://tencentarena.com/aiarena/zh/certificate) 提供“编号查询”和“我的证书”。已有证书编号可以使用编号查询；个人账号下的证书列表需要登录后查看。此入口已于2026年10月23日核对，没有代替维护者登录或访问私人证书。
+
+目前公开证据确认两届入围／晋级。两届赛道规则也说明，完成海选并成功提交、通过模型验证可获得官方参赛证书；这项通用规则不等于个人证书已取得，更不能替代具体奖级的证明。后续按证书上的正式名称和奖项文字补齐，参赛证书、晋级经历与等级奖项分别记录。
+
 ## 为什么把开悟接回来
 
 腾讯开悟的 [HoK 官方文档](https://aiarena.tencent.com/hok/doc/) 把观测、动作、奖励、回放和训练框架放在同一条链路里。游戏环境中的部分可观测、长时决策和多智能体协作，也能帮助理解机器人为什么需要记忆、反馈和恢复。

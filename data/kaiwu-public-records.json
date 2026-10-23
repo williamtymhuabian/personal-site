@@ -26,5 +26,12 @@
       "image_sha256": "7e964f910478ae629e4ad275f2090af78cceaf1bf7879ef4647e3d23907c545c",
       "award_level_verified": false
     }
-  ]
+  ],
+  "certificateLookup": {
+    "url": "https://tencentarena.com/aiarena/zh/certificate",
+    "publicMethod": "编号查询",
+    "accountMethod": "我的证书",
+    "accountMethodRequiresLogin": true,
+    "pending": "Personal certificate titles and award wording; not accessible from public qualifying lists."
+  }
 }

@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "archive_path": "downloads/embodied-training-lab.zip",
-  "sha256": "17e5bec8d882db95e68f2213613616de7f7c25389dc15777f96747d795cc329a",
-  "bytes": 100941,
+  "sha256": "f540114c704677325b71ed9ab96df7bacf0fd3ab286db3bf2838c2642ed30180",
+  "bytes": 101203,
   "files": {
     "embodied-training-lab/.gitattributes": "b9634641f360c18b15c786c2b5ca2f768d72328c3c78a3d8df446d18a8c1b7f9",
     "embodied-training-lab/.gitignore": "62895a1f30d9bda25e73491b1bf7adf56ad5642376869573764978895efb7329",
@@ -10,7 +10,7 @@
     "embodied-training-lab/curriculum.json": "35a369aa0ccf98a463a8bfd06701e61160878c8e4df1dff687d095067e80de9a",
     "embodied-training-lab/docs/三个作品路线.md": "ae6eb755615e2e8e63bc6e695edee6941bcb8d304426322640e6cc4705d8528c",
     "embodied-training-lab/docs/创新与成果记录.md": "8cce67c9afdaa1677b1e60048c742ce9f684220333ebb6e4c2986729db766dfa",
-    "embodied-training-lab/docs/腾讯开悟实践指南.md": "846c9d51cc72240a75b9cdd4525f0fb5842e057a578f353fd45a6f0869c47558",
+    "embodied-training-lab/docs/腾讯开悟实践指南.md": "0dafe213f79c898d2667371b406dcf52a0e8eb6c2200ac3193c187f9fe27326e",
     "embodied-training-lab/docs/训练任务卡.md": "ec8cfdee02ab8f1a822314eb4cde21903ca8b3aad0c0d4f279781382f42c62db",
     "embodied-training-lab/docs/首次实验记录.md": "3c87ddea8f5da5fdb79d7e691bdce44b2e18b97577fb5b4f35a556521aa705ba",
     "embodied-training-lab/README.md": "ca9307e0b97eadb2a75d78437757e3e4f575c91e8fd668558dbe652239bbbaba",
