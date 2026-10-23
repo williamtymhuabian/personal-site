@@ -86,6 +86,7 @@ async function build() {
   const venueDeadlines=JSON.parse(await readFile(path.join(root,'data','venue-deadlines.json'),'utf8'));
   const research=JSON.parse(await readFile(path.join(root,'data','research-directions.json'),'utf8'));
   const books=JSON.parse(await readFile(path.join(root,'data','books.json'),'utf8'));
+  const kaiwuPublicRecords=JSON.parse(await readFile(path.join(root,'data','kaiwu-public-records.json'),'utf8'));
   validateDeadlines(venueDeadlines,ccfCatalog);
   validateExplore({ fields, friends, ccfCatalog });
   validatePublicData({ profile, awards, projects });
@@ -114,7 +115,7 @@ async function build() {
   const communityEntries=TopicModel.entries({profile,posts,projects,papers,fields,journeys,ccfCatalog,research,books});
   if(new Set(communityEntries.map(e=>e.key)).size!==communityEntries.length)throw new Error('交流话题标识重复。');
   const communityHashes=Object.fromEntries(communityEntries.map(e=>[e.key,createHash('sha1').update(TopicModel.term(e.key)).digest('hex')]));
-  const serialized = JSON.stringify({ profile: { ...profile, awards }, posts, projects, papers, publicCertificates, community, journeys, fields, friends, ccfCatalog, venueDeadlines,research,books, communityHashes }).replaceAll('<', '\\u003c').replaceAll('\u2028', '\\u2028').replaceAll('\u2029', '\\u2029');
+  const serialized = JSON.stringify({ profile: { ...profile, awards }, posts, projects, papers, publicCertificates, community, journeys, fields, friends, ccfCatalog, venueDeadlines,research,books,kaiwuPublicRecords, communityHashes }).replaceAll('<', '\\u003c').replaceAll('\u2028', '\\u2028').replaceAll('\u2029', '\\u2029');
   const assetHash = createHash('sha256');
   for (const file of ['vendor/leaflet/leaflet.js', 'vendor/leaflet/leaflet.css', 'app.js', 'visitors.js', 'lab.js', 'background.js', 'computer-labs.js', 'portfolio.js', 'honors.js', 'honors.css', 'style.css', 'computer-labs.css', 'portfolio.css', 'journey-basemap.js', 'journey-map.js', 'journeys.js', 'journeys.css', 'field-labs.js', 'research-desk.js', 'explore.css', 'topic-model.js', 'community.js', 'community.css', 'award-model.js', 'deadline-model.js', 'deadline-desk.js', 'deadline-desk.css', 'research-model.js', 'research-hub.js', 'research-hub.css']) assetHash.update(await readFile(path.join(root, 'assets', file)));
   const replacements = { TITLE: escapeHtml(profile.siteTitle), DESCRIPTION: escapeHtml(profile.description), NAME: escapeHtml(profile.name), ROLE: profile.role.split(' · ').map(escapeHtml).join('<br>'), MOTTO: escapeHtml(profile.motto), SITE_DATA: serialized, ASSET_VERSION: assetHash.digest('hex').slice(0, 10) };

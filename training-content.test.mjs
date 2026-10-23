@@ -56,6 +56,7 @@ test('learning entry points link to real posts and preserve unknown award detail
 
 test('Kaiwu public evidence confirms two qualifying records without inventing award levels',async()=>{
   const evidence=JSON.parse(await read('./data/kaiwu-public-records.json'));
+  const awards=JSON.parse(await read('./data/awards.json'));
   assert.equal(evidence.checkedAt,'2026-10-23');
   assert.deepEqual(evidence.records.map(r=>[r.year,r.competition_id,r.stage_id,r.result]),
     [[2023,82,10,'海选入围'],[2024,100,80,'中国内地赛区海选晋级']]);
@@ -66,5 +67,10 @@ test('Kaiwu public evidence confirms two qualifying records without inventing aw
     assert.equal(new URL(record.score_image_url).hostname,'kaiwu-prod-1252931805.cos.ap-shanghai.myqcloud.com');
     assert.match(record.image_sha256,/^[a-f0-9]{64}$/);
     assert(!Object.hasOwn(record,'prize'));
+    const participation=awards.find(award=>award.id===record.recordId);
+    assert(participation);
+    assert.equal(participation.kind,'participation');
+    assert.equal(participation.year,String(record.year));
+    assert.equal(participation.prize,record.result);
   }
 });
