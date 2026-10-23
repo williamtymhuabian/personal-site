@@ -1,0 +1,154 @@
+{
+  "seed": 43,
+  "best_epoch": 160,
+  "initial_train_bce": 0.7672331477002418,
+  "best_validation_bce": 0.006455936141969189,
+  "classification": {
+    "train": {
+      "n": 4608,
+      "positive_fraction": 0.038411458333333336,
+      "tp": 166,
+      "fp": 0,
+      "fn": 11,
+      "tn": 4431,
+      "accuracy": 0.9976128472222222,
+      "balanced_accuracy": 0.9689265536723164
+    },
+    "validation": {
+      "n": 1536,
+      "positive_fraction": 0.038411458333333336,
+      "tp": 58,
+      "fp": 2,
+      "fn": 1,
+      "tn": 1475,
+      "accuracy": 0.998046875,
+      "balanced_accuracy": 0.9908483756584006
+    },
+    "test": {
+      "n": 1536,
+      "positive_fraction": 0.025390625,
+      "tp": 39,
+      "fp": 2,
+      "fn": 0,
+      "tn": 1495,
+      "accuracy": 0.9986979166666666,
+      "balanced_accuracy": 0.9993319973279893
+    },
+    "ood": {
+      "n": 1536,
+      "positive_fraction": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "tn": 1536,
+      "accuracy": 1.0,
+      "balanced_accuracy": null
+    }
+  },
+  "replay_summary": [
+    {
+      "split": "test",
+      "method": "fixed",
+      "episodes": 32,
+      "succeeded": 6,
+      "status_counts": {
+        "FAILED": 26,
+        "SUCCEEDED": 6
+      },
+      "endpoint_checks_mean": 0.0
+    },
+    {
+      "split": "test",
+      "method": "nearest",
+      "episodes": 32,
+      "succeeded": 0,
+      "status_counts": {
+        "FAILED": 32
+      },
+      "endpoint_checks_mean": 0.0
+    },
+    {
+      "split": "test",
+      "method": "geometry_verified",
+      "episodes": 32,
+      "succeeded": 9,
+      "status_counts": {
+        "REJECTED": 23,
+        "SUCCEEDED": 9
+      },
+      "endpoint_checks_mean": 41.21875
+    },
+    {
+      "split": "test",
+      "method": "mlp_raw",
+      "episodes": 32,
+      "succeeded": 9,
+      "status_counts": {
+        "FAILED": 23,
+        "SUCCEEDED": 9
+      },
+      "endpoint_checks_mean": 0.0
+    },
+    {
+      "split": "test",
+      "method": "mlp_verified",
+      "episodes": 32,
+      "succeeded": 9,
+      "status_counts": {
+        "REJECTED": 23,
+        "SUCCEEDED": 9
+      },
+      "endpoint_checks_mean": 34.78125
+    },
+    {
+      "split": "ood",
+      "method": "fixed",
+      "episodes": 32,
+      "succeeded": 0,
+      "status_counts": {
+        "FAILED": 32
+      },
+      "endpoint_checks_mean": 0.0
+    },
+    {
+      "split": "ood",
+      "method": "nearest",
+      "episodes": 32,
+      "succeeded": 0,
+      "status_counts": {
+        "FAILED": 32
+      },
+      "endpoint_checks_mean": 0.0
+    },
+    {
+      "split": "ood",
+      "method": "geometry_verified",
+      "episodes": 32,
+      "succeeded": 0,
+      "status_counts": {
+        "REJECTED": 32
+      },
+      "endpoint_checks_mean": 48.0
+    },
+    {
+      "split": "ood",
+      "method": "mlp_raw",
+      "episodes": 32,
+      "succeeded": 0,
+      "status_counts": {
+        "FAILED": 32
+      },
+      "endpoint_checks_mean": 0.0
+    },
+    {
+      "split": "ood",
+      "method": "mlp_verified",
+      "episodes": 32,
+      "succeeded": 0,
+      "status_counts": {
+        "REJECTED": 32
+      },
+      "endpoint_checks_mean": 48.0
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "kind": "synthetic-geometric-training-and-kinematic-replay",
+  "dataset_sha256": "28290693c28bf4a48cb6ca93b3c41178bde6c0d085b4f4fa9c83326208a68308",
+  "core_sha256": "29595a1803c2cfbb402c8a8af0f74651c869d5fcdc1fa7a651b734f5b8072a90",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "2.3.5",
+    "platform": "Windows-11-10.0.26300-SP0"
+  },
+  "split_scenes": {
+    "train": 96,
+    "validation": 32,
+    "test": 32,
+    "ood": 32
+  },
+  "training": {
+    "epochs": 160,
+    "seeds": [
+      7,
+      19,
+      43
+    ],
+    "optimizer": "Adam",
+    "learning_rate": 0.005,
+    "batch_size": 256,
+    "hidden_units": 24,
+    "threshold": 0.5,
+    "checkpoint_selection": "minimum validation BCE; test/OOD not used"
+  },
+  "runs": []
+}

@@ -1,0 +1,3096 @@
+{
+  "core_sha256": "29595a1803c2cfbb402c8a8af0f74651c869d5fcdc1fa7a651b734f5b8072a90",
+  "timestep_s": 0.04,
+  "rows": [
+    {
+      "scene_id": "cell-14-6",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9.12
+    },
+    {
+      "scene_id": "cell-14-6",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.52
+    },
+    {
+      "scene_id": "cell-14-6",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-14-6",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 41,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-14-6",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-9-3",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.84
+    },
+    {
+      "scene_id": "cell-9-3",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.74
+    },
+    {
+      "scene_id": "cell-9-3",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-9-3",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 27,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-9-3",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-10-3",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.9
+    },
+    {
+      "scene_id": "cell-10-3",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.96
+    },
+    {
+      "scene_id": "cell-10-3",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-10-3",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 27,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-10-3",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-4-6",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.44
+    },
+    {
+      "scene_id": "cell-4-6",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 15,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.12
+    },
+    {
+      "scene_id": "cell-4-6",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-4-6",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 1,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-4-6",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-5-6",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.58
+    },
+    {
+      "scene_id": "cell-5-6",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 15,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.6
+    },
+    {
+      "scene_id": "cell-5-6",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-5-6",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 1,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-5-6",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-0-3",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.38
+    },
+    {
+      "scene_id": "cell-0-3",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 31,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.42
+    },
+    {
+      "scene_id": "cell-0-3",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-0-3",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 19,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-0-3",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-11-5",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.92
+    },
+    {
+      "scene_id": "cell-11-5",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.22
+    },
+    {
+      "scene_id": "cell-11-5",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-11-5",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 41,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-11-5",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-12-7",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9
+    },
+    {
+      "scene_id": "cell-12-7",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.44
+    },
+    {
+      "scene_id": "cell-12-7",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-12-7",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 41,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-12-7",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-5-4",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.52
+    },
+    {
+      "scene_id": "cell-5-4",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 15,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.7
+    },
+    {
+      "scene_id": "cell-5-4",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-5-4",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 19,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-5-4",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-5-3",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.52
+    },
+    {
+      "scene_id": "cell-5-3",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 15,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.62
+    },
+    {
+      "scene_id": "cell-5-3",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 25,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 49.42
+    },
+    {
+      "scene_id": "cell-5-3",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 49.42
+    },
+    {
+      "scene_id": "cell-5-3",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 1,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 49.42
+    },
+    {
+      "scene_id": "cell-7-7",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.74
+    },
+    {
+      "scene_id": "cell-7-7",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.96
+    },
+    {
+      "scene_id": "cell-7-7",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-7-7",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 41,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-7-7",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-11-3",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.96
+    },
+    {
+      "scene_id": "cell-11-3",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.08
+    },
+    {
+      "scene_id": "cell-11-3",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-11-3",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 27,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-11-3",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-5-1",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 48.32
+    },
+    {
+      "scene_id": "cell-5-1",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 15,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.3
+    },
+    {
+      "scene_id": "cell-5-1",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 26,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 49.16
+    },
+    {
+      "scene_id": "cell-5-1",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 49.16
+    },
+    {
+      "scene_id": "cell-5-1",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 1,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 49.16
+    },
+    {
+      "scene_id": "cell-14-0",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 46.52
+    },
+    {
+      "scene_id": "cell-14-0",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.02
+    },
+    {
+      "scene_id": "cell-14-0",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 21,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 47.68
+    },
+    {
+      "scene_id": "cell-14-0",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 18,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 47.48
+    },
+    {
+      "scene_id": "cell-14-0",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 1,
+      "candidate_id": 18,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 47.48
+    },
+    {
+      "scene_id": "cell-2-4",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.84
+    },
+    {
+      "scene_id": "cell-2-4",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 23,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.82
+    },
+    {
+      "scene_id": "cell-2-4",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-2-4",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 19,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-2-4",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-10-4",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.9
+    },
+    {
+      "scene_id": "cell-10-4",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.98
+    },
+    {
+      "scene_id": "cell-10-4",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-10-4",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 27,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-10-4",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-8-3",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.78
+    },
+    {
+      "scene_id": "cell-8-3",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.3
+    },
+    {
+      "scene_id": "cell-8-3",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 24,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 49.2
+    },
+    {
+      "scene_id": "cell-8-3",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 27,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 48.98
+    },
+    {
+      "scene_id": "cell-8-3",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 1,
+      "candidate_id": 27,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 48.98
+    },
+    {
+      "scene_id": "cell-1-6",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.16
+    },
+    {
+      "scene_id": "cell-1-6",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 31,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.66
+    },
+    {
+      "scene_id": "cell-1-6",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-1-6",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 1,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-1-6",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-9-2",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 49.18
+    },
+    {
+      "scene_id": "cell-9-2",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.64
+    },
+    {
+      "scene_id": "cell-9-2",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 24,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 49.08
+    },
+    {
+      "scene_id": "cell-9-2",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 49.08
+    },
+    {
+      "scene_id": "cell-9-2",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 1,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 49.08
+    },
+    {
+      "scene_id": "cell-9-1",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 47.94
+    },
+    {
+      "scene_id": "cell-9-1",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.52
+    },
+    {
+      "scene_id": "cell-9-1",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 24,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 48.84
+    },
+    {
+      "scene_id": "cell-9-1",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 18,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 47.94
+    },
+    {
+      "scene_id": "cell-9-1",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 1,
+      "candidate_id": 18,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 47.94
+    },
+    {
+      "scene_id": "cell-12-8",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9
+    },
+    {
+      "scene_id": "cell-12-8",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.54
+    },
+    {
+      "scene_id": "cell-12-8",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-12-8",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 41,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-12-8",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-8-9",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.76
+    },
+    {
+      "scene_id": "cell-8-9",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.88
+    },
+    {
+      "scene_id": "cell-8-9",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-8-9",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 41,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-8-9",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-12-5",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9
+    },
+    {
+      "scene_id": "cell-12-5",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.32
+    },
+    {
+      "scene_id": "cell-12-5",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-12-5",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 41,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-12-5",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-8-0",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 47.78
+    },
+    {
+      "scene_id": "cell-8-0",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.08
+    },
+    {
+      "scene_id": "cell-8-0",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 24,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 48.92
+    },
+    {
+      "scene_id": "cell-8-0",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 18,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 47.9
+    },
+    {
+      "scene_id": "cell-8-0",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 1,
+      "candidate_id": 18,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 47.9
+    },
+    {
+      "scene_id": "cell-13-3",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9.06
+    },
+    {
+      "scene_id": "cell-13-3",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.22
+    },
+    {
+      "scene_id": "cell-13-3",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 23,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 48.9
+    },
+    {
+      "scene_id": "cell-13-3",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 27,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 48.66
+    },
+    {
+      "scene_id": "cell-13-3",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 1,
+      "candidate_id": 27,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 48.66
+    },
+    {
+      "scene_id": "cell-15-5",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9.18
+    },
+    {
+      "scene_id": "cell-15-5",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.46
+    },
+    {
+      "scene_id": "cell-15-5",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-15-5",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 41,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-15-5",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-10-8",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.9
+    },
+    {
+      "scene_id": "cell-10-8",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.38
+    },
+    {
+      "scene_id": "cell-10-8",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-10-8",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 41,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-10-8",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-8-7",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.76
+    },
+    {
+      "scene_id": "cell-8-7",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.72
+    },
+    {
+      "scene_id": "cell-8-7",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-8-7",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 41,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-8-7",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-1-7",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.14
+    },
+    {
+      "scene_id": "cell-1-7",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 31,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.82
+    },
+    {
+      "scene_id": "cell-1-7",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-1-7",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 1,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-1-7",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-13-8",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9.06
+    },
+    {
+      "scene_id": "cell-13-8",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.66
+    },
+    {
+      "scene_id": "cell-13-8",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-13-8",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 41,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-13-8",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-5-5",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.54
+    },
+    {
+      "scene_id": "cell-5-5",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 15,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.7
+    },
+    {
+      "scene_id": "cell-5-5",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-5-5",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 1,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "cell-5-5",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "cell-7-1",
+      "split": "test",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 48.08
+    },
+    {
+      "scene_id": "cell-7-1",
+      "split": "test",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.56
+    },
+    {
+      "scene_id": "cell-7-1",
+      "split": "test",
+      "method": "geometry_verified",
+      "checks": 24,
+      "candidate_id": 19,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 49.04
+    },
+    {
+      "scene_id": "cell-7-1",
+      "split": "test",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 18,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 48.06
+    },
+    {
+      "scene_id": "cell-7-1",
+      "split": "test",
+      "method": "mlp_verified",
+      "checks": 1,
+      "candidate_id": 18,
+      "status": "SUCCEEDED",
+      "phase": "搬运完成",
+      "simulation_time_s": 48.06
+    },
+    {
+      "scene_id": "ood-0",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.12
+    },
+    {
+      "scene_id": "ood-0",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 31,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-0",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-0",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-0",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-1",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.38
+    },
+    {
+      "scene_id": "ood-1",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 23,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-1",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-1",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-1",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-2",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9.02
+    },
+    {
+      "scene_id": "ood-2",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-2",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-2",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-2",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-3",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.38
+    },
+    {
+      "scene_id": "ood-3",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 23,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-3",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-3",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-3",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-4",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9.1
+    },
+    {
+      "scene_id": "ood-4",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-4",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-4",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-4",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-5",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.52
+    },
+    {
+      "scene_id": "ood-5",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 15,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-5",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-5",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-5",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-6",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.66
+    },
+    {
+      "scene_id": "ood-6",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-6",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-6",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-6",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-7",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9.12
+    },
+    {
+      "scene_id": "ood-7",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-7",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-7",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-7",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-8",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.84
+    },
+    {
+      "scene_id": "ood-8",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 23,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-8",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-8",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-8",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-9",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.74
+    },
+    {
+      "scene_id": "ood-9",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-9",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-9",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-9",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-10",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.7
+    },
+    {
+      "scene_id": "ood-10",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-10",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-10",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-10",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-11",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9.18
+    },
+    {
+      "scene_id": "ood-11",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-11",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-11",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-11",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-12",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.8
+    },
+    {
+      "scene_id": "ood-12",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-12",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-12",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-12",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-13",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.94
+    },
+    {
+      "scene_id": "ood-13",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-13",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-13",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-13",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-14",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.84
+    },
+    {
+      "scene_id": "ood-14",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 23,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-14",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-14",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-14",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-15",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.54
+    },
+    {
+      "scene_id": "ood-15",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 15,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-15",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-15",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-15",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-16",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9.1
+    },
+    {
+      "scene_id": "ood-16",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-16",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-16",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-16",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-17",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9.16
+    },
+    {
+      "scene_id": "ood-17",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-17",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-17",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-17",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-18",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.98
+    },
+    {
+      "scene_id": "ood-18",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-18",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-18",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-18",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-19",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.48
+    },
+    {
+      "scene_id": "ood-19",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 15,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-19",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-19",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 42,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-19",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-20",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.86
+    },
+    {
+      "scene_id": "ood-20",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-20",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-20",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-20",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-21",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8
+    },
+    {
+      "scene_id": "ood-21",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 23,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-21",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-21",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-21",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-22",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.26
+    },
+    {
+      "scene_id": "ood-22",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 23,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-22",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-22",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-22",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-23",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.24
+    },
+    {
+      "scene_id": "ood-23",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 23,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-23",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-23",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-23",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-24",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.74
+    },
+    {
+      "scene_id": "ood-24",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-24",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-24",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-24",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-25",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 7.84
+    },
+    {
+      "scene_id": "ood-25",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 23,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-25",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-25",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-25",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-26",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.18
+    },
+    {
+      "scene_id": "ood-26",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 31,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-26",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-26",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-26",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-27",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.8
+    },
+    {
+      "scene_id": "ood-27",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-27",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-27",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-27",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-28",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.24
+    },
+    {
+      "scene_id": "ood-28",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 31,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-28",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-28",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-28",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-29",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.48
+    },
+    {
+      "scene_id": "ood-29",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 15,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-29",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-29",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 42,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-29",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-30",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 8.12
+    },
+    {
+      "scene_id": "ood-30",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 31,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-30",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-30",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 2,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-30",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-31",
+      "split": "ood",
+      "method": "fixed",
+      "checks": 0,
+      "candidate_id": null,
+      "status": "FAILED",
+      "phase": "OUT_OF_REACH：目标超出机械臂工作空间",
+      "simulation_time_s": 9.06
+    },
+    {
+      "scene_id": "ood-31",
+      "split": "ood",
+      "method": "nearest",
+      "checks": 0,
+      "candidate_id": 7,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-31",
+      "split": "ood",
+      "method": "geometry_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    },
+    {
+      "scene_id": "ood-31",
+      "split": "ood",
+      "method": "mlp_raw",
+      "checks": 0,
+      "candidate_id": 40,
+      "status": "FAILED",
+      "phase": "NAV_INVALID：起点或终点没有足够底盘间隙",
+      "simulation_time_s": 0.28
+    },
+    {
+      "scene_id": "ood-31",
+      "split": "ood",
+      "method": "mlp_verified",
+      "checks": 48,
+      "candidate_id": null,
+      "status": "REJECTED",
+      "phase": "NO_VALID_CANDIDATE"
+    }
+  ]
+}

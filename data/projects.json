@@ -19,6 +19,25 @@
     "awardIds": []
   },
   {
+    "id": "embodied-training-lab",
+    "title": "具身智能训练实验室 · 开悟强化学习路线",
+    "year": "2026",
+    "type": "课题训练与复现",
+    "status": "停车训练已验证；强化学习热身已提供",
+    "description": "从三本书与开悟参赛经验出发，整理10项课题训练任务和三个候选作品。已提供停车候选MLP、运动学回放、历史实验记录与自建网格Q-learning热身；正式开悟赛道适配、服务器完整训练和机器人视觉闭环仍待完成。",
+    "tags": [
+      "强化学习",
+      "腾讯开悟",
+      "具身智能",
+      "实验评测",
+      "Python"
+    ],
+    "repoUrl": "https://github.com/williamtymhuabian/personal-site/tree/main/examples/embodied-training",
+    "demoUrl": "",
+    "articleSlug": "embodied-kaiwu-training-roadmap",
+    "awardIds": []
+  },
+  {
     "id": "field-notes",
     "title": "探索手记 · 个人知识站",
     "year": "2026",

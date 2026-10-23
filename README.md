@@ -1,5 +1,15 @@
 # Williamtym · 探索手记
 
+## 具身智能与腾讯开悟训练路线
+
+新增三篇原创文章：`embodied-kaiwu-training-roadmap`、`embodied-parking-first-experiment`、`kaiwu-rl-server-practice`。书目页、研究方向页和 Agent 第7章可进入训练路线，文章继续使用现有研究方向关联和本人确认的学习记录。
+
+配套源码在 `examples/embodied-training`：包含三本书的10项任务、三个候选作品方案、初步相关工作检索、停车 MLP 训练/仿真回放、自建网格 Q-learning 热身和服务器入口。`sample-results/parking-v1` 保存已执行停车实验的原始指标、权重和回放。开悟正式适配与服务器完整训练尚未执行；不会把教学网格或几何训练写成开悟跑榜成绩。
+
+`downloads/embodied-training-lab.zip` 是目录的完整配套包，含 PickGo 独立数学核心副本及来源说明。包内不含原书 PDF、原始证书、账号、受限赛事开发包或虚构获奖模型。`scripts/package-embodied-training.py` 负责按白名单打包和校验，修改源码后需重新执行。
+
+维护者补充曾参加两届开悟，队名“线性代数”，主要是王者荣耀，回忆年份约2023、2024。年份与具体奖项尚未与公开名单对应；文章说明这个边界，未增加或更改已核对的奖项数据。
+
 一个受 Hexo 博客形式启发的轻量个人网站。支持 Markdown 写作、分类、归档、全文搜索、主题切换、计算机交互实验室、论文页、收藏与交流入口、竞赛与成果筛选、人工材料核验申请，以及 CSDN/小红书/抖音发布稿整理和 RSS 订阅。适配手机和桌面。
 
 这是独立的静态博客实现，不是 Hexo 安装包；不需要 npm install、数据库、第三方字体或 CDN。运行生成器需要 Node.js 18 或以上。本机已检测到 Node.js 和 Git。

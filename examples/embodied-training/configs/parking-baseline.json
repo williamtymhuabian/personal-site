@@ -1,0 +1,6 @@
+{
+  "experiment": "pickgo-parking-geometric-v1",
+  "epochs": 160,
+  "seeds": [7, 19, 43],
+  "notes": "CPU-compatible training entry point for server smoke tests. Not VLN, VLA, image training, or an invention claim."
+}

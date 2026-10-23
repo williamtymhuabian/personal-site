@@ -1,0 +1,279 @@
+{
+  "schema": 1,
+  "updated_at": "2026-10-23",
+  "progress_policy": "Implementation status is not learner completion. No automatic check-ins or leaderboard points.",
+  "execution": "server",
+  "tasks": [
+    {
+      "id": "T01",
+      "title": "重现固定停车位失败",
+      "status": "implemented",
+      "books": [
+        {
+          "id": "ai-agents-in-depth",
+          "chapters": [
+            1,
+            4,
+            6
+          ]
+        }
+      ],
+      "direction_ids": [
+        "rd-011",
+        "rd-014",
+        "rd-015"
+      ],
+      "works": [
+        "training-platform",
+        "grasp-recovery"
+      ],
+      "entry": "tests/pickgo_adapter.test.cjs"
+    },
+    {
+      "id": "T02",
+      "title": "停车候选监督训练",
+      "status": "implemented",
+      "books": [
+        {
+          "id": "ai-agents-in-depth",
+          "chapters": [
+            7
+          ]
+        },
+        {
+          "id": "llm-from-scratch",
+          "chapters": [
+            5
+          ],
+          "appendices": [
+            "A"
+          ]
+        }
+      ],
+      "direction_ids": [
+        "rd-006",
+        "rd-015",
+        "rd-017"
+      ],
+      "works": [
+        "training-platform",
+        "grasp-recovery"
+      ],
+      "entry": "scripts/run_server.py"
+    },
+    {
+      "id": "T03",
+      "title": "分开评价成功、失败与拒绝",
+      "status": "partial",
+      "books": [
+        {
+          "id": "ai-agents-in-depth",
+          "chapters": [
+            6
+          ]
+        }
+      ],
+      "direction_ids": [
+        "rd-015",
+        "rd-076"
+      ],
+      "works": [
+        "training-platform"
+      ],
+      "entry": "scripts/train_parking.py"
+    },
+    {
+      "id": "T04",
+      "title": "观测与动作证据轨迹",
+      "status": "planned",
+      "books": [
+        {
+          "id": "ai-agents-in-depth",
+          "chapters": [
+            2,
+            4,
+            9
+          ]
+        }
+      ],
+      "direction_ids": [
+        "rd-003",
+        "rd-014",
+        "rd-022"
+      ],
+      "works": [
+        "training-platform",
+        "grasp-recovery"
+      ]
+    },
+    {
+      "id": "T05",
+      "title": "空间记忆检索基线",
+      "status": "planned",
+      "books": [
+        {
+          "id": "ai-agents-in-depth",
+          "chapters": [
+            3
+          ]
+        },
+        {
+          "id": "essential-graphrag",
+          "chapters": [
+            2,
+            3,
+            6,
+            8
+          ]
+        }
+      ],
+      "direction_ids": [
+        "rd-016",
+        "rd-061",
+        "rd-070"
+      ],
+      "works": [
+        "memory-navigation"
+      ]
+    },
+    {
+      "id": "T06",
+      "title": "记忆重排器训练",
+      "status": "planned",
+      "books": [
+        {
+          "id": "llm-from-scratch",
+          "chapters": [
+            6
+          ]
+        },
+        {
+          "id": "essential-graphrag",
+          "chapters": [
+            8
+          ]
+        }
+      ],
+      "direction_ids": [
+        "rd-006",
+        "rd-061",
+        "rd-070"
+      ],
+      "works": [
+        "memory-navigation"
+      ]
+    },
+    {
+      "id": "T07",
+      "title": "从零训练机制与任务微调",
+      "status": "planned",
+      "books": [
+        {
+          "id": "llm-from-scratch",
+          "chapters": [
+            2,
+            3,
+            4,
+            5,
+            7
+          ],
+          "appendices": [
+            "E"
+          ]
+        },
+        {
+          "id": "ai-agents-in-depth",
+          "chapters": [
+            7
+          ]
+        }
+      ],
+      "direction_ids": [
+        "rd-007",
+        "rd-014"
+      ],
+      "works": [
+        "memory-navigation",
+        "grasp-recovery"
+      ]
+    },
+    {
+      "id": "T08",
+      "title": "失败驱动数据改进",
+      "status": "planned",
+      "books": [
+        {
+          "id": "ai-agents-in-depth",
+          "chapters": [
+            8
+          ]
+        }
+      ],
+      "direction_ids": [
+        "rd-006",
+        "rd-009",
+        "rd-015"
+      ],
+      "works": [
+        "training-platform",
+        "memory-navigation"
+      ]
+    },
+    {
+      "id": "T09",
+      "title": "恢复策略与强化学习对照",
+      "status": "partial",
+      "books": [
+        {
+          "id": "ai-agents-in-depth",
+          "chapters": [
+            7,
+            8,
+            9
+          ]
+        }
+      ],
+      "direction_ids": [
+        "rd-002",
+        "rd-011",
+        "rd-017"
+      ],
+      "works": [
+        "grasp-recovery"
+      ],
+      "entry": "scripts/grid_rl.py"
+    },
+    {
+      "id": "T10",
+      "title": "整理可复现作品与成果证据",
+      "status": "planned",
+      "books": [
+        {
+          "id": "ai-agents-in-depth",
+          "chapters": [
+            5,
+            6,
+            10
+          ]
+        }
+      ],
+      "direction_ids": [
+        "rd-015",
+        "rd-076"
+      ],
+      "works": [
+        "training-platform",
+        "memory-navigation",
+        "grasp-recovery"
+      ]
+    }
+  ],
+  "platforms": [
+    {
+      "id": "tencent-kaiwu",
+      "name": "腾讯开悟",
+      "url": "https://tencentarena.com/aiarena/zh/",
+      "integration": "guide-only; no competition adapter or official scores claimed"
+    }
+  ]
+}
