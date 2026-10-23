@@ -48,8 +48,23 @@ test('learning entry points link to real posts and preserve unknown award detail
     for(const match of post.matchAll(/\]\(#\/post\/([a-z0-9-]+)\)/g))assert((await read('./content/'+match[1]+'.md')).length);
   }
   assert.match(posts[0],/线性代数/);
-  assert.match(posts[0],/具体届次.*核对/);
+  assert.match(posts[0],/具体奖项仍需.*核对/);
   assert.match(posts[2],/不是开悟的峡谷漫步/);
   const hub=await read('./assets/research-hub.js');
   assert.match(hub,/开悟与课题训练/);
+});
+
+test('Kaiwu public evidence confirms two qualifying records without inventing award levels',async()=>{
+  const evidence=JSON.parse(await read('./data/kaiwu-public-records.json'));
+  assert.equal(evidence.checkedAt,'2026-10-23');
+  assert.deepEqual(evidence.records.map(r=>[r.year,r.competition_id,r.stage_id,r.result]),
+    [[2023,82,10,'海选入围'],[2024,100,80,'中国内地赛区海选晋级']]);
+  for(const record of evidence.records){
+    assert.equal(record.team,'线性代数');
+    assert.equal(record.award_level_verified,false);
+    assert.equal(new URL(record.competition_page).hostname,'tencentarena.com');
+    assert.equal(new URL(record.score_image_url).hostname,'kaiwu-prod-1252931805.cos.ap-shanghai.myqcloud.com');
+    assert.match(record.image_sha256,/^[a-f0-9]{64}$/);
+    assert(!Object.hasOwn(record,'prize'));
+  }
 });

@@ -10,7 +10,7 @@ pinned: false
 
 重新学习强化学习，可以从以前参加开悟时接触过的王者荣耀任务出发：模型如何取得观测、选择动作、得到反馈，又如何判断这一轮训练是否真的变好？
 
-我参加过两届开悟，队名“线性代数”，主要是王者荣耀方向。当前回忆年份约为2023、2024，具体奖项待核对。本篇整理新的学习和训练流程，不声称恢复当年的参赛模型或成绩。
+我参加过2023、2024两届开悟，队名“线性代数”，主要是王者荣耀方向。官网公开图片已核对到 [2023中级海选入围](https://kaiwu-prod-1252931805.cos.ap-shanghai.myqcloud.com/public/image/competition_score/1692064202708K6etKp10.jpg) 与 [2024中国内地赛区海选晋级](https://kaiwu-prod-1252931805.cos.ap-shanghai.myqcloud.com/public/image/competition_score/17255305006nAIXu2k0ZkBHCTgVBijgTDZXKQcVtRc2423.jpg)。具体奖项待核对；本篇整理新的学习和训练流程，不声称恢复当年的参赛模型或训练结果。
 
 ## 先分清三种实验
 

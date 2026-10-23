@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-10-23",
+  "method": "Read official public competition list and score endpoints; manually inspect published score images. No login, account data or personal certificates used.",
+  "records": [
+    {
+      "year": 2023,
+      "team": "线性代数",
+      "track": "博弈算法中级",
+      "result": "海选入围",
+      "competition_page": "https://tencentarena.com/aiarena/zh/match/open-competition-2023?tab=leaderboard",
+      "score_image_url": "https://kaiwu-prod-1252931805.cos.ap-shanghai.myqcloud.com/public/image/competition_score/1692064202708K6etKp10.jpg",
+      "competition_id": 82,
+      "stage_id": 10,
+      "image_sha256": "b353533ed940aa918a65861de6f40e8b05d06ccf9883d873ad801699862a521e",
+      "award_level_verified": false
+    },
+    {
+      "year": 2024,
+      "team": "线性代数",
+      "track": "智能体博弈算法",
+      "result": "中国内地赛区海选晋级",
+      "competition_page": "https://tencentarena.com/aiarena/zh/match/open-competition-2024?tab=leaderboard",
+      "score_image_url": "https://kaiwu-prod-1252931805.cos.ap-shanghai.myqcloud.com/public/image/competition_score/17255305006nAIXu2k0ZkBHCTgVBijgTDZXKQcVtRc2423.jpg",
+      "competition_id": 100,
+      "stage_id": 80,
+      "image_sha256": "7e964f910478ae629e4ad275f2090af78cceaf1bf7879ef4647e3d23907c545c",
+      "award_level_verified": false
+    }
+  ]
+}
