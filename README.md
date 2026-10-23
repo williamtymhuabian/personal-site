@@ -35,7 +35,7 @@ node build.mjs --serve
 
 ### 研究方向与共读
 
-`#/research` 是独立的100项研究方向导航，使用 `rd-001` 至 `rd-100` 的固定引用标识，不改变原有 CCF 十领域目录。每个方向可跳转到相关期刊会议及 DDL，也可复制 Markdown 引用。`#/books` 整理推荐书目，已加入三本书、OI Wiki 在线算法手册和《深入理解 AI Agent》v1.3 全部10章的原创共读导读（每章附离线练习）。`#/books?book=oi-wiki` 提供 OI Wiki 官网、官方学习路线，以及 Codeforces、AtCoder、洛谷的官网、练习和比赛入口；资源元数据在 `data/books.json` 维护。
+`#/research` 是独立的100项研究方向导航，使用 `rd-001` 至 `rd-100` 的固定引用标识，不改变原有 CCF 十领域目录。每个方向可跳转到相关期刊会议及 DDL，也可复制 Markdown 引用。`#/books` 整理推荐书目，已加入三本书、OI Wiki 在线算法手册和《深入理解 AI Agent》v1.3 全部10章的原创共读导读（每章附离线练习）。`#/books?book=oi-wiki` 提供 OI Wiki 官网、官方学习路线，以及 Codeforces、AtCoder、洛谷、UOJ、HDU / HDOJ、POJ、VJudge、CSES、LibreOJ、牛客竞赛共10个平台的相关入口；POJ 保留北大介绍、历史原站和 VJudge 旧题入口，并注明访问状态，未提供比赛入口的平台不显示比赛链接。资源元数据在 `data/books.json` 维护。
 
 `#/research?view=personal` 按本人确认保存的学习记录条数排序；一条记录可关联1—5个方向，不会因文章上线而自动增加学习记录。数据保存在当前浏览器 `william-learning-v1`，支持编辑、删除撤销、JSON 导入导出与同浏览器标签页同步。备份包含个人笔记，请自行保管，不要提交 Git。
 

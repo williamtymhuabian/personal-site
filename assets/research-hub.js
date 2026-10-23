@@ -24,7 +24,7 @@
   }
   function practicePlatformsMarkup(book){
     if(!book.practicePlatforms?.length)return '';
-    return `<section class="algorithm-practice" aria-label="算法练习与比赛"><h3>算法练习与比赛</h3><p>读一个专题，独立实现，再选题练习；把思路、复杂度和错题原因写进学习记录。</p><div class="algorithm-platforms">${book.practicePlatforms.map(p=>`<article class="algorithm-platform"><h4><a href="${esc(p.officialUrl)}" target="_blank" rel="noopener noreferrer">${esc(p.name)} ↗</a></h4><p>${esc(p.description)}</p><div class="research-links"><a href="${esc(p.practiceUrl)}" target="_blank" rel="noopener noreferrer">练习入口 ↗</a><a href="${esc(p.contestsUrl)}" target="_blank" rel="noopener noreferrer">比赛列表 ↗</a></div></article>`).join('')}</div></section>`;
+    return `<section class="algorithm-practice" aria-label="算法练习与比赛"><h3>算法练习与比赛</h3><p>读一个专题，独立实现，再选题练习；把思路、复杂度和错题原因写进学习记录。</p><div class="algorithm-platforms">${book.practicePlatforms.map(p=>`<article class="algorithm-platform"><h4><a href="${esc(p.officialUrl)}" target="_blank" rel="noopener noreferrer">${esc(p.name)} ↗</a></h4><p>${esc(p.description)}</p>${p.notice?`<p class="algorithm-platform-notice">${esc(p.notice)}</p>`:''}<div class="research-links"><a href="${esc(p.practiceUrl)}" target="_blank" rel="noopener noreferrer">${esc(p.practiceLabel||'练习入口')} ↗</a>${p.contestsUrl?`<a href="${esc(p.contestsUrl)}" target="_blank" rel="noopener noreferrer">比赛列表 ↗</a>`:''}${p.legacyUrl?`<a href="${esc(p.legacyUrl)}" target="_blank" rel="noopener noreferrer">历史入口（HTTP） ↗</a>`:''}</div></article>`).join('')}</div></section>`;
   }
   function booksMarkup(query){
     const selected=books.find(b=>b.id===query.get('book'));

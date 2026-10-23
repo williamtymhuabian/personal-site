@@ -213,7 +213,10 @@
     "edition": "免费在线手册 · 持续更新",
     "description": "适合边查边练的中文算法学习手册，涵盖语言基础、搜索、动态规划、字符串、数学、数据结构、图论和计算几何。建议先读学习路线，再按专题阅读、实现算法并完成练习；图与数据结构知识也可作为后续图算法研究的基础。",
     "prerequisites": "掌握一门编程语言的基本语法；可从 C++ 基础、复杂度分析与基础数据结构开始，每学一个专题就配合题目练习。",
-    "directionIds": ["rd-096", "rd-097"],
+    "directionIds": [
+      "rd-096",
+      "rd-097"
+    ],
     "sourceUrl": "https://github.com/OI-wiki/OI-wiki",
     "readingUrl": "https://oi-wiki.org/",
     "roadmapUrl": "https://oi-wiki.org/contest/roadmap/",
@@ -238,6 +241,56 @@
         "officialUrl": "https://www.luogu.com.cn/",
         "practiceUrl": "https://www.luogu.com.cn/problem/list",
         "contestsUrl": "https://www.luogu.com.cn/contest/list"
+      },
+      {
+        "name": "UOJ（Universal Online Judge）",
+        "description": "提供总题库、模板题库和原创比赛，适合从模板练习逐步过渡到综合算法题。",
+        "officialUrl": "https://uoj.ac/",
+        "practiceUrl": "https://uoj.ac/problems",
+        "contestsUrl": "https://uoj.ac/contests"
+      },
+      {
+        "name": "HDU / HDOJ（杭电）",
+        "description": "杭州电子科技大学在线评测平台，提供经典题库与多校训练赛题，可按专题练习和赛后补题。",
+        "officialUrl": "https://acm.hdu.edu.cn/",
+        "practiceUrl": "https://acm.hdu.edu.cn/listproblem.php?vol=1",
+        "contestsUrl": "https://acm.hdu.edu.cn/contests/contest_list.php"
+      },
+      {
+        "name": "POJ（北京大学）",
+        "description": "北京大学的经典在线评测系统，适合查找传统算法竞赛题。标题链接为北大官方系统介绍，另保留原站历史入口。",
+        "officialUrl": "https://center.pku.edu.cn/zxts/pojxt/index.htm",
+        "practiceUrl": "https://vjudge.net/problem#OJId=POJ",
+        "practiceLabel": "VJudge 查找旧题",
+        "legacyUrl": "http://poj.org/",
+        "notice": "2026-10-23 核对：原站访问超时，当前服务状态未确认。VJudge 收录不代表题源仍可提交评测。"
+      },
+      {
+        "name": "VJudge（Virtual Judge）",
+        "description": "汇集多个 OJ 的题目入口，可组合题目进行虚拟比赛和团队训练；远程提交能力取决于对应题源状态。",
+        "officialUrl": "https://vjudge.net/",
+        "practiceUrl": "https://vjudge.net/problem",
+        "contestsUrl": "https://vjudge.net/contest"
+      },
+      {
+        "name": "CSES Problem Set",
+        "description": "按专题整理算法练习，涵盖入门、排序与搜索、动态规划、图论和区间查询，适合系统补齐算法基础。",
+        "officialUrl": "https://cses.fi/",
+        "practiceUrl": "https://cses.fi/problemset/"
+      },
+      {
+        "name": "LibreOJ",
+        "description": "可作为算法专题与进阶题练习的补充入口，配合 OI Wiki 阅读相关知识后查题训练。",
+        "officialUrl": "https://loj.ac/",
+        "practiceUrl": "https://loj.ac/problems",
+        "notice": "2026-10-23 核对：本次资料抓取返回错误页，当前访问与提交状态待确认。"
+      },
+      {
+        "name": "牛客竞赛",
+        "description": "提供中文竞赛题库、专题题单与系列比赛，可从入门题、小白月赛逐步练到集训营和多校训练。",
+        "officialUrl": "https://ac.nowcoder.com/",
+        "practiceUrl": "https://ac.nowcoder.com/acm/problem/list",
+        "contestsUrl": "https://ac.nowcoder.com/acm/contest/vip-index"
       }
     ],
     "chapters": []

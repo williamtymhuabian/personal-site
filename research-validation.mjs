@@ -19,7 +19,9 @@ export function validateResearch({research,books,posts,fields}){
       if(!Array.isArray(b.practicePlatforms)||new Set(b.practicePlatforms.map(p=>p.name)).size!==b.practicePlatforms.length)fail('练习平台列表无效。');
       for(const p of b.practicePlatforms){
         if(!p.name||!p.description)fail('练习平台介绍缺失。');
-        for(const url of [p.officialUrl,p.practiceUrl,p.contestsUrl])if(new URL(url).protocol!=='https:')fail('练习平台链接无效。');
+        for(const url of [p.officialUrl,p.practiceUrl,...(p.contestsUrl===undefined?[]:[p.contestsUrl])])if(new URL(url).protocol!=='https:')fail('练习平台链接无效。');
+        if(p.legacyUrl!==undefined&&(p.legacyUrl!=='http://poj.org/'||!p.notice))fail('历史平台链接需明确标注访问状态。');
+        for(const key of ['notice','practiceLabel'])if(p[key]!==undefined&&(typeof p[key]!=='string'||!p[key].trim()))fail('练习平台文字无效。');
       }
     }
     if(!Array.isArray(b.chapters)||new Set(b.chapters.map(c=>c.number)).size!==b.chapters.length||new Set(b.chapters.map(c=>c.postSlug)).size!==b.chapters.length)fail('章节索引重复或格式无效。');
