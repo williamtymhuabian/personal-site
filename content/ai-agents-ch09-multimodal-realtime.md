@@ -99,6 +99,8 @@ if __name__ == "__main__":
 
 ## 阅读出处
 
+想把事件时序问题继续做成机器人课题，可以读 [VLA 的8个选题与起步实验](#/post/vla-research-topics-and-starter-experiments)，重点看动作分块、异步推理和过期动作处理。
+
 - 李博杰，《深入理解 AI Agent：设计原理与工程实践》，v1.3，第9章，书内第246—271页；涉及语音范式、快慢处理、GUI 与机器人操作。
 - [作者原始项目与多模态实验](https://github.com/bojieli/ai-agent-book)。文中使用架构概念，不复述产品当前排名或书中模型实验成绩。
 - [本书章节索引](#/books?book=ai-agents-in-depth)。本文代码为原创的事件顺序模拟。
