@@ -234,3 +234,11 @@ DDL 日历导出 UTC 时间，可选提前 1、3、7 天或不提醒；仅导出
 ## 首页开悟参赛经历
 
 首页介绍下方展示2023、2024两届腾讯开悟，包含“线性代数”队、王者荣耀方向、已核实入围／晋级结果、官网名单和训练路线入口。竞赛与成果页同步增加两条 `participation` 记录，按 `data/kaiwu-public-records.json` 的 `recordId` 关联；42项竞赛获奖统计不变。后续拿到正式证书再核对奖级。
+
+## 轻量界面动效
+
+`assets/site-polish.css`统一卡片悬停、按钮按压和键盘焦点反馈，沿用现有配色与布局。`assets/site-polish.js`由路由挂载和清理，使用IntersectionObserver做一次性入场；内容保持默认可见，禁用动效或缺少相关API时也能阅读。
+
+鼠标倾斜只作用于首页原有的计算卡片，最大幅度2度，触屏操作跳过。系统开启“减少动态效果”时取消入场动画和倾斜，不改变现有背景控制。没有新增动画库、字体或外部运行时请求。
+
+设计参考[redesign-existing-projects](https://github.com/elayadesign/redesign-skill/blob/main/skills/redesign-existing-projects/SKILL.md)中的交互与动效建议，按本站保留原有风格的要求取用。相关检查：`node --test site-polish.test.mjs`。

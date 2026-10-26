@@ -1,0 +1,36 @@
+/* A quiet interaction layer over the existing paper / green design. */
+:root{--ui-curve:cubic-bezier(0.22,1,0.36,1);--ui-surface:color-mix(in srgb,var(--accent-soft) 55%,var(--paper));--ui-shadow:0 8px 24px color-mix(in srgb,var(--accent) 9%,transparent)}
+.hero h1,.page-header h1,.article-header h1{text-wrap:balance}
+.hero-description,.page-header>p,.post-summary{text-wrap:pretty}
+.post-meta,.ddl-time,.journey-overview strong{font-variant-numeric:tabular-nums}
+.post-card,.project-entry,.paper-card,.book-entry,.research-entry,.friend-card,.favorite-card,.award-mini,.journey-event,.kaiwu-record{
+  transition:transform 500ms var(--ui-curve),background-color 300ms var(--ui-curve),border-color 300ms var(--ui-curve),box-shadow 300ms var(--ui-curve);
+}
+.nav-link,.filter,.tag,.primary-link,.icon-button,.lab-control,.journey-map-controls button,.journey-map-head-actions button{
+  transition:transform 500ms var(--ui-curve),background-color 300ms var(--ui-curve),border-color 300ms var(--ui-curve),color 300ms var(--ui-curve),box-shadow 300ms var(--ui-curve);
+}
+.post-art svg,.primary-link svg,.text-link svg,.read-arrow{transition:transform 500ms var(--ui-curve)}
+.compute-feature{transform:perspective(1000px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg));transition:transform 500ms var(--ui-curve),box-shadow 300ms var(--ui-curve),border-color 300ms var(--ui-curve)}
+.compute-node{transition:transform 500ms var(--ui-curve)}
+.post-card:focus-within{background:var(--ui-surface);border-color:var(--accent)}
+.project-entry:focus-within,.paper-card:focus-within,.book-entry:focus-within,.research-entry:focus-within,.friend-card:focus-within,.favorite-card:focus-within,.journey-event:focus-within{border-color:var(--accent)}
+.article-body a{text-decoration-thickness:1px;text-underline-offset:4px}
+.primary-link:focus-visible,.nav-link:focus-visible,.filter:focus-visible,.tag:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media(hover:hover) and (pointer:fine){
+  .post-card:hover{background:var(--ui-surface);border-color:var(--accent);transform:translateY(-2px)}
+  .post-card:hover .post-art svg{transform:translateY(-4px)}
+  .post-card:hover .read-arrow,.primary-link:hover svg,.text-link:hover svg{transform:translateX(4px)}
+  .project-entry:hover,.paper-card:hover,.book-entry:hover,.research-entry:hover,.friend-card:hover,.favorite-card:hover,.award-mini:hover,.journey-event:hover,.kaiwu-record:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--ui-shadow)}
+  .nav-link:hover{transform:translateX(4px)}
+  .primary-link:hover{filter:none;transform:translateY(-2px);box-shadow:var(--ui-shadow)}
+  .compute-feature:hover{border-color:var(--accent);box-shadow:var(--ui-shadow)}
+  .compute-feature:hover .compute-node.n1{transform:translateY(-4px)}
+  .compute-feature:hover .compute-node.n3{transform:translateY(4px)}
+  .article-body a:hover{text-decoration-thickness:2px}
+}
+.primary-link:active,.icon-button:active,.filter:active,.tag:active,.lab-control:active,.journey-map-controls button:active,.journey-map-head-actions button:active{transform:translateY(1px)}
+@media(prefers-reduced-motion:reduce){
+  .post-card,.project-entry,.paper-card,.book-entry,.research-entry,.friend-card,.favorite-card,.award-mini,.journey-event,.kaiwu-record,
+  .nav-link,.filter,.tag,.primary-link,.icon-button,.lab-control,.journey-map-controls button,.journey-map-head-actions button,
+  .post-art svg,.primary-link svg,.text-link svg,.read-arrow,.compute-feature,.compute-node{transform:none!important;transition:none!important}
+}

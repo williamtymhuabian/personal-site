@@ -154,6 +154,7 @@
     const splitAt = raw.indexOf('?');
     const route = splitAt < 0 ? raw : raw.slice(0, splitAt);
     const query = new URLSearchParams(splitAt < 0 ? '' : raw.slice(splitAt + 1));
+    window.SitePolish?.unmount();
     window.EmbodiedLab.unmount();
     window.ComputerLabs.unmount();
     window.Portfolio.unmount();
@@ -203,6 +204,7 @@
     document.getElementById('menu-toggle').innerHTML = icon('menu');
     window.scrollTo({ top: 0, behavior: 'instant' });
     if (route === '/about' && query.get('section') === 'education') document.getElementById('education-history')?.scrollIntoView({behavior:'instant',block:'start'});
+    window.SitePolish?.mount(main);
   }
   window.addEventListener('hashchange', () => { render(); main.focus({ preventScroll: true }); });
 
