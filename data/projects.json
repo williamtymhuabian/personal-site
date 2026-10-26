@@ -1,5 +1,24 @@
 [
   {
+    "id": "paper2podium",
+    "title": "Paper2Podium · 科研汇报与竞赛路演",
+    "year": "2026",
+    "type": "演示文稿技能工具集",
+    "status": "两套技能与中文PPT示例已公开",
+    "description": "面向科研汇报和竞赛路演的两套Agent技能，配有论文图表提取、版式说明、讲稿备注与TravelUAV示例。科研版14页、竞赛版17页；使用时仍需核对数据来源、项目事实和逐页排版。",
+    "tags": [
+      "Agent Skill",
+      "科研汇报",
+      "竞赛路演",
+      "Python",
+      "PPT"
+    ],
+    "repoUrl": "https://github.com/williamtymhuabian/paper2podium",
+    "demoUrl": "",
+    "articleSlug": "paper2podium",
+    "awardIds": []
+  },
+  {
     "id": "pickgo-lab",
     "title": "PickGo Lab · 底盘与机械臂搬运仿真",
     "year": "2026",

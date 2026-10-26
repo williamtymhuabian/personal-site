@@ -1,5 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Williamtym · 探索手记</title><link>https://williamtymhuabian.github.io/personal-site/</link><description>Williamtym，苏州大学计算机科学与技术硕士研究生。记录技术实践、算法思考、竞赛经历与历史阅读。</description><language>zh-cn</language><atom:link href="https://williamtymhuabian.github.io/personal-site/feed.xml" rel="self" type="application/rss+xml"/><item><title>农学 CV 调研①：从农艺问题到视觉任务，论文与数据怎么选</title><link>https://williamtymhuabian.github.io/personal-site/#/post/agricultural-cv-01-landscape-and-resources</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/agricultural-cv-01-landscape-and-resources</guid><pubDate>Sun, 25 Oct 2026 16:00:00 GMT</pubDate><description>从病斑、杂草、穗果计数、三维表型、多时相观测和多光谱农田分析切入，整理9组官方数据资源及近期相关工作，先区分视觉指标与农学结论。</description><content:encoded>&lt;p&gt;农学方向的计算机视觉，重点不只是识别一张照片。更值得追问的是：图像里测到了什么，测量误差会影响哪项农艺判断，以及换一块田、一个品种或一个生育期以后，结论还能否成立。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Williamtym · 探索手记</title><link>https://williamtymhuabian.github.io/personal-site/</link><description>Williamtym，苏州大学计算机科学与技术硕士研究生。记录技术实践、算法思考、竞赛经历与历史阅读。</description><language>zh-cn</language><atom:link href="https://williamtymhuabian.github.io/personal-site/feed.xml" rel="self" type="application/rss+xml"/><item><title>Paper2Podium：把论文整理成科研汇报与竞赛路演</title><link>https://williamtymhuabian.github.io/personal-site/#/post/paper2podium</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/paper2podium</guid><pubDate>Sun, 25 Oct 2026 16:00:00 GMT</pubDate><description>整理科研汇报与竞赛路演两套Agent技能，用TravelUAV展示不同的讲述方式，并记录图表提取、讲稿备注和逐页核对的使用流程。</description><content:encoded>&lt;p&gt;做组会汇报时，我需要讲清楚论文解决了什么问题、方法为什么成立、实验说明了什么。准备竞赛答辩时，评委还会关心项目给谁用、完成到了哪一步，以及团队接下来怎么做。同一份技术材料，讲述顺序和页面重点往往要重新安排。&lt;/p&gt;
+&lt;p&gt;我把这两种需求整理到了&lt;a href=&quot;https://github.com/williamtymhuabian/paper2podium&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Paper2Podium&lt;/a&gt;里。它包含&lt;code&gt;research-ppt&lt;/code&gt;和&lt;code&gt;competition-ppt&lt;/code&gt;两套Agent技能，配有图表提取脚本、设计说明和可修改的示例构建代码。&lt;/p&gt;
+&lt;figure class=&quot;article-figure&quot;&gt;&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/paper2podium-two-stages.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; aria-label=&quot;原尺寸查看：Paper2Podium同一篇论文的两种呈现：左侧为科研汇报，右侧为竞赛路演。示例中的论文、技术图和研究成果属于TravelUAV原作者，仅用于演示排版与讲述方式&quot;&gt;&lt;img src=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/paper2podium-two-stages.jpg&quot; alt=&quot;Paper2Podium同一篇论文的两种呈现：左侧为科研汇报，右侧为竞赛路演。示例中的论文、技术图和研究成果属于TravelUAV原作者，仅用于演示排版与讲述方式&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;Paper2Podium同一篇论文的两种呈现：左侧为科研汇报，右侧为竞赛路演。示例中的论文、技术图和研究成果属于TravelUAV原作者，仅用于演示排版与讲述方式&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;一、先看已有的示例&lt;/h2&gt;
+&lt;p&gt;仓库选用TravelUAV作为共同材料，论文全名为&lt;a href=&quot;https://arxiv.org/abs/2410.07087&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Towards Realistic UAV Vision-Language Navigation: Platform, Benchmark, and Methodology&lt;/a&gt;。这篇论文研究无人机视觉语言导航，介绍了OpenUAV平台、任务基准和导航方法。论文作者为Xiangyu Wang等人，原项目主页是&lt;a href=&quot;https://prince687028.github.io/OpenUAV/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;OpenUAV&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;目前仓库提供两份中文成品：科研版14页，竞赛版17页，两份PPT每页都有演讲者备注。可以先看&lt;a href=&quot;https://github.com/williamtymhuabian/paper2podium/tree/main/showcase/decks&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;成品目录中的PDF与PPTX&lt;/a&gt;，再决定是否使用对应技能。英文版有配套构建脚本，不能把它和已提交的中文成品混为一谈。&lt;/p&gt;
+&lt;p&gt;这些样例用于比较表达方式。TravelUAV的研究、实验和平台均应署名给原作者，不代表我完成了这项研究，也不代表样例参加过竞赛或获得过奖项。&lt;/p&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;二、科研汇报怎么组织&lt;/h2&gt;
+&lt;p&gt;科研版从研究问题开始，依次交代已有工作的不足、方法设计、实验结果和局限。页面以白底和蓝灰色为主，把空间留给框架图、对照实验和关键结论。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;research-ppt&lt;/code&gt;采用“一页一个判断，再用证据解释”的写法。例如，方法页可以先说明模块承担的作用，再展示结构图；实验页应写清比较对象、评价指标和实验设置，不能只留下一个醒目的提升百分比。&lt;/p&gt;
+&lt;p&gt;我希望这套技能能减少整理材料和重复排版的时间。论文里的假设、指标含义以及结论适用范围，仍然需要汇报者自己读懂。&lt;/p&gt;
+&lt;figure class=&quot;article-figure&quot;&gt;&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/paper2podium-research-overview.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; aria-label=&quot;原尺寸查看：TravelUAV科研版14页概览，展示背景、平台、数据集、方法与实验的编排。论文图表来源为TravelUAV原作者，完整内容可在仓库成品目录查看&quot;&gt;&lt;img src=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/paper2podium-research-overview.jpg&quot; alt=&quot;TravelUAV科研版14页概览，展示背景、平台、数据集、方法与实验的编排。论文图表来源为TravelUAV原作者，完整内容可在仓库成品目录查看&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;TravelUAV科研版14页概览，展示背景、平台、数据集、方法与实验的编排。论文图表来源为TravelUAV原作者，完整内容可在仓库成品目录查看&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;三、竞赛路演要补哪些材料&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;competition-ppt&lt;/code&gt;把讲述重点放在应用场景和项目进展上。技术方案仍然需要证据，此外还要解释使用者遇到了什么问题、现有方案有什么不足，以及团队已经完成了哪些工作。创业类项目可以继续讨论市场和收入模式，学术类赛事则应按实际评审要求调整篇幅。&lt;/p&gt;
+&lt;p&gt;视觉上，示例采用深蓝色背景和章节导航，用较大的数字突出关键结果。颜色和版式可以复用，项目事实要重新填写。&lt;/p&gt;
+&lt;p&gt;这里有一处需要特别说明：当前竞赛样例包含市场预测、专利或软著申报、团队分工和商业规划等内容。这些表述在本次整理中没有逐项核实，不能直接用作真实参赛申报材料。实际使用时，应换成有来源的数据和已经具备的证明；没有的材料就删去或明确标为计划。&lt;/p&gt;
+&lt;p&gt;例如，只有论文和代码时，可以介绍方法、复现情况和拟验证的场景。合同、客户数量、专利受理状态等，都要等真实材料齐备后再写入。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;四、技能文件与脚本各自做什么&lt;/h2&gt;
+&lt;p&gt;仓库的主要结构如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-text&quot;&gt;paper2podium/
+  skills/
+    research-ppt/
+      SKILL.md
+      references/
+      scripts/extract_figures.py
+    competition-ppt/
+      SKILL.md
+      references/
+      scripts/extract_figures.py
+      scripts/make_backgrounds.py
+  examples/TravelUAV/
+  showcase/decks/&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;SKILL.md&lt;/code&gt;描述适用场景和工作步骤，&lt;code&gt;references&lt;/code&gt;保存配色、字号和页面组织规则，脚本负责提取素材、生成背景等具体操作。Agent读取这些文件后，再结合用户的论文和要求编写或修改PPT构建代码。&lt;/p&gt;
+&lt;p&gt;需要区分两层工具：技能说明中使用了PptxGenJS的构建约定，当前TravelUAV示例实际采用&lt;code&gt;python-pptx&lt;/code&gt;。运行示例时，应按示例代码和说明安装Python依赖；使用Agent重新制作时，则要确认它选择的构建工具。安装技能本身不会自动补齐全部运行环境。&lt;/p&gt;
+&lt;h2 id=&quot;section-5&quot;&gt;五、图表提取后为什么还要检查&lt;/h2&gt;
+&lt;p&gt;科研PPT经常需要从PDF里取出方法图或实验曲线。仓库的提取脚本会寻找Figure、Fig、Table等图注，结合栏宽、位图位置和矢量绘图范围估计裁剪区域，再输出PNG和包含页码、图注、置信度等信息的&lt;code&gt;manifest.json&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;这种方法能减少手工截图，但双栏论文、多面板图和扫描件仍可能裁错。遇到缺少子图、混入正文或图注被截断的情况，要先看整页，再按PDF坐标重新裁剪。&lt;/p&gt;
+&lt;p&gt;在仓库根目录准备好自己的&lt;code&gt;paper.pdf&lt;/code&gt;后，可以使用：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;python -m pip install PyMuPDF python-pptx pillow
+python skills/research-ppt/scripts/extract_figures.py paper.pdf -o figures --dpi 450&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果第3页提取不完整，先输出整页预览：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;python skills/research-ppt/scripts/extract_figures.py paper.pdf -o figures --render-page 3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后根据实际版面指定区域。下面的坐标仅用于展示参数格式，不能套用于所有论文：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;python skills/research-ppt/scripts/extract_figures.py paper.pdf -o figures --crop 3,72,220,540,560&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;提高输出DPI可以改善矢量图的渲染清晰度，原本模糊的位图则不会因此增加细节。&lt;/p&gt;
+&lt;h2 id=&quot;section-6&quot;&gt;六、怎样用在自己的汇报里&lt;/h2&gt;
+&lt;p&gt;先获取仓库：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;git clone https://github.com/williamtymhuabian/paper2podium.git
+cd paper2podium&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;把需要的技能文件夹完整放进所用Agent支持的技能目录，保留&lt;code&gt;SKILL.md&lt;/code&gt;、&lt;code&gt;references&lt;/code&gt;和&lt;code&gt;scripts&lt;/code&gt;的相对结构。不同客户端的目录和加载方式可能不同，仓库README中的ZCode路径只是其中一种示例。也可以直接让支持本地文件读取的Agent参考对应技能文件。&lt;/p&gt;
+&lt;p&gt;做科研汇报时，我会给出这样的任务：&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;请参考research-ppt技能，把这篇论文整理为15分钟组会汇报。先给出逐页大纲，每页写清要解释的问题和所需证据；确认后再制作PPT。图表注明论文页码或图号，讲稿放到演讲者备注中。材料缺失时列出缺项。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;做竞赛路演时，输入需要更具体：&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;请参考competition-ppt技能，制作8分钟项目路演。已有材料包括项目说明、实物照片和测试记录。先按本届赛事要求安排内容，区分已完成工作和后续计划。缺少市场、财务或知识产权证明时，不补造数据。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;想复现仓库中的TravelUAV示例，可以按&lt;a href=&quot;https://github.com/williamtymhuabian/paper2podium/tree/main/examples/TravelUAV&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;示例说明&lt;/a&gt;准备论文PDF和原项目图片，再执行构建及讲稿注入脚本。部分源素材没有入库，直接运行构建脚本可能找不到图片。&lt;/p&gt;
+&lt;h2 id=&quot;section-7&quot;&gt;七、交付前还要做一次完整演练&lt;/h2&gt;
+&lt;p&gt;生成PPT之后，我会先检查每页论断是否有依据，尤其核对百分比的分母、对照方法和实验条件。接着看图片有没有缺失子图、文字有没有溢出，以及换到演示电脑后字体和符号是否正常。&lt;/p&gt;
+&lt;p&gt;仓库的技能文档还要求把PPT转为PDF或逐页图片做视觉检查，这一步通常需要LibreOffice和Poppler等工具。最后按实际时长讲一遍，把讲不完的细节移到备注或备份页。&lt;/p&gt;
+&lt;p&gt;Paper2Podium目前已经有两套技能、素材脚本和公开示例。接下来更值得补的是可追溯的证据清单：让重要数字对应到论文图表或测试记录，让待补材料留在检查清单里，方便汇报者在上台前逐项确认。&lt;/p&gt;
+&lt;p&gt;代码仓库采用MIT许可证。论文图片、学校标识等第三方素材仍按各自的权利和使用条件处理，引用时保留原始出处。&lt;/p&gt;
+&lt;p&gt;项目地址：&lt;a href=&quot;https://github.com/williamtymhuabian/paper2podium&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Paper2Podium&lt;/a&gt;。&lt;/p&gt;</content:encoded></item><item><title>农学 CV 调研①：从农艺问题到视觉任务，论文与数据怎么选</title><link>https://williamtymhuabian.github.io/personal-site/#/post/agricultural-cv-01-landscape-and-resources</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/agricultural-cv-01-landscape-and-resources</guid><pubDate>Sun, 25 Oct 2026 16:00:00 GMT</pubDate><description>从病斑、杂草、穗果计数、三维表型、多时相观测和多光谱农田分析切入，整理9组官方数据资源及近期相关工作，先区分视觉指标与农学结论。</description><content:encoded>&lt;p&gt;农学方向的计算机视觉，重点不只是识别一张照片。更值得追问的是：图像里测到了什么，测量误差会影响哪项农艺判断，以及换一块田、一个品种或一个生育期以后，结论还能否成立。&lt;/p&gt;
 &lt;p&gt;本专题于2026年10月26日核对公开论文页面、作者项目与数据说明，归在 &lt;a href=&quot;#/research?direction=rd-027&quot;&gt;第27项：开放世界感知与开放词汇识别&lt;/a&gt; 下，并关联多模态与空间理解。这是专题入口，不是说全部农业 CV 都属于开放词汇识别。原有100个方向编号保持稳定。&lt;/p&gt;
 &lt;p&gt;这里先调研作物与植物视觉，不把畜牧、水产等其他农业视觉任务混入同一份入门实验。论文页面或摘要核对不等于完整复现；本专题尚未下载训练数据、启动模型训练或得到田间实验成绩。&lt;/p&gt;
 &lt;p&gt;三篇文档可以顺着阅读：本篇建立任务与资料地图，&lt;a href=&quot;#/post/agricultural-cv-02-research-proposals&quot;&gt;第二篇讨论3个候选课题&lt;/a&gt;，&lt;a href=&quot;#/post/agricultural-cv-03-first-experiment-plan&quot;&gt;第三篇给出第一组实验计划&lt;/a&gt;。&lt;/p&gt;
