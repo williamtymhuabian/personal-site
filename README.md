@@ -1,5 +1,11 @@
 # Williamtym · 探索手记
 
+## 农学 CV 研究专题
+
+2026-10-26新增三篇原创调研文档：`agricultural-cv-01-landscape-and-resources` 整理任务与9组官方数据资源；`agricultural-cv-02-research-proposals` 提出3个带近邻工作、对照与否定条件的候选课题；`agricultural-cv-03-first-experiment-plan` 给出 PhenoBench 起步实验计划。
+
+三篇统一关联 `rd-027`，并按内容连接多模态、空间理解、记忆、数据质量与不确定性方向。在研究方向页搜索“农业CV”“农学CV”或“Agricultural Vision”可找到入口；原有100个编号保持稳定。所有训练与指标均明确标为待执行，没有下载农业数据、运行模型或新增个人学习完成记录。
+
 ## 具身智能与腾讯开悟训练路线
 
 新增三篇原创文章：`embodied-kaiwu-training-roadmap`、`embodied-parking-first-experiment`、`kaiwu-rl-server-practice`。书目页、研究方向页和 Agent 第7章可进入训练路线，文章继续使用现有研究方向关联和本人确认的学习记录。

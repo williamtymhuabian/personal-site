@@ -481,7 +481,7 @@
       "number": 27,
       "groupId": "multimodal",
       "title": "开放世界感知与开放词汇识别",
-      "keywords": "Open-World Perception / Open-Vocabulary Recognition",
+      "keywords": "Open-World Perception / Open-Vocabulary Recognition / 农业CV / 农学CV / Agricultural Vision",
       "question": "如何识别训练中未标注的新物体，并在开放环境中持续扩展类别？",
       "fieldIds": [
         "ai",
