@@ -1,5 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Williamtym · 探索手记</title><link>https://williamtymhuabian.github.io/personal-site/</link><description>Williamtym，苏州大学计算机科学与技术硕士研究生。记录技术实践、算法思考、竞赛经历与历史阅读。</description><language>zh-cn</language><atom:link href="https://williamtymhuabian.github.io/personal-site/feed.xml" rel="self" type="application/rss+xml"/><item><title>Paper2Podium：把论文整理成科研汇报与竞赛路演</title><link>https://williamtymhuabian.github.io/personal-site/#/post/paper2podium</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/paper2podium</guid><pubDate>Sun, 25 Oct 2026 16:00:00 GMT</pubDate><description>整理科研汇报与竞赛路演两套Agent技能，用TravelUAV展示不同的讲述方式，并记录图表提取、讲稿备注和逐页核对的使用流程。</description><content:encoded>&lt;p&gt;做组会汇报时，我需要讲清楚论文解决了什么问题、方法为什么成立、实验说明了什么。准备竞赛答辩时，评委还会关心项目给谁用、完成到了哪一步，以及团队接下来怎么做。同一份技术材料，讲述顺序和页面重点往往要重新安排。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Williamtym · 探索手记</title><link>https://williamtymhuabian.github.io/personal-site/</link><description>Williamtym，苏州大学计算机科学与技术硕士研究生。记录技术实践、算法思考、竞赛经历与历史阅读。</description><language>zh-cn</language><atom:link href="https://williamtymhuabian.github.io/personal-site/feed.xml" rel="self" type="application/rss+xml"/><item><title>PickGo Lab摄像头实践：中文TTS播报与D435真实测距</title><link>https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab-camera</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab-camera</guid><pubDate>Wed, 28 Oct 2026 16:00:00 GMT</pubDate><description>补全物体检测、GrabCut分割、Windows本地中文TTS和RealSense真实RGB-D点选测距，记录实机验证结果、图像来源与尚未完成的视觉控制闭环。</description><content:encoded>&lt;p&gt;PickGo Lab已经接通了常见物体检测、前景分割、中文语音播报和D435真实RGB-D测距。现在可以在页面查看彩色图与配准深度图，点击目标读取光轴深度，也可以让系统用中文播报识别到的类别。&lt;/p&gt;
+&lt;p&gt;本文于2026-10-29更新，替换原先仅介绍RGB采集与深度开发计划的说明。硬件结果依据项目的10月24日测试记录，相关代码已于10月28日同步到&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;GitHub仓库&lt;/a&gt;。本次整理重新检查了软件测试，没有重新采集相机画面或播放语音。&lt;/p&gt;
+&lt;figure class=&quot;article-figure&quot;&gt;&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-d435-device.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; aria-label=&quot;原尺寸查看：本机RealSense D435摄像头与三脚架实拍，摄于早期RGB接入阶段&quot;&gt;&lt;img src=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-d435-device.jpg&quot; alt=&quot;本机RealSense D435摄像头与三脚架实拍，摄于早期RGB接入阶段&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;本机RealSense D435摄像头与三脚架实拍，摄于早期RGB接入阶段&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;一、目前可以做什么&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;原颜色与矩形识别继续保留，用于红、蓝、黄色目标的基础验证。&lt;/li&gt;
+&lt;li&gt;NanoDet支持COCO的80类物体候选，GrabCut根据检测框或手动框选提取前景。分割结果不能直接当作精确实例轮廓或抓取点。&lt;/li&gt;
+&lt;li&gt;中文TTS支持试音、播报当前结果、自动播报和停止，Windows使用本地中文语音，不申请麦克风权限。&lt;/li&gt;
+&lt;li&gt;D435通过RealSense SDK读取同一组彩色与深度帧，完成配准后支持点选测距，以及检测框中心或有效分割质心的深度读取。&lt;/li&gt;
+&lt;li&gt;来源变化、旧帧和无效深度会使相关结果失效。上述视觉结果尚未闭环控制实体机械臂或底盘。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;article-figure&quot;&gt;&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-rgbd-tts-interface.png&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; aria-label=&quot;原尺寸查看：最新RGB-D与TTS功能界面说明图：本次未打开摄像头或播放声音，图像和距离为空，仅展示控件与状态，不是实机测距结果图&quot;&gt;&lt;img src=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-rgbd-tts-interface.png&quot; alt=&quot;最新RGB-D与TTS功能界面说明图：本次未打开摄像头或播放声音，图像和距离为空，仅展示控件与状态，不是实机测距结果图&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;最新RGB-D与TTS功能界面说明图：本次未打开摄像头或播放声音，图像和距离为空，仅展示控件与状态，不是实机测距结果图&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;section-2&quot;&gt;二、先启动本机视觉服务&lt;/h2&gt;
+&lt;p&gt;在仓库根目录安装基础依赖并启动：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;python -m pip install -r requirements.txt
+python -B app.py --vision-only --port 8771&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这个入口只运行本机视觉服务，不启动运动仿真进程。普通RGB模式可以在Edge或Chrome打开&lt;a href=&quot;http://127.0.0.1:8771/vision.html?source=camera&amp;amp;task=objects&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;物体识别页面&lt;/a&gt;，选好设备后再点击“打开摄像头”。&lt;/p&gt;
+&lt;p&gt;常见物体检测需要单独准备NanoDet权重：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;python -B setup_objects.py --check
+python -B setup_objects.py&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;第一条只检查本地权重，第二条在需要时下载固定版本并校验。模型约3.8 MB，使用OpenCV DNN CPU推理。手动框选GrabCut和TTS本身不依赖该检测模型。&lt;/p&gt;
+&lt;p&gt;真实深度需要可选的RealSense运行库。仓库将它放在项目目录，避免修改系统Python：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-powershell&quot;&gt;python -B -m pip install --no-deps --only-binary=:all: --index-url https://pypi.org/simple --target .runtime/realsense -r requirements-depth.txt&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;随后打开&lt;a href=&quot;http://127.0.0.1:8771/vision.html?source=realsense&amp;amp;task=objects&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;RGB-D页面&lt;/a&gt;，或在“图像来源”中选择“RealSense RGB-D / 真实测距”。先关闭其他程序的相机预览，再点击打开，避免设备争用。网页的逐帧识别更新率取决于处理耗时，不能把SDK的30 fps采集配置写成网页实时识别帧率。&lt;/p&gt;
+&lt;h2 id=&quot;section-3&quot;&gt;三、中文TTS怎么播报识别结果&lt;/h2&gt;
+&lt;p&gt;语音部分由&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/vision_speech.js&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;vision_speech.js&lt;/a&gt;组织播报内容和页面状态，&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/speech_audio.py&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;speech_audio.py&lt;/a&gt;在Windows上调用已安装的System.Speech中文语音，将WAV音频交给浏览器播放。&lt;/p&gt;
+&lt;p&gt;识别后可以点击“播报当前结果”，也可以先点某个候选目标，优先播报这一类别。表述使用“可能识别到杯子”，不会把模型分数解释成正确率。没有目标或类别未知时，系统会说明当前状态；手动框选只说明提取了前景，不猜测物体名称。&lt;/p&gt;
+&lt;p&gt;自动播报与连续识别配合使用：类别组合需要连续出现两次，两次播报至少间隔6秒，相同内容20秒内不重复。超过2.5秒的旧观测不能触发自动播报。切换来源、关闭相机或隐藏页面会停止旧语音，“停止播报”还会关闭自动播报。&lt;/p&gt;
+&lt;p&gt;语音在本机合成，不调用云TTS，不下载语音模型，也不采集麦克风。其他系统可以回退到浏览器已有的本地中文语音；没有可用语音时会报告不可用。实现与实测说明见&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/docs/speech.md&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;中文播报记录&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;当前播报内容是物体类别，测距结果另行显示在面板里。距离尚未拼进播报语句，后续可以增加“可能识别到杯子，光轴深度约多少毫米”，同时保留无效与过期状态判断。&lt;/p&gt;
+&lt;h2 id=&quot;section-4&quot;&gt;四、D435测到的究竟是什么距离&lt;/h2&gt;
+&lt;p&gt;RGB-D模式由&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/realsense_camera.py&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;realsense_camera.py&lt;/a&gt;统一持有设备。SDK读取640×480彩色与Z16深度，使用实际深度比例换算毫米，再通过&lt;code&gt;align(color)&lt;/code&gt;配准到彩色视角。网页显示的320×240图像来自对应的同组数据，避免拿浏览器RGB去索引另一时刻的深度。&lt;/p&gt;
+&lt;p&gt;点击彩色图、深度图或候选目标可以更改测距点。测量取该点7×7邻域内有效深度的中值，并显示有效样本数和配准帧信息。分割模式在有效掩膜质心取深度，没有有效掩膜时退回框中心。&lt;/p&gt;
+&lt;p&gt;当前实现会排除零值、非有限数和0.15—10 m范围外的数据。有效样本少于9个，或不足邻域的30%，会返回无效；邻域深度分布过于分散时会判为多表面混合，不输出距离。这些是工程过滤规则，不能保证消除全部背景回波。&lt;/p&gt;
+&lt;p&gt;显示值是相机光轴方向的Z，不是相机到目标的欧氏直线距离，也不是物体尺寸、完整三维位姿或机械臂坐标。透明、镜面、金属反光和边缘区域都可能缺少有效深度。伪彩图的颜色仅用于显示，黑色表示无效数据，不能读成零距离。&lt;/p&gt;
+&lt;p&gt;测距请求绑定当前显示的帧号。迟到响应、来源切换和超过2.5秒的帧都不会继续输出有效测距；空闲约10秒后后台释放设备。深度数组短时保留在内存中，不自动保存照片、深度文件或录像。细节见&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/docs/realsense-depth.md&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;真实RGB-D测距说明&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&quot;section-5&quot;&gt;五、已经留下哪些实机验证记录&lt;/h2&gt;
+&lt;p&gt;10月24日的项目记录包含以下结果。这些是当时场景下的连通与功能检查，本次没有重跑硬件实验：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;D435取得了640×480彩色与深度帧，并完成depth-to-color配准。&lt;/li&gt;
+&lt;li&gt;页面一帧中心读数约325 mm，彩色与深度帧时间差约9 ms；点击键盘候选后，测距点为(75, 156)，读数约502 mm，邻域49/49个样本有效。&lt;/li&gt;
+&lt;li&gt;金属保温杯区域出现无效深度或混合深度时，页面明确拒绝输出距离，没有用RGB或预设数字补齐。&lt;/li&gt;
+&lt;li&gt;Windows中文语音生成了有效WAV，浏览器完成播放，当时用户确认听到试音和识别结果播报。&lt;/li&gt;
+&lt;li&gt;保温杯识别出现过cup、bottle混淆和漏检，因此不能据一次播报声称已经稳定识别这类物体。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;约325 mm或502 mm只是当时观测值，没有用尺具完成精度标定，不能写成测距误差或准确率。对应记录没有导出真实RGB-D截图或录像，因此目前无法补出那次测距的原始画面。&lt;/p&gt;
+&lt;figure class=&quot;article-figure&quot;&gt;&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-d435-rgb-real.png&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; aria-label=&quot;原尺寸查看：10月18日D435 RGB橘子近景：真实彩色采集的历史图片，仅用于展示RGB接入，不是10月24日深度测距或物体识别成功的证据&quot;&gt;&lt;img src=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-d435-rgb-real.png&quot; alt=&quot;10月18日D435 RGB橘子近景：真实彩色采集的历史图片，仅用于展示RGB接入，不是10月24日深度测距或物体识别成功的证据&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;10月18日D435 RGB橘子近景：真实彩色采集的历史图片，仅用于展示RGB接入，不是10月24日深度测距或物体识别成功的证据&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;figure class=&quot;article-figure&quot;&gt;&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-camera-test-stream.png&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; aria-label=&quot;原尺寸查看：早期合成视频流联调截图：验证送检帧、检测框与原算法输出的对应关系，输入并非真实相机画面&quot;&gt;&lt;img src=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-camera-test-stream.png&quot; alt=&quot;早期合成视频流联调截图：验证送检帧、检测框与原算法输出的对应关系，输入并非真实相机画面&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;早期合成视频流联调截图：验证送检帧、检测框与原算法输出的对应关系，输入并非真实相机画面&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;section-6&quot;&gt;六、观测评估也已经接入&lt;/h2&gt;
+&lt;p&gt;当前页面还提供同帧框扰动评估：对原框、扩框或缩框等候选提示比较分割结果，显示掩膜一致性、中心差异和共同前景内部像素。它用于发现结果对框选是否敏感，一致性高也可能是大家一起分错，不能当作分割准确率。&lt;/p&gt;
+&lt;figure class=&quot;article-figure&quot;&gt;&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-observation-quality.png&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; aria-label=&quot;原尺寸查看：10月23日观测质量界面截图：输入为合成测试／冻结帧，展示框选扰动评估与报告入口，不是真实测距结果或抓取点验证&quot;&gt;&lt;img src=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-observation-quality.png&quot; alt=&quot;10月23日观测质量界面截图：输入为合成测试／冻结帧，展示框选扰动评估与报告入口，不是真实测距结果或抓取点验证&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;10月23日观测质量界面截图：输入为合成测试／冻结帧，展示框选扰动评估与报告入口，不是真实测距结果或抓取点验证&lt;/figcaption&gt;&lt;/figure&gt;
+&lt;p&gt;实时RGB观测需要积累不同的新帧，冻结图不能重复计作连续证据。修改来源、参数或所选目标后，原有评估会失效。原始流程与限制见&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/docs/camera-validation-2026-10-24.md&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;摄像头实操说明&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 id=&quot;section-7&quot;&gt;七、软件测试与后续工作&lt;/h2&gt;
+&lt;p&gt;10月28日的&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/CHANGELOG.md&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;发布记录&lt;/a&gt;记载66项Python回归及全部JavaScript测试通过。本次整理单独重跑了测距、语音的13项Python测试和14项前端测试，均通过；测试使用假相机、数组和模拟音频，不能替代实机测量。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;python -B -m unittest discover -s tests -p test_realsense.py
+python -B -m unittest discover -s tests -p test_speech.py
+node --test tests/depth_client.test.cjs tests/speech.test.cjs&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;接下来需要补的是不同距离与材质下的测距误差记录、有效像素反投影、相机到机器人基座的外参，以及带失败处理的任务闭环。识别类别、能播报、能读取Z值，距离真正可靠地控制抓取还有这些步骤。&lt;/p&gt;
+&lt;p&gt;源码与完整用法：&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;PickGo Lab&lt;/a&gt;。&lt;/p&gt;</content:encoded></item><item><title>Paper2Podium：把论文整理成科研汇报与竞赛路演</title><link>https://williamtymhuabian.github.io/personal-site/#/post/paper2podium</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/paper2podium</guid><pubDate>Sun, 25 Oct 2026 16:00:00 GMT</pubDate><description>整理科研汇报与竞赛路演两套Agent技能，用TravelUAV展示不同的讲述方式，并记录图表提取、讲稿备注和逐页核对的使用流程。</description><content:encoded>&lt;p&gt;做组会汇报时，我需要讲清楚论文解决了什么问题、方法为什么成立、实验说明了什么。准备竞赛答辩时，评委还会关心项目给谁用、完成到了哪一步，以及团队接下来怎么做。同一份技术材料，讲述顺序和页面重点往往要重新安排。&lt;/p&gt;
 &lt;p&gt;我把这两种需求整理到了&lt;a href=&quot;https://github.com/williamtymhuabian/paper2podium&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;Paper2Podium&lt;/a&gt;里。它包含&lt;code&gt;research-ppt&lt;/code&gt;和&lt;code&gt;competition-ppt&lt;/code&gt;两套Agent技能，配有图表提取脚本、设计说明和可修改的示例构建代码。&lt;/p&gt;
 &lt;figure class=&quot;article-figure&quot;&gt;&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/paper2podium-two-stages.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; aria-label=&quot;原尺寸查看：Paper2Podium同一篇论文的两种呈现：左侧为科研汇报，右侧为竞赛路演。示例中的论文、技术图和研究成果属于TravelUAV原作者，仅用于演示排版与讲述方式&quot;&gt;&lt;img src=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/paper2podium-two-stages.jpg&quot; alt=&quot;Paper2Podium同一篇论文的两种呈现：左侧为科研汇报，右侧为竞赛路演。示例中的论文、技术图和研究成果属于TravelUAV原作者，仅用于演示排版与讲述方式&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;Paper2Podium同一篇论文的两种呈现：左侧为科研汇报，右侧为竞赛路演。示例中的论文、技术图和研究成果属于TravelUAV原作者，仅用于演示排版与讲述方式&lt;/figcaption&gt;&lt;/figure&gt;
 &lt;h2 id=&quot;section-1&quot;&gt;一、先看已有的示例&lt;/h2&gt;
@@ -1596,96 +1654,7 @@ if __name__ == &amp;quot;__main__&amp;quot;:
 &lt;p&gt;完成后运行：&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;python scripts/collect_results.py --input results/raw --output results/share-01&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;导出器保留参数、逐轮测量、配置与代码指纹，排除原始日志、路径、环境转储、请求文本、生成文本和token ID。检查导出的JSON后，再用它画图和整理公开记录。&lt;/p&gt;
-&lt;p&gt;现在完成的是实验工程和不加载模型的工具检查。GPU是否兼容、缓存路径是否通过模型核对、各组实际耗时是多少，都等服务器运行后确认。接下来先把这三组数据收齐，再决定继续查缓存访问、调度等待，还是服务端前缀复用。&lt;/p&gt;</content:encoded></item><item><title>PickGo Lab摄像头实践：从RGB识别走向深度感知</title><link>https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab-camera</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab-camera</guid><pubDate>Sat, 17 Oct 2026 16:00:00 GMT</pubDate><description>接通浏览器与本机OpenCV的RGB识别链路，梳理D435、D405、D455的使用场景，并规划RGB-D对齐、三维定位与可回放实验的下一步代码。</description><content:encoded>&lt;p&gt;这次给PickGo Lab增加了RGB摄像头输入：浏览器采集彩色画面，本机Python调用原颜色与矩形识别函数，再将检测结果绘制到对应的送检帧上。&lt;/p&gt;
-&lt;p&gt;彩色视频接通以后，还需要取得有效深度、反投影到相机坐标，再转换到机器人坐标。这篇记录已经完成的RGB接入，以及尚待实现的深度采集和坐标链路。&lt;/p&gt;
-&lt;p&gt;项目地址：&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;PickGo Lab&lt;/a&gt;。&lt;/p&gt;
-&lt;h2 id=&quot;section-1&quot;&gt;一、先跑通RGB采集与识别&lt;/h2&gt;
-&lt;p&gt;准备Python 3.10或以上版本，在本机安装依赖并启动视觉模式：&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;git clone https://github.com/williamtymhuabian/pickgo-lab.git
-cd pickgo-lab
-python -m pip install -r requirements.txt
-python -B app.py --vision-only&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;用本机Edge或Chrome打开&lt;a href=&quot;http://127.0.0.1:8767/vision.html?source=camera&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;视觉页面&lt;/a&gt;，Windows也可以双击&lt;code&gt;start-camera.cmd&lt;/code&gt;。此模式不需要Node.js；博客本身只展示文章和图片，识别服务运行在读者自己的电脑上。&lt;/p&gt;
-&lt;p&gt;先用合成图确认服务可用，再选择摄像头的RGB接口。点击“打开摄像头”后才申请视频权限，不采集麦克风。浏览器采集需要安全上下文，本机localhost属于可用于开发的环境。&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;getUserMedia官方说明&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;当前开发记录中，D435的RGB接口曾以640×480打开，并将画面交给原算法；当次结果为“未识别到目标”。它说明采集与送检已经连通，实物颜色识别仍需针对光照、颜色阈值和目标大小继续验证。真实深度尚未接入。&lt;/p&gt;
-&lt;p&gt;这次补拍了一张D435 RGB真实画面，原始采集分辨率为640×480。为避免展示背景人员与电脑屏幕，文章只使用302×266的橘子近景裁剪图。拍完即释放相机，没有采集音频。&lt;/p&gt;
-&lt;figure class=&quot;article-figure&quot;&gt;&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-d435-rgb-real.png&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; aria-label=&quot;原尺寸查看：2026-10-18 D435 RGB实拍：本地裁剪后的橘子近景；仅展示彩色采集，不代表目标识别或深度测距成功&quot;&gt;&lt;img src=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-d435-rgb-real.png&quot; alt=&quot;2026-10-18 D435 RGB实拍：本地裁剪后的橘子近景；仅展示彩色采集，不代表目标识别或深度测距成功&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;2026-10-18 D435 RGB实拍：本地裁剪后的橘子近景；仅展示彩色采集，不代表目标识别或深度测距成功&lt;/figcaption&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;section-2&quot;&gt;二、预览在动，检测框要跟着送检帧&lt;/h2&gt;
-&lt;p&gt;摄像头预览与实际送检图像分开展示。一次识别经过以下步骤：&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-text&quot;&gt;RGB 视频 → 选择区域 → 等比缩放至 320×240 → PNG 送检
-         → 本机 OpenCV → 原 det_color / det_rect
-         → 核对 frame_id → 在对应送检帧上绘制结果&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;连续识别在上一次返回后才采集下一帧，同一页面最多一个识别请求。切换来源、颜色或裁剪区域后，旧结果失效；未识别到目标时清空旧中心与角度。&lt;/p&gt;
-&lt;figure class=&quot;article-figure&quot;&gt;&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-camera-test-stream.png&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; aria-label=&quot;原尺寸查看：RGB页面联调截图：输入为浏览器合成测试视频流，未打开真实相机；用于检查预览、送检帧和原算法输出&quot;&gt;&lt;img src=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-camera-test-stream.png&quot; alt=&quot;RGB页面联调截图：输入为浏览器合成测试视频流，未打开真实相机；用于检查预览、送检帧和原算法输出&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;RGB页面联调截图：输入为浏览器合成测试视频流，未打开真实相机；用于检查预览、送检帧和原算法输出&lt;/figcaption&gt;&lt;/figure&gt;
-&lt;p&gt;这张图专门验证软件链路，不作为D435实拍效果。原函数含0.4秒等待，识别频率与预览帧率也应分开看。&lt;/p&gt;
-&lt;p&gt;切换来源、关闭设备或离开页面会释放视频轨道。取消连续识别只暂停送检，仍保留预览。&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/stop&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;MediaStreamTrack.stop说明&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;section-3&quot;&gt;三、相机选型：先用已有D435完成闭环前的验证&lt;/h2&gt;
-&lt;p&gt;我的第一选择是继续使用已有的&lt;strong&gt;RealSense D435&lt;/strong&gt;。当前最需要补齐的是深度采集、配准和坐标链路，可以先用现有设备验证这些问题，再根据实测距离决定是否换机。&lt;/p&gt;
-&lt;figure class=&quot;article-figure&quot;&gt;&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-d435-device.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; aria-label=&quot;原尺寸查看：本机RealSense D435摄像头与三脚架的实拍照片&quot;&gt;&lt;img src=&quot;https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-d435-device.jpg&quot; alt=&quot;本机RealSense D435摄像头与三脚架的实拍照片&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;本机RealSense D435摄像头与三脚架的实拍照片&lt;/figcaption&gt;&lt;/figure&gt;
-&lt;p&gt;上图是本次使用的摄像头与三脚架实拍，展示设备的实际安装状态。&lt;/p&gt;
-&lt;p&gt;按当前项目可能发展的场景，我会考虑三款具体型号。以下是选型建议，工作距离取自官方页面，实际表现还取决于材质、光照、分辨率和安装方式，规格核对日期为2026-10-18。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;D435：现有设备优先。&lt;/strong&gt;官方理想范围为0.3—3 m，适合先做桌面物体观察、目标测距和RGB-D接口开发。其RGB是滚动快门，深度成像器是全局快门，运动场景需要留意彩色与深度的时序差异。&lt;a href=&quot;https://store.realsenseai.com/buy-realsense-depth-camera-d435.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;D435官方规格&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;D405：明确需要近距离抓取时考虑。&lt;/strong&gt;官方标准理想范围为7—50 cm，适合腕部或近距离工位观察。它的彩色信息来自左侧成像器经ISP输出，选购前要确认颜色效果、安装距离和遮挡是否满足任务。&lt;a href=&quot;https://www.realsenseai.com/products/d405-series/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;D405官方说明&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;D455：移动底盘与较远场景时考虑。&lt;/strong&gt;官方理想范围为0.6—6 m，具备全局快门RGB与深度成像、集成IMU；更适合需要较远环境观察的方向。它能否满足某个抓取距离仍要单独测试。&lt;a href=&quot;https://www.realsenseai.com/product-family/450-series/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;D455官方说明&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;建议先记录相机到目标的实际距离，再比较有效深度比例和测距误差。购买判断应由这些结果驱动；目前没有必要为了让项目看起来完整就一次购入多款设备。&lt;/p&gt;
-&lt;h2 id=&quot;section-4&quot;&gt;四、深度相机开发：先做独立采集，再接回页面&lt;/h2&gt;
-&lt;p&gt;浏览器获得的RGB视频不包含可直接读取的毫米深度。RealSense深度开发应从官方SDK与Python包&lt;code&gt;pyrealsense2&lt;/code&gt;入手，先在RealSense Viewer中检查设备、RGB、深度和USB连接，再开发独立采集程序。&lt;a href=&quot;https://github.com/realsenseai/librealsense&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;官方SDK与安装入口&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;建议由Python统一持有D435的RGB与深度流，网页读取本机服务提供的帧和检测结果。这样可以避免浏览器和SDK同时争用同一设备，也方便保存同一组图像、内参和时间戳。&lt;/p&gt;
-&lt;p&gt;第一步只做“像素对应的三维表面点”。下面是独立实验的最小示意，尚未接入项目，也未在本轮硬件上运行。示例配置需与设备支持的流模式匹配。&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;import pyrealsense2 as rs
-
-pipeline = rs.pipeline()
-config = rs.config()
-config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
-align = rs.align(rs.stream.color)
-
-started = False
-try:
-    pipeline.start(config)
-    started = True
-    for _ in range(30):
-        frames = pipeline.wait_for_frames(5000)
-    aligned = align.process(frames)
-    depth = aligned.get_depth_frame()
-    color = aligned.get_color_frame()
-    if not depth or not color:
-        raise RuntimeError(&amp;quot;没有取得对齐后的 RGB-D 帧&amp;quot;)
-    # 这里只测图像中心，不代表已经检测到了目标。
-    u, v = color.get_width() // 2, color.get_height() // 2
-    z_m = depth.get_distance(u, v)
-    if z_m &amp;lt;= 0:
-        raise RuntimeError(&amp;quot;该像素无有效深度，请换位置或检查场景&amp;quot;)
-    intrinsics = depth.profile.as_video_stream_profile().intrinsics
-    point_m = rs.rs2_deproject_pixel_to_point(intrinsics, [u, v], z_m)
-    print(&amp;quot;相机坐标中的表面点 / m:&amp;quot;, point_m)
-finally:
-    if started:
-        pipeline.stop()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这里用&lt;code&gt;rs.align(rs.stream.color)&lt;/code&gt;把深度对齐到彩色图像，再读取匹配的内参。官方提供了&lt;a href=&quot;https://github.com/realsenseai/librealsense/blob/master/wrappers/python/examples/align-depth2color.py&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;深度对齐Python示例&lt;/a&gt; 和&lt;a href=&quot;https://realsenseai.github.io/librealsense/python_docs/_generated/pyrealsense2.align.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;align接口说明&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;get_distance&lt;/code&gt;返回米制深度；读取原始Z16数据时则必须使用实际&lt;code&gt;depth_scale&lt;/code&gt;转换，不能一律假定原始值就是毫米。深度伪彩图只用于显示，测距需要原始深度值。&lt;a href=&quot;https://realsenseai.github.io/librealsense/python_docs/_generated/pyrealsense2.depth_frame.html&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;depth_frame接口说明&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;对齐解决空间像素对应关系，仍需记录并检查RGB、深度时间戳。相机坐标的轴向为右、下、前，三维点单位为米。它到机器人基座的转换还需要外参；固定相机与腕部相机的标定流程也不同。&lt;a href=&quot;https://dev.realsenseai.com/docs/projection-in-realsense-sdk-2-0/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;官方投影与坐标说明&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;section-5&quot;&gt;五、接下来具体写哪些代码&lt;/h2&gt;
-&lt;p&gt;我会按下面的依赖顺序推进。这些文件名是拟新增模块，当前尚未实现；每一步先验收，再进入下一步。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;&lt;code&gt;sensors/realsense_source.py&lt;/code&gt;：统一采集接口。&lt;/strong&gt;打开指定设备，输出RGB、原始深度、内参、深度比例、帧号与各流时间戳；断连和超时明确报错，退出时释放设备。验收标准是能保存一组可读取、元数据完整的RGB-D样本。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;code&gt;vision/pixel_mapping.py&lt;/code&gt;：还原送检坐标。&lt;/strong&gt;记录当前320×240送检过程中的裁剪区域、缩放和留边，把检测坐标逆变换回原始彩色像素。黑边内的点应拒绝；不能直接拿送检中心去索引原始深度。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;code&gt;vision/depth_target.py&lt;/code&gt;：目标区域测距。&lt;/strong&gt;在对齐后的目标内部筛选有效深度，避开边界混入的背景和深度空洞，输出有效比例、离散程度与失败原因。选定有效表面像素后用它自身的深度反投影，保留采样位置；暂不把一个表面点宣称为完整物体位姿。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;code&gt;calibration/camera_to_base.py&lt;/code&gt;：坐标转换。&lt;/strong&gt;明确相机安装方式，保存有版本的外参与单位，在已知测量点上检查转换误差。标定缺失、过期或误差不满足任务要求时，只显示观测，不输出可执行抓取目标。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;code&gt;experiments/rgbd_replay.py&lt;/code&gt;：先回放，再接控制。&lt;/strong&gt;保存RGB、Z16、元数据和算法输出，使没有相机时也能复现同一组检测。先向仿真提供带时间戳的估计位置，确认过期帧、无效深度和不可达点会被拒绝，再考虑实体机械臂。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;原&lt;code&gt;legacy/utils.py&lt;/code&gt;与颜色阈值继续保留，新的采集与坐标处理放在适配层。现在的&lt;code&gt;det_rect&lt;/code&gt;角度只是二维轮廓角度；真正抓取还要结合目标几何、表面法线或姿态估计、夹爪约束与运动规划。&lt;/p&gt;
-&lt;p&gt;第一个可以独立完成的小目标是：&lt;strong&gt;在网页点击物体，显示对应三维表面点，并保存这次RGB-D观测。&lt;/strong&gt;先用已知距离的静止物体测误差，再比较不同距离、光照和材质下的有效比例与抖动。&lt;/p&gt;
-&lt;h2 id=&quot;section-6&quot;&gt;六、可以继续探索的三个小方向&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;让系统解释为什么看不准。&lt;/strong&gt;当目标颜色占比不足、深度空洞多、帧过期或坐标标定缺失时，页面显示具体原因，并保留失败样本。它既是调试工具，也能成为持续更新的实验内容。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;让机器人为观察选择位置。&lt;/strong&gt;固定视角看不清时，先在仿真中比较几个观察位，尝试改善可见面积和深度有效比例，再决定是否靠近或改变视角。可以从规则策略开始，记录移动代价与观测收益。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;给语言指令加上几何核验。&lt;/strong&gt;例如“找到红色盒子，靠近后观察”。语言模块负责解析目标与步骤，视觉模块返回观测，几何模块核对距离和可达性，再由执行器决定动作。这可以作为向VLN／移动操作延伸的小实验；目前属于项目设想，尚无研究新颖性或效果结论。&lt;/p&gt;
-&lt;h2 id=&quot;section-7&quot;&gt;七、已经验证的范围&lt;/h2&gt;
-&lt;p&gt;截至2026-10-18这次记录，项目共有36项测试通过，覆盖运动核心、摄像头辅助、视觉接口与MCP集成。浏览器联调使用合成图与合成视频流，检查了帧标识、连续识别不积压、设备释放与移动端布局。真实深度仍需在硬件上单独验证。&lt;/p&gt;
-&lt;p&gt;本次另从D435 RGB补拍一张实图，确认彩色采集可用；没有对橘子补做识别测试，也没有获取真实深度。下一步最有价值的进展，是把一张真实RGB-D观测变成有单位、坐标、时间戳和误差记录的三维估计，再让后续任务使用这个估计。&lt;/p&gt;
-&lt;p&gt;源码与运行说明：&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;PickGo Lab&lt;/a&gt;。&lt;/p&gt;</content:encoded></item><item><title>PickGo Lab实践：用浏览器、Python和MCP串起机器人搬运仿真</title><link>https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab</guid><pubDate>Fri, 16 Oct 2026 16:00:00 GMT</pubDate><description>从底盘与机械臂的搬运流程出发，整理一个可离线演示、支持Python与MCP共用场景，并能验证原视觉函数的轻量项目。</description><content:encoded>&lt;p&gt;本文记录2026-10-17的搬运仿真实践。后续的RGB摄像头接入另记在&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab-camera&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;摄像头与深度开发实践&lt;/a&gt;，两篇分别说明各自阶段的功能与验证范围。&lt;/p&gt;
+&lt;p&gt;现在完成的是实验工程和不加载模型的工具检查。GPU是否兼容、缓存路径是否通过模型核对、各组实际耗时是多少，都等服务器运行后确认。接下来先把这三组数据收齐，再决定继续查缓存访问、调度等待，还是服务端前缀复用。&lt;/p&gt;</content:encoded></item><item><title>PickGo Lab实践：用浏览器、Python和MCP串起机器人搬运仿真</title><link>https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab</link><guid isPermaLink="true">https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab</guid><pubDate>Fri, 16 Oct 2026 16:00:00 GMT</pubDate><description>从底盘与机械臂的搬运流程出发，整理一个可离线演示、支持Python与MCP共用场景，并能验证原视觉函数的轻量项目。</description><content:encoded>&lt;p&gt;本文记录2026-10-17的搬运仿真实践。后续的RGB摄像头接入另记在&lt;a href=&quot;https://williamtymhuabian.github.io/personal-site/#/post/pickgo-lab-camera&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;摄像头与深度开发实践&lt;/a&gt;，两篇分别说明各自阶段的功能与验证范围。&lt;/p&gt;
 &lt;p&gt;如果要验证一个“移动到目标附近、抓取物体、运输并投放”的机器人流程，除了看最终动画，还需要知道：动作推进到了哪一步，暂停后能否继续，不同控制入口看到的状态是否一致，以及视觉函数到底输出了什么。&lt;/p&gt;
 &lt;p&gt;PickGo Lab把这些环节放进一个轻量环境：浏览器显示底盘与机械臂运动学仿真，本机Python服务持有场景，MCP提供工具入口，视觉页面单独检查原检测函数的输入输出。&lt;/p&gt;
 &lt;p&gt;项目地址：&lt;a href=&quot;https://github.com/williamtymhuabian/pickgo-lab&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;williamtymhuabian/pickgo-lab&lt;/a&gt;。&lt;/p&gt;

@@ -1,146 +1,114 @@
 ---
-title: PickGo Lab摄像头实践：从RGB识别走向深度感知
-date: 2026-10-18
+title: PickGo Lab摄像头实践：中文TTS播报与D435真实测距
+date: 2026-10-29
 category: 技术实践
-summary: 接通浏览器与本机OpenCV的RGB识别链路，梳理D435、D405、D455的使用场景，并规划RGB-D对齐、三维定位与可回放实验的下一步代码。
-tags: 计算机视觉, RealSense, 摄像头, Python, RGB-D
+summary: 补全物体检测、GrabCut分割、Windows本地中文TTS和RealSense真实RGB-D点选测距，记录实机验证结果、图像来源与尚未完成的视觉控制闭环。
+tags: 计算机视觉, RealSense, TTS, Python, RGB-D
 pinned: true
 ---
 
-这次给PickGo Lab增加了RGB摄像头输入：浏览器采集彩色画面，本机Python调用原颜色与矩形识别函数，再将检测结果绘制到对应的送检帧上。
+PickGo Lab已经接通了常见物体检测、前景分割、中文语音播报和D435真实RGB-D测距。现在可以在页面查看彩色图与配准深度图，点击目标读取光轴深度，也可以让系统用中文播报识别到的类别。
 
-彩色视频接通以后，还需要取得有效深度、反投影到相机坐标，再转换到机器人坐标。这篇记录已经完成的RGB接入，以及尚待实现的深度采集和坐标链路。
+本文于2026-10-29更新，替换原先仅介绍RGB采集与深度开发计划的说明。硬件结果依据项目的10月24日测试记录，相关代码已于10月28日同步到[GitHub仓库](https://github.com/williamtymhuabian/pickgo-lab)。本次整理重新检查了软件测试，没有重新采集相机画面或播放语音。
 
-项目地址：[PickGo Lab](https://github.com/williamtymhuabian/pickgo-lab)。
+![本机RealSense D435摄像头与三脚架实拍，摄于早期RGB接入阶段](https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-d435-device.jpg)
 
-## 一、先跑通RGB采集与识别
+## 一、目前可以做什么
 
-准备Python 3.10或以上版本，在本机安装依赖并启动视觉模式：
+- 原颜色与矩形识别继续保留，用于红、蓝、黄色目标的基础验证。
+- NanoDet支持COCO的80类物体候选，GrabCut根据检测框或手动框选提取前景。分割结果不能直接当作精确实例轮廓或抓取点。
+- 中文TTS支持试音、播报当前结果、自动播报和停止，Windows使用本地中文语音，不申请麦克风权限。
+- D435通过RealSense SDK读取同一组彩色与深度帧，完成配准后支持点选测距，以及检测框中心或有效分割质心的深度读取。
+- 来源变化、旧帧和无效深度会使相关结果失效。上述视觉结果尚未闭环控制实体机械臂或底盘。
+
+![最新RGB-D与TTS功能界面说明图：本次未打开摄像头或播放声音，图像和距离为空，仅展示控件与状态，不是实机测距结果图](https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-rgbd-tts-interface.png)
+
+## 二、先启动本机视觉服务
+
+在仓库根目录安装基础依赖并启动：
 
 ~~~bash
-git clone https://github.com/williamtymhuabian/pickgo-lab.git
-cd pickgo-lab
 python -m pip install -r requirements.txt
-python -B app.py --vision-only
+python -B app.py --vision-only --port 8771
 ~~~
 
-用本机Edge或Chrome打开[视觉页面](http://127.0.0.1:8767/vision.html?source=camera)，Windows也可以双击`start-camera.cmd`。此模式不需要Node.js；博客本身只展示文章和图片，识别服务运行在读者自己的电脑上。
+这个入口只运行本机视觉服务，不启动运动仿真进程。普通RGB模式可以在Edge或Chrome打开[物体识别页面](http://127.0.0.1:8771/vision.html?source=camera&task=objects)，选好设备后再点击“打开摄像头”。
 
-先用合成图确认服务可用，再选择摄像头的RGB接口。点击“打开摄像头”后才申请视频权限，不采集麦克风。浏览器采集需要安全上下文，本机localhost属于可用于开发的环境。[getUserMedia官方说明](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia)
+常见物体检测需要单独准备NanoDet权重：
 
-当前开发记录中，D435的RGB接口曾以640×480打开，并将画面交给原算法；当次结果为“未识别到目标”。它说明采集与送检已经连通，实物颜色识别仍需针对光照、颜色阈值和目标大小继续验证。真实深度尚未接入。
-
-这次补拍了一张D435 RGB真实画面，原始采集分辨率为640×480。为避免展示背景人员与电脑屏幕，文章只使用302×266的橘子近景裁剪图。拍完即释放相机，没有采集音频。
-
-![2026-10-18 D435 RGB实拍：本地裁剪后的橘子近景；仅展示彩色采集，不代表目标识别或深度测距成功](https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-d435-rgb-real.png)
-
-## 二、预览在动，检测框要跟着送检帧
-
-摄像头预览与实际送检图像分开展示。一次识别经过以下步骤：
-
-~~~text
-RGB 视频 → 选择区域 → 等比缩放至 320×240 → PNG 送检
-         → 本机 OpenCV → 原 det_color / det_rect
-         → 核对 frame_id → 在对应送检帧上绘制结果
+~~~bash
+python -B setup_objects.py --check
+python -B setup_objects.py
 ~~~
 
-连续识别在上一次返回后才采集下一帧，同一页面最多一个识别请求。切换来源、颜色或裁剪区域后，旧结果失效；未识别到目标时清空旧中心与角度。
+第一条只检查本地权重，第二条在需要时下载固定版本并校验。模型约3.8 MB，使用OpenCV DNN CPU推理。手动框选GrabCut和TTS本身不依赖该检测模型。
 
-![RGB页面联调截图：输入为浏览器合成测试视频流，未打开真实相机；用于检查预览、送检帧和原算法输出](https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-camera-test-stream.png)
+真实深度需要可选的RealSense运行库。仓库将它放在项目目录，避免修改系统Python：
 
-这张图专门验证软件链路，不作为D435实拍效果。原函数含0.4秒等待，识别频率与预览帧率也应分开看。
-
-切换来源、关闭设备或离开页面会释放视频轨道。取消连续识别只暂停送检，仍保留预览。[MediaStreamTrack.stop说明](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/stop)
-
-## 三、相机选型：先用已有D435完成闭环前的验证
-
-我的第一选择是继续使用已有的**RealSense D435**。当前最需要补齐的是深度采集、配准和坐标链路，可以先用现有设备验证这些问题，再根据实测距离决定是否换机。
-
-![本机RealSense D435摄像头与三脚架的实拍照片](https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-d435-device.jpg)
-
-上图是本次使用的摄像头与三脚架实拍，展示设备的实际安装状态。
-
-按当前项目可能发展的场景，我会考虑三款具体型号。以下是选型建议，工作距离取自官方页面，实际表现还取决于材质、光照、分辨率和安装方式，规格核对日期为2026-10-18。
-
-- **D435：现有设备优先。**官方理想范围为0.3—3 m，适合先做桌面物体观察、目标测距和RGB-D接口开发。其RGB是滚动快门，深度成像器是全局快门，运动场景需要留意彩色与深度的时序差异。[D435官方规格](https://store.realsenseai.com/buy-realsense-depth-camera-d435.html)
-- **D405：明确需要近距离抓取时考虑。**官方标准理想范围为7—50 cm，适合腕部或近距离工位观察。它的彩色信息来自左侧成像器经ISP输出，选购前要确认颜色效果、安装距离和遮挡是否满足任务。[D405官方说明](https://www.realsenseai.com/products/d405-series/)
-- **D455：移动底盘与较远场景时考虑。**官方理想范围为0.6—6 m，具备全局快门RGB与深度成像、集成IMU；更适合需要较远环境观察的方向。它能否满足某个抓取距离仍要单独测试。[D455官方说明](https://www.realsenseai.com/product-family/450-series/)
-
-建议先记录相机到目标的实际距离，再比较有效深度比例和测距误差。购买判断应由这些结果驱动；目前没有必要为了让项目看起来完整就一次购入多款设备。
-
-## 四、深度相机开发：先做独立采集，再接回页面
-
-浏览器获得的RGB视频不包含可直接读取的毫米深度。RealSense深度开发应从官方SDK与Python包`pyrealsense2`入手，先在RealSense Viewer中检查设备、RGB、深度和USB连接，再开发独立采集程序。[官方SDK与安装入口](https://github.com/realsenseai/librealsense)
-
-建议由Python统一持有D435的RGB与深度流，网页读取本机服务提供的帧和检测结果。这样可以避免浏览器和SDK同时争用同一设备，也方便保存同一组图像、内参和时间戳。
-
-第一步只做“像素对应的三维表面点”。下面是独立实验的最小示意，尚未接入项目，也未在本轮硬件上运行。示例配置需与设备支持的流模式匹配。
-
-~~~python
-import pyrealsense2 as rs
-
-pipeline = rs.pipeline()
-config = rs.config()
-config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
-align = rs.align(rs.stream.color)
-
-started = False
-try:
-    pipeline.start(config)
-    started = True
-    for _ in range(30):
-        frames = pipeline.wait_for_frames(5000)
-    aligned = align.process(frames)
-    depth = aligned.get_depth_frame()
-    color = aligned.get_color_frame()
-    if not depth or not color:
-        raise RuntimeError("没有取得对齐后的 RGB-D 帧")
-    # 这里只测图像中心，不代表已经检测到了目标。
-    u, v = color.get_width() // 2, color.get_height() // 2
-    z_m = depth.get_distance(u, v)
-    if z_m <= 0:
-        raise RuntimeError("该像素无有效深度，请换位置或检查场景")
-    intrinsics = depth.profile.as_video_stream_profile().intrinsics
-    point_m = rs.rs2_deproject_pixel_to_point(intrinsics, [u, v], z_m)
-    print("相机坐标中的表面点 / m:", point_m)
-finally:
-    if started:
-        pipeline.stop()
+~~~powershell
+python -B -m pip install --no-deps --only-binary=:all: --index-url https://pypi.org/simple --target .runtime/realsense -r requirements-depth.txt
 ~~~
 
-这里用`rs.align(rs.stream.color)`把深度对齐到彩色图像，再读取匹配的内参。官方提供了[深度对齐Python示例](https://github.com/realsenseai/librealsense/blob/master/wrappers/python/examples/align-depth2color.py) 和[align接口说明](https://realsenseai.github.io/librealsense/python_docs/_generated/pyrealsense2.align.html)。
+随后打开[RGB-D页面](http://127.0.0.1:8771/vision.html?source=realsense&task=objects)，或在“图像来源”中选择“RealSense RGB-D / 真实测距”。先关闭其他程序的相机预览，再点击打开，避免设备争用。网页的逐帧识别更新率取决于处理耗时，不能把SDK的30 fps采集配置写成网页实时识别帧率。
 
-`get_distance`返回米制深度；读取原始Z16数据时则必须使用实际`depth_scale`转换，不能一律假定原始值就是毫米。深度伪彩图只用于显示，测距需要原始深度值。[depth_frame接口说明](https://realsenseai.github.io/librealsense/python_docs/_generated/pyrealsense2.depth_frame.html)
+## 三、中文TTS怎么播报识别结果
 
-对齐解决空间像素对应关系，仍需记录并检查RGB、深度时间戳。相机坐标的轴向为右、下、前，三维点单位为米。它到机器人基座的转换还需要外参；固定相机与腕部相机的标定流程也不同。[官方投影与坐标说明](https://dev.realsenseai.com/docs/projection-in-realsense-sdk-2-0/)
+语音部分由[vision_speech.js](https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/vision_speech.js)组织播报内容和页面状态，[speech_audio.py](https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/speech_audio.py)在Windows上调用已安装的System.Speech中文语音，将WAV音频交给浏览器播放。
 
-## 五、接下来具体写哪些代码
+识别后可以点击“播报当前结果”，也可以先点某个候选目标，优先播报这一类别。表述使用“可能识别到杯子”，不会把模型分数解释成正确率。没有目标或类别未知时，系统会说明当前状态；手动框选只说明提取了前景，不猜测物体名称。
 
-我会按下面的依赖顺序推进。这些文件名是拟新增模块，当前尚未实现；每一步先验收，再进入下一步。
+自动播报与连续识别配合使用：类别组合需要连续出现两次，两次播报至少间隔6秒，相同内容20秒内不重复。超过2.5秒的旧观测不能触发自动播报。切换来源、关闭相机或隐藏页面会停止旧语音，“停止播报”还会关闭自动播报。
 
-1. **`sensors/realsense_source.py`：统一采集接口。**打开指定设备，输出RGB、原始深度、内参、深度比例、帧号与各流时间戳；断连和超时明确报错，退出时释放设备。验收标准是能保存一组可读取、元数据完整的RGB-D样本。
-2. **`vision/pixel_mapping.py`：还原送检坐标。**记录当前320×240送检过程中的裁剪区域、缩放和留边，把检测坐标逆变换回原始彩色像素。黑边内的点应拒绝；不能直接拿送检中心去索引原始深度。
-3. **`vision/depth_target.py`：目标区域测距。**在对齐后的目标内部筛选有效深度，避开边界混入的背景和深度空洞，输出有效比例、离散程度与失败原因。选定有效表面像素后用它自身的深度反投影，保留采样位置；暂不把一个表面点宣称为完整物体位姿。
-4. **`calibration/camera_to_base.py`：坐标转换。**明确相机安装方式，保存有版本的外参与单位，在已知测量点上检查转换误差。标定缺失、过期或误差不满足任务要求时，只显示观测，不输出可执行抓取目标。
-5. **`experiments/rgbd_replay.py`：先回放，再接控制。**保存RGB、Z16、元数据和算法输出，使没有相机时也能复现同一组检测。先向仿真提供带时间戳的估计位置，确认过期帧、无效深度和不可达点会被拒绝，再考虑实体机械臂。
+语音在本机合成，不调用云TTS，不下载语音模型，也不采集麦克风。其他系统可以回退到浏览器已有的本地中文语音；没有可用语音时会报告不可用。实现与实测说明见[中文播报记录](https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/docs/speech.md)。
 
-原`legacy/utils.py`与颜色阈值继续保留，新的采集与坐标处理放在适配层。现在的`det_rect`角度只是二维轮廓角度；真正抓取还要结合目标几何、表面法线或姿态估计、夹爪约束与运动规划。
+当前播报内容是物体类别，测距结果另行显示在面板里。距离尚未拼进播报语句，后续可以增加“可能识别到杯子，光轴深度约多少毫米”，同时保留无效与过期状态判断。
 
-第一个可以独立完成的小目标是：**在网页点击物体，显示对应三维表面点，并保存这次RGB-D观测。**先用已知距离的静止物体测误差，再比较不同距离、光照和材质下的有效比例与抖动。
+## 四、D435测到的究竟是什么距离
 
-## 六、可以继续探索的三个小方向
+RGB-D模式由[realsense_camera.py](https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/realsense_camera.py)统一持有设备。SDK读取640×480彩色与Z16深度，使用实际深度比例换算毫米，再通过`align(color)`配准到彩色视角。网页显示的320×240图像来自对应的同组数据，避免拿浏览器RGB去索引另一时刻的深度。
 
-**让系统解释为什么看不准。**当目标颜色占比不足、深度空洞多、帧过期或坐标标定缺失时，页面显示具体原因，并保留失败样本。它既是调试工具，也能成为持续更新的实验内容。
+点击彩色图、深度图或候选目标可以更改测距点。测量取该点7×7邻域内有效深度的中值，并显示有效样本数和配准帧信息。分割模式在有效掩膜质心取深度，没有有效掩膜时退回框中心。
 
-**让机器人为观察选择位置。**固定视角看不清时，先在仿真中比较几个观察位，尝试改善可见面积和深度有效比例，再决定是否靠近或改变视角。可以从规则策略开始，记录移动代价与观测收益。
+当前实现会排除零值、非有限数和0.15—10 m范围外的数据。有效样本少于9个，或不足邻域的30%，会返回无效；邻域深度分布过于分散时会判为多表面混合，不输出距离。这些是工程过滤规则，不能保证消除全部背景回波。
 
-**给语言指令加上几何核验。**例如“找到红色盒子，靠近后观察”。语言模块负责解析目标与步骤，视觉模块返回观测，几何模块核对距离和可达性，再由执行器决定动作。这可以作为向VLN／移动操作延伸的小实验；目前属于项目设想，尚无研究新颖性或效果结论。
+显示值是相机光轴方向的Z，不是相机到目标的欧氏直线距离，也不是物体尺寸、完整三维位姿或机械臂坐标。透明、镜面、金属反光和边缘区域都可能缺少有效深度。伪彩图的颜色仅用于显示，黑色表示无效数据，不能读成零距离。
 
-## 七、已经验证的范围
+测距请求绑定当前显示的帧号。迟到响应、来源切换和超过2.5秒的帧都不会继续输出有效测距；空闲约10秒后后台释放设备。深度数组短时保留在内存中，不自动保存照片、深度文件或录像。细节见[真实RGB-D测距说明](https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/docs/realsense-depth.md)。
 
-截至2026-10-18这次记录，项目共有36项测试通过，覆盖运动核心、摄像头辅助、视觉接口与MCP集成。浏览器联调使用合成图与合成视频流，检查了帧标识、连续识别不积压、设备释放与移动端布局。真实深度仍需在硬件上单独验证。
+## 五、已经留下哪些实机验证记录
 
-本次另从D435 RGB补拍一张实图，确认彩色采集可用；没有对橘子补做识别测试，也没有获取真实深度。下一步最有价值的进展，是把一张真实RGB-D观测变成有单位、坐标、时间戳和误差记录的三维估计，再让后续任务使用这个估计。
+10月24日的项目记录包含以下结果。这些是当时场景下的连通与功能检查，本次没有重跑硬件实验：
 
-源码与运行说明：[PickGo Lab](https://github.com/williamtymhuabian/pickgo-lab)。
+- D435取得了640×480彩色与深度帧，并完成depth-to-color配准。
+- 页面一帧中心读数约325 mm，彩色与深度帧时间差约9 ms；点击键盘候选后，测距点为(75, 156)，读数约502 mm，邻域49/49个样本有效。
+- 金属保温杯区域出现无效深度或混合深度时，页面明确拒绝输出距离，没有用RGB或预设数字补齐。
+- Windows中文语音生成了有效WAV，浏览器完成播放，当时用户确认听到试音和识别结果播报。
+- 保温杯识别出现过cup、bottle混淆和漏检，因此不能据一次播报声称已经稳定识别这类物体。
+
+约325 mm或502 mm只是当时观测值，没有用尺具完成精度标定，不能写成测距误差或准确率。对应记录没有导出真实RGB-D截图或录像，因此目前无法补出那次测距的原始画面。
+
+![10月18日D435 RGB橘子近景：真实彩色采集的历史图片，仅用于展示RGB接入，不是10月24日深度测距或物体识别成功的证据](https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-d435-rgb-real.png)
+
+![早期合成视频流联调截图：验证送检帧、检测框与原算法输出的对应关系，输入并非真实相机画面](https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-camera-test-stream.png)
+
+## 六、观测评估也已经接入
+
+当前页面还提供同帧框扰动评估：对原框、扩框或缩框等候选提示比较分割结果，显示掩膜一致性、中心差异和共同前景内部像素。它用于发现结果对框选是否敏感，一致性高也可能是大家一起分错，不能当作分割准确率。
+
+![10月23日观测质量界面截图：输入为合成测试／冻结帧，展示框选扰动评估与报告入口，不是真实测距结果或抓取点验证](https://williamtymhuabian.github.io/personal-site/assets/projects/pickgo-observation-quality.png)
+
+实时RGB观测需要积累不同的新帧，冻结图不能重复计作连续证据。修改来源、参数或所选目标后，原有评估会失效。原始流程与限制见[摄像头实操说明](https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/docs/camera-validation-2026-10-24.md)。
+
+## 七、软件测试与后续工作
+
+10月28日的[发布记录](https://github.com/williamtymhuabian/pickgo-lab/blob/d796e97/CHANGELOG.md)记载66项Python回归及全部JavaScript测试通过。本次整理单独重跑了测距、语音的13项Python测试和14项前端测试，均通过；测试使用假相机、数组和模拟音频，不能替代实机测量。
+
+~~~bash
+python -B -m unittest discover -s tests -p test_realsense.py
+python -B -m unittest discover -s tests -p test_speech.py
+node --test tests/depth_client.test.cjs tests/speech.test.cjs
+~~~
+
+接下来需要补的是不同距离与材质下的测距误差记录、有效像素反投影、相机到机器人基座的外参，以及带失败处理的任务闭环。识别类别、能播报、能读取Z值，距离真正可靠地控制抓取还有这些步骤。
+
+源码与完整用法：[PickGo Lab](https://github.com/williamtymhuabian/pickgo-lab)。
