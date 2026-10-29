@@ -270,6 +270,10 @@ DDL 日历导出 UTC 时间，可选提前 1、3、7 天或不提醒；仅导出
 
 首页介绍下方展示2023、2024两届腾讯开悟，包含“线性代数”队、王者荣耀方向、已核实入围／晋级结果、官网名单和训练路线入口。竞赛与成果页同步增加两条 `participation` 记录，按 `data/kaiwu-public-records.json` 的 `recordId` 关联；42项竞赛获奖统计不变。后续拿到正式证书再核对奖级。
 
+### 强化学习方法与开悟解题资料
+
+2026年10月29日新增[强化学习GitHub学习地图](https://williamtymhuabian.github.io/personal-site/#/post/rl-github-method-map)与[王者荣耀PPO解题路线](https://williamtymhuabian.github.io/personal-site/#/post/kaiwu-hok-rl-solution-playbook)，连接共读第7章、原服务器训练文及研究方向 rd-002/011/012/015。内容包含方法分类、10个按用途推荐的项目、官方与社区资料边界，以及六组待执行对照实验；未声称已运行开悟训练或核验社区作者成绩。
+
 ## 轻量界面动效
 
 `assets/site-polish.css`统一卡片悬停、按钮按压和键盘焦点反馈，沿用现有配色与布局。`assets/site-polish.js`由路由挂载和清理，使用IntersectionObserver做一次性入场；内容保持默认可见，禁用动效或缺少相关API时也能阅读。

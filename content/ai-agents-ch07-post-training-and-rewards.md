@@ -7,13 +7,15 @@ tags: AI Agent, 共读, 后训练, SFT, 强化学习
 research: rd-002, rd-006, rd-007, rd-008
 book: ai-agents-in-depth
 chapter: 7
-updated: 2026-10-24
+updated: 2026-10-29
 pinned: false
 ---
 
 学习版修订：2026年10月24日。
 
 后续实践：[腾讯开悟与强化学习服务器训练](#/post/kaiwu-rl-server-practice) 提供独立 Q-learning 热身；[从三本书到具身课题](#/post/embodied-kaiwu-training-roadmap) 把数据、评估和恢复策略连接成训练路线。
+
+2026年10月29日补充：[强化学习方法与GitHub地图](#/post/rl-github-method-map) 帮助区分 on-policy、off-policy、在线与离线；[开悟王者荣耀解题路线](#/post/kaiwu-hok-rl-solution-playbook) 把本章的轨迹和奖励问题接到 PPO 样本、动作掩码及对局评估。正文练习沿用2026年10月24日学习版。
 
 一个助手用更少的工具调用交出答案，究竟是学会了更高效的策略，还是直接省掉了必要的查询？答案取决于任务结果和验证过程。训练目标如果只奖励“少调用”，反而可能鼓励后者。
 

@@ -196,7 +196,7 @@
       "number": 2,
       "groupId": "models",
       "title": "强化学习后训练与偏好对齐",
-      "keywords": "RLVR / Preference Optimization",
+      "keywords": "RLVR / Preference Optimization / PPO / on-policy / off-policy / 腾讯开悟 / 强化学习入门",
       "question": "如何设计可验证奖励、过程反馈和偏好学习，减少奖励投机？",
       "fieldIds": [
         "ai"

@@ -5,6 +5,7 @@ category: 强化学习
 summary: 用Q-learning热身理解观测、动作、奖励与终止，再准备开悟赛道基线、独立评测和具身任务迁移，配套可运行代码。
 tags: 腾讯开悟, 王者荣耀, 强化学习, Q-learning, 服务器训练
 research: rd-002, rd-011, rd-012, rd-015
+updated: 2026-10-29
 pinned: false
 ---
 
@@ -13,6 +14,8 @@ pinned: false
 我参加过2023、2024两届开悟，队名“线性代数”，主要是王者荣耀方向。官网公开图片已核对到 [2023中级海选入围](https://kaiwu-prod-1252931805.cos.ap-shanghai.myqcloud.com/public/image/competition_score/1692064202708K6etKp10.jpg) 与 [2024中国内地赛区海选晋级](https://kaiwu-prod-1252931805.cos.ap-shanghai.myqcloud.com/public/image/competition_score/17255305006nAIXu2k0ZkBHCTgVBijgTDZXKQcVtRc2423.jpg)。具体奖项待核对；本篇整理新的学习和训练流程，不声称恢复当年的参赛模型或训练结果。
 
 ## 先分清三种实验
+
+2026年10月29日补充：[强化学习 GitHub 学习地图](#/post/rl-github-method-map) 整理 on-policy/off-policy、在线/离线等分类及10个开源项目；[王者荣耀1v1解题路线](#/post/kaiwu-hok-rl-solution-playbook) 继续拆解官方PPO基线、条件动作、奖励诊断和自博弈评测。先读方法地图，再按自己的赛段确认接口。
 
 第一种是机制热身：用自己可完全检查的小环境，确认采样、价值更新和终止处理。第二种是开悟赛道基线：使用对应开发包和正式评测协议。第三种是具身课题：把方法放进机器人自己的观测与动作定义中。
 
