@@ -1,5 +1,40 @@
 # Williamtym · 探索手记
 
+个人研究主页与技术博客，记录计算机学习、具身智能与VLN探索、项目实践，以及竞赛和旅行经历。用Markdown写作，通过Node.js生成静态页面，部署在GitHub Pages。
+
+[访问网站](https://williamtymhuabian.github.io/personal-site/) · [阅读手记](https://williamtymhuabian.github.io/personal-site/#/posts) · [项目与实践](https://williamtymhuabian.github.io/personal-site/#/projects) · [RSS订阅](https://williamtymhuabian.github.io/personal-site/feed.xml)
+
+## 网站预览
+
+以下均为2026-10-29在线网站的实际页面截图，点击图片可访问对应页面。
+
+### 首页
+
+浅色与深色主题、计算机交互背景、最近手记和项目展示，支持手机与桌面访问。
+
+[![探索手记首页：个人简介、交互背景和内容入口](assets/projects/personal-site-home.png)](https://williamtymhuabian.github.io/personal-site/)
+
+### 研究方向与学习
+
+按计算机方向连接文章、书目和期刊会议。个人学习记录由本人填写并保存在当前浏览器，文章上线不会自动计为完成学习。
+
+[![研究方向页面：方向分类、搜索和学习记录入口](assets/projects/personal-site-research.png)](https://williamtymhuabian.github.io/personal-site/#/research)
+
+### 期刊与会议
+
+支持按方向、推荐类别和类型筛选，连接文献索引与独立的DDL记事本。
+
+[![期刊与会议页面：目录来源说明、筛选和候选入口](assets/projects/personal-site-venues.png)](https://williamtymhuabian.github.io/personal-site/#/venues)
+
+## 可以在这里做什么
+
+- 阅读技术手记、项目源码说明和配套实验计划，查看真实测试记录及尚未完成的工作。
+- 浏览计算机实验室、研究方向与推荐书目，通过独立的DDL记事本记录投稿安排。
+- 查看竞赛成果与城市足迹，通过GitHub Discussions／giscus交流，并在当前浏览器收藏内容。
+- 使用站内发布助手整理各平台稿件，或通过RSS订阅更新。
+
+下方为内容专题、运行方法与维护说明。页面截图随网站演进更新，实时内容以在线页面为准。
+
 ## 农学 CV 研究专题
 
 2026-10-26新增三篇原创调研文档：`agricultural-cv-01-landscape-and-resources` 整理任务与9组官方数据资源；`agricultural-cv-02-research-proposals` 提出3个带近邻工作、对照与否定条件的候选课题；`agricultural-cv-03-first-experiment-plan` 给出 PhenoBench 起步实验计划。
@@ -99,7 +134,7 @@ node build.mjs
 
 ## 支持的 Markdown 范围
 
-支持一级到三级标题、段落、粗体、行内代码、有序/无序列表、引用、分隔线、HTTPS/HTTP 链接和围栏代码块。代码块可用三个反引号或三个波浪号包围。暂不支持表格、嵌套列表、Markdown 图片、原生 HTML 和完整 CommonMark 扩展。
+支持一级到三级标题、段落、粗体、行内代码、有序/无序列表、引用、分隔线、HTTPS/HTTP链接和围栏代码块。代码块可用三个反引号或三个波浪号包围。支持独占一行的HTTPS Markdown图片，自动生成图注。暂不支持表格、嵌套列表、原生HTML和完整CommonMark扩展。
 
 文章的原生 HTML 会转义显示，不会作为脚本执行。博客是纯前端静态站点，文章地址采用 `#/post/文章名`，无需配置服务器重写；支持 GitHub Pages 子目录。
 
